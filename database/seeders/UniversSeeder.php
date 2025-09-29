@@ -2,13 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Models\Test;
+use App\Models\Univers;
 use Illuminate\Database\Seeder;
 
-class TestSeeder extends Seeder
+class UniversSeeder extends Seeder
 {
     public function run(): void
     {
-        Test::factory()->count(50)->create();
+        Univers::factory()->count(10)->create();
     }
 }

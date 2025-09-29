@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('logo', 255);
             $table->string('primary_color', 7);
             $table->string('secondary_color', 7);
+            $table->softDeletes();
+            $table->timestamps();
         });
     }
 

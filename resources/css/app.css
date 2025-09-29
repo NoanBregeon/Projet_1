@@ -10,3 +10,47 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+/* Styles personnalisés pour les cartes */
+.card {
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.card:hover {
+    transform: translateY(calc(-1 * var(--spacing, 0.25rem) * 2));
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.card-img-top {
+    transition: transform 0.5s ease;
+}
+
+.card:hover .card-img-top {
+    transform: scale(1.05);
+}
+
+.btn {
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(calc(-1 * var(--spacing, 0.25rem) * 0.25));
+}
+
+.hover-opacity {
+    transition: opacity 0.3s ease;
+}
+
+.card:hover .hover-opacity {
+    opacity: 1 !important;
+}
+
+.gradient-bg {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.shadow-custom {
+    box-shadow: 0 calc(var(--spacing, 0.25rem) * 2.5) calc(var(--spacing, 0.25rem) * 7.5) rgba(0,0,0,0.1);
+}
