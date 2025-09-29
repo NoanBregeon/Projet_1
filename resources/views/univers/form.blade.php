@@ -13,19 +13,15 @@
 
         <div class="card shadow">
             <div class="card-body p-4">
-                <!-- En-tête avec couleurs de la carte -->
-                <div class="text-center py-4 rounded-3 mb-4 text-white" style="background: linear-gradient(to right, {{ $formData['primary_color'] }}, {{ $formData['secondary_color'] }});">
+                <div class="text-center py-4 rounded-3 mb-4 text-white" style="background: {{ $formData['gradients']['header'] }};">
                     <h1 class="h3 fw-bold">
-                        @if($isEdit)
-                            Modifier {{ $formData['name'] }}
-                        @else
-                            Créer une nouvelle carte
-                        @endif
+                        {{ $isEdit ? 'Modifier ' . $formData['name'] : 'Créer une nouvelle carte' }}
                     </h1>
                 </div>
 
                 @if ($errors->any())
                     <div class="alert alert-danger">
+                        <h6 class="alert-heading"><i class="bi bi-exclamation-triangle me-2"></i>Erreurs de validation</h6>
                         <ul class="mb-0">
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
@@ -35,168 +31,110 @@
                 @endif
 
                 <div class="row">
-                    <!-- Formulaire à gauche -->
                     <div class="col-md-8">
                         <form action="{{ $isEdit ? route('univers.update', $univers->id) : route('univers.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            @if($isEdit)
-                                @method('PUT')
-                            @endif
+                            @if($isEdit) @method('PUT') @endif
 
-                            <!-- Nom de la carte -->
+                            <!-- ✅ Nom DANS le formulaire -->
                             <div class="mb-3">
                                 <label for="name" class="form-label fw-medium">
                                     Nom de la carte <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                       id="name" name="name" value="{{ old('name', $formData['name']) }}" required
-                                       placeholder="Ex: Dragon Légendaire, Forêt Enchantée...">
+                                       id="name" name="name" value="{{ $formData['name'] }}" required
+                                       placeholder="Ex: Dragon Légendaire">
                                 @error('name')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    <div class="invalid-feedback">
+                                        <i class="bi bi-x-circle me-1"></i>{{ $message }}
+                                    </div>
                                 @enderror
                             </div>
 
-                            <!-- Description -->
+                            <!-- ✅ Description -->
                             <div class="mb-3">
                                 <label for="description" class="form-label fw-medium">
                                     Description <span class="text-danger">*</span>
                                 </label>
                                 <textarea class="form-control @error('description') is-invalid @enderror"
-                                          id="description" name="description" rows="4" required
-                                          placeholder="Décrivez cette carte unique...">{{ old('description', $formData['description']) }}</textarea>
+                                          id="description" name="description" rows="4" required>{{ $formData['description'] }}</textarea>
                                 @error('description')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    <div class="invalid-feedback">
+                                        <i class="bi bi-x-circle me-1"></i>{{ $message }}
+                                    </div>
                                 @enderror
                             </div>
 
-                            <!-- Image actuelle (seulement en mode édition) -->
                             @if($isEdit && $formData['image'])
-                            <div class="mb-3">
-                                <label class="form-label fw-medium">Image actuelle</label>
-                                <div class="d-flex align-items-start gap-3">
-                                    <img src="{{ asset('storage/' . $formData['image']) }}" alt="{{ $formData['name'] }}" class="img-thumbnail" style="width: 192px; height: 128px; object-fit: cover;">
-                                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="supprimerImage()">
-                                        <i class="bi bi-trash me-1"></i>Supprimer l'image
-                                    </button>
+                                <div class="mb-3">
+                                    <label class="form-label fw-medium">Image actuelle</label>
+                                    <div class="d-flex align-items-start gap-3">
+                                        <img src="{{ asset('storage/' . $formData['image']) }}" alt="{{ $formData['name'] }}" class="img-thumbnail" style="width: 192px; height: 128px; object-fit: cover;">
+                                        <button type="button" class="btn btn-outline-danger btn-sm" onclick="supprimerImage()">
+                                            <i class="bi bi-trash me-1"></i>Supprimer l'image
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
                             @endif
 
-                            <!-- Image -->
                             <div class="mb-3">
-                                <label for="image" class="form-label fw-medium">
-                                    @if($isEdit)
-                                        Changer l'image (optionnel)
-                                    @else
-                                        Image de la carte
-                                    @endif
-                                </label>
+                                <label for="image" class="form-label fw-medium">{{ $isEdit ? 'Changer l\'image (optionnel)' : 'Image de la carte' }}</label>
                                 <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" accept="image/*">
-                                <div class="form-text">
-                                    @if($isEdit)
-                                        Laissez vide pour garder l'image actuelle. Format: JPG, PNG. Taille max: 2MB
-                                    @else
-                                        Format: JPG, PNG. Taille max: 2MB
-                                    @endif
-                                </div>
-                                @error('image')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                @error('image')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
 
-                            <!-- Logo actuel (seulement en mode édition) -->
                             @if($isEdit && $formData['logo'])
-                            <div class="mb-3">
-                                <label class="form-label fw-medium">Logo/Symbole actuel</label>
-                                <div class="d-flex align-items-start gap-3">
-                                    <img src="{{ asset('storage/' . $formData['logo']) }}" alt="Logo {{ $formData['name'] }}" class="img-thumbnail" style="width: 64px; height: 64px; object-fit: cover;">
-                                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="supprimerLogo()">
-                                        <i class="bi bi-trash me-1"></i>Supprimer le logo
-                                    </button>
+                                <div class="mb-3">
+                                    <label class="form-label fw-medium">Logo/Symbole actuel</label>
+                                    <div class="d-flex align-items-start gap-3">
+                                        <img src="{{ asset('storage/' . $formData['logo']) }}" alt="Logo" class="img-thumbnail" style="width: 64px; height: 64px; object-fit: cover;">
+                                        <button type="button" class="btn btn-outline-danger btn-sm" onclick="supprimerLogo()">
+                                            <i class="bi bi-trash me-1"></i>Supprimer le logo
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
                             @endif
 
-                            <!-- Logo -->
                             <div class="mb-3">
-                                <label for="logo" class="form-label fw-medium">
-                                    @if($isEdit)
-                                        Changer le logo/symbole (optionnel)
-                                    @else
-                                        Logo/Symbole (optionnel)
-                                    @endif
-                                </label>
+                                <label for="logo" class="form-label fw-medium">{{ $isEdit ? 'Changer le logo/symbole (optionnel)' : 'Logo/Symbole (optionnel)' }}</label>
                                 <input type="file" class="form-control @error('logo') is-invalid @enderror" id="logo" name="logo" accept="image/*">
-                                <div class="form-text">
-                                    @if($isEdit)
-                                        Laissez vide pour garder le logo actuel. Taille max: 1MB
-                                    @else
-                                        Petit symbole représentant cette carte. Taille max: 1MB
-                                    @endif
-                                </div>
-                                @error('logo')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                @error('logo')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
 
-                            <!-- Couleurs thématiques avec champs hexadécimaux -->
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label for="primary_color" class="form-label fw-medium">
-                                        Couleur principale <span class="text-danger">*</span>
-                                    </label>
+                                    <label for="primary_color" class="form-label fw-medium">Couleur principale <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="color" class="form-control form-control-color @error('primary_color') is-invalid @enderror"
-                                               id="primary_color" name="primary_color"
-                                               value="{{ old('primary_color', $formData['primary_color']) }}" required>
+                                               id="primary_color" name="primary_color" value="{{ $formData['primary_color'] }}" required>
                                         <span class="input-group-text">#</span>
                                         <input type="text" class="form-control @error('primary_color_hex') is-invalid @enderror"
-                                               id="primary_color_hex" name="primary_color_hex"
-                                               value="{{ old('primary_color_hex', str_replace('#', '', $formData['primary_color'])) }}"
-                                               pattern="^[A-Fa-f0-9]{6}$" maxlength="6" placeholder="FF5733">
+                                               id="primary_color_hex" name="primary_color_hex" value="{{ $formData['primary_color_hex'] }}" maxlength="6">
                                     </div>
-                                    <div class="form-text">Format: 6 caractères hexadécimaux (ex: FF5733)</div>
-                                    @error('primary_color')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                    @error('primary_color_hex')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
+                                    @error('primary_color')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                    @error('primary_color_hex')<div class="invalid-feedback">{{ $message }}</div>@enderror
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="secondary_color" class="form-label fw-medium">
-                                        Couleur secondaire <span class="text-danger">*</span>
-                                    </label>
+                                    <label for="secondary_color" class="form-label fw-medium">Couleur secondaire <span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="color" class="form-control form-control-color @error('secondary_color') is-invalid @enderror"
-                                               id="secondary_color" name="secondary_color"
-                                               value="{{ old('secondary_color', $formData['secondary_color']) }}" required>
+                                               id="secondary_color" name="secondary_color" value="{{ $formData['secondary_color'] }}" required>
                                         <span class="input-group-text">#</span>
                                         <input type="text" class="form-control @error('secondary_color_hex') is-invalid @enderror"
-                                               id="secondary_color_hex" name="secondary_color_hex"
-                                               value="{{ old('secondary_color_hex', str_replace('#', '', $formData['secondary_color'])) }}"
-                                               pattern="^[A-Fa-f0-9]{6}$" maxlength="6" placeholder="33C3FF">
+                                               id="secondary_color_hex" name="secondary_color_hex" value="{{ $formData['secondary_color_hex'] }}" maxlength="6">
                                     </div>
-                                    <div class="form-text">Format: 6 caractères hexadécimaux (ex: 33C3FF)</div>
-                                    @error('secondary_color')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                    @error('secondary_color_hex')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
+                                    @error('secondary_color')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                    @error('secondary_color_hex')<div class="invalid-feedback">{{ $message }}</div>@enderror
                                 </div>
                             </div>
 
-                            <!-- Boutons -->
                             <div class="d-flex justify-content-between mt-4">
                                 @if($isEdit)
                                     <button type="button" class="btn btn-danger" onclick="confirmerSuppressionUnivers()">
                                         <i class="bi bi-trash"></i> Supprimer la carte
                                     </button>
-                                @else
-                                    <div></div>
                                 @endif
-                                <div class="d-flex gap-2">
+                                <div class="d-flex gap-2 {{ !$isEdit ? 'ms-auto' : '' }}">
                                     <a href="{{ url('/') }}" class="btn btn-secondary">Annuler</a>
                                     <button type="submit" class="btn btn-primary">
                                         <i class="bi bi-{{ $isEdit ? 'check-lg' : 'plus-lg' }}"></i>
@@ -207,57 +145,50 @@
                         </form>
                     </div>
 
-                    <!-- Aperçu à droite (sticky) -->
                     <div class="col-md-4">
                         <div class="sticky-top" style="top: 2rem;">
                             <h5 class="fw-bold mb-3">Aperçu en temps réel</h5>
 
-                            <!-- Aperçu principal -->
                             <div id="preview" class="rounded-3 d-flex align-items-center justify-content-center text-white fw-bold fs-5 mb-3"
-                                 style="height: 120px; background: linear-gradient(to right, {{ old('primary_color', $formData['primary_color']) }}, {{ old('secondary_color', $formData['secondary_color']) }});">
-                                {{ old('name', $formData['name'] ?: 'Nom de la carte') }}
+                                 style="height: 120px; background: {{ $formData['gradients']['preview_main'] }};">
+                                {{ $formData['preview']['title'] }}
                             </div>
 
-                            <!-- Aperçu carte miniature -->
-                            <div class="card shadow-sm">
-                                <div class="card-header border-0 text-white text-center py-2" id="preview-header" style="background: linear-gradient(135deg, {{ old('primary_color', $formData['primary_color']) }} 0%, {{ old('secondary_color', $formData['secondary_color']) }} 100%);">
-                                    <h6 class="card-title mb-0 fw-bold" id="preview-title">{{ old('name', $formData['name'] ?: 'Nom de la carte') }}</h6>
+                            <div class="card shadow-sm position-relative">
+                                <div class="card-header border-0 text-white text-center py-2" id="preview-header" style="background: {{ $formData['gradients']['preview_header'] }};">
+                                    <h6 class="card-title mb-0 fw-bold" id="preview-title">{{ $formData['preview']['title'] }}</h6>
                                 </div>
 
-                                <!-- Zone d'image avec prévisualisation -->
                                 <div id="preview-image-container" style="height: 150px; position: relative; overflow: hidden;">
-                                    @if($isEdit && $formData['image'])
-                                        <img id="preview-image" src="{{ asset('storage/' . $formData['image']) }}" alt="Aperçu" style="width: 100%; height: 100%; object-fit: cover;">
+                                    @if($formData['preview']['has_image'])
+                                        <img id="preview-image" src="{{ $formData['preview']['image_url'] }}" alt="Aperçu" style="width: 100%; height: 100%; object-fit: cover;">
                                     @else
-                                        <div id="preview-image" class="d-flex align-items-center justify-content-center text-white fs-1 fw-bold h-100" style="background: linear-gradient(45deg, {{ old('primary_color', $formData['primary_color']) }} 0%, {{ old('secondary_color', $formData['secondary_color']) }} 100%);">
+                                        <div id="preview-image" class="d-flex align-items-center justify-content-center text-white fs-1 fw-bold h-100" style="background: {{ $formData['gradients']['preview_image'] }};">
                                             <i class="bi bi-stars opacity-75"></i>
                                         </div>
                                     @endif
                                 </div>
 
                                 <div class="card-body p-3">
-                                    <p class="card-text text-muted small mb-2" id="preview-description">{{ Str::limit(old('description', $formData['description'] ?: 'Description de la carte...'), 80) }}</p>
-
-                                    <!-- Indicateurs de couleurs dans l'aperçu -->
+                                    <p class="card-text text-muted small mb-2" id="preview-description">{{ $formData['preview']['description'] }}</p>
                                     <div class="d-flex align-items-center">
                                         <small class="text-muted me-2">Couleurs:</small>
                                         <div class="d-flex gap-1">
-                                            <div class="rounded-circle border border-white shadow-sm" id="preview-primary-color"
-                                                 style="width: 20px; height: 20px; background-color: {{ old('primary_color', $formData['primary_color']) }};"></div>
-                                            <div class="rounded-circle border border-white shadow-sm" id="preview-secondary-color"
-                                                 style="width: 20px; height: 20px; background-color: {{ old('secondary_color', $formData['secondary_color']) }};"></div>
+                                            <div class="rounded-circle border border-white shadow-sm" id="preview-primary-color" style="width: 20px; height: 20px; background-color: {{ $formData['primary_color'] }};"></div>
+                                            <div class="rounded-circle border border-white shadow-sm" id="preview-secondary-color" style="width: 20px; height: 20px; background-color: {{ $formData['secondary_color'] }};"></div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- Logo en superposition -->
-                                <div class="position-absolute top-0 end-0 m-2" style="z-index: 10;" id="preview-logo-container">
-                                    @if($isEdit && $formData['logo'])
-                                        <img id="preview-logo" src="{{ asset('storage/' . $formData['logo']) }}" alt="Logo"
-                                             class="rounded-circle border border-2 border-white shadow"
-                                             style="width: 40px; height: 40px; object-fit: cover;">
-                                    @endif
-                                </div>
+                                @if($formData['preview']['has_logo'])
+                                    <div class="position-absolute top-0 end-0 m-2" style="z-index: 10;" id="preview-logo-container">
+                                        <img id="preview-logo" src="{{ $formData['preview']['logo_url'] }}" alt="Logo" class="rounded-circle border border-2 border-white shadow" style="width: 40px; height: 40px; object-fit: cover;">
+                                    </div>
+                                @else
+                                    <div class="position-absolute top-0 end-0 m-2" style="z-index: 10;" id="preview-logo-container">
+                                        <!-- Container vide pour le logo dynamique -->
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -267,72 +198,45 @@
     </div>
 </div>
 
+<!-- Scripts inchangés -->
+<script>
+const jsConfig = @json($jsConfig);
+@if($isEdit)
+const deleteRoutes = @json($deleteRoutes);
+@endif
+</script>
+
 @if($isEdit)
 <script>
 function confirmerSuppressionUnivers() {
-    if (confirm('Êtes-vous sûr de vouloir supprimer cette carte ? Cette action est irréversible.')) {
+    if (confirm('Êtes-vous sûr de vouloir supprimer cette carte ?')) {
         const form = document.createElement('form');
         form.method = 'POST';
-        form.action = '{{ route("univers.destroy", $univers->id) }}';
-
-        const csrfToken = document.createElement('input');
-        csrfToken.type = 'hidden';
-        csrfToken.name = '_token';
-        csrfToken.value = '{{ csrf_token() }}';
-
-        const methodField = document.createElement('input');
-        methodField.type = 'hidden';
-        methodField.name = '_method';
-        methodField.value = 'DELETE';
-
-        form.appendChild(csrfToken);
-        form.appendChild(methodField);
+        form.action = deleteRoutes.univers;
+        form.appendChild(Object.assign(document.createElement('input'), {type: 'hidden', name: '_token', value: '{{ csrf_token() }}'}));
+        form.appendChild(Object.assign(document.createElement('input'), {type: 'hidden', name: '_method', value: 'DELETE'}));
         document.body.appendChild(form);
         form.submit();
     }
 }
-
 function supprimerImage() {
-    if (confirm('Êtes-vous sûr de vouloir supprimer l\'image de cette carte ?')) {
+    if (confirm('Êtes-vous sûr de vouloir supprimer l\'image ?')) {
         const form = document.createElement('form');
         form.method = 'POST';
-        form.action = '{{ route("univers.remove-image", $univers->id) }}';
-
-        const csrfToken = document.createElement('input');
-        csrfToken.type = 'hidden';
-        csrfToken.name = '_token';
-        csrfToken.value = '{{ csrf_token() }}';
-
-        const methodField = document.createElement('input');
-        methodField.type = 'hidden';
-        methodField.name = '_method';
-        methodField.value = 'DELETE';
-
-        form.appendChild(csrfToken);
-        form.appendChild(methodField);
+        form.action = deleteRoutes.image;
+        form.appendChild(Object.assign(document.createElement('input'), {type: 'hidden', name: '_token', value: '{{ csrf_token() }}'}));
+        form.appendChild(Object.assign(document.createElement('input'), {type: 'hidden', name: '_method', value: 'DELETE'}));
         document.body.appendChild(form);
         form.submit();
     }
 }
-
 function supprimerLogo() {
-    if (confirm('Êtes-vous sûr de vouloir supprimer le logo de cette carte ?')) {
+    if (confirm('Êtes-vous sûr de vouloir supprimer le logo ?')) {
         const form = document.createElement('form');
         form.method = 'POST';
-        form.action = '{{ route("univers.remove-logo", $univers->id) }}';
-
-        const csrfToken = document.createElement('input');
-        csrfToken.type = 'hidden';
-        csrfToken.name = '_token';
-        csrfToken.value = '{{ csrf_token() }}';
-
-        const methodField = document.createElement('input');
-        methodField.type = 'hidden';
-        methodField.name = '_method';
-        methodField.value = 'DELETE';
-
-        form.appendChild(csrfToken);
-        form.appendChild(methodField);
+        form.action = deleteRoutes.logo;
+        form.appendChild(Object.assign(document.createElement('input'), {type: 'hidden', name: '_token', value: '{{ csrf_token() }}'}));
+        form.appendChild(Object.assign(document.createElement('input'), {type: 'hidden', name: '_method', value: 'DELETE'}));
         document.body.appendChild(form);
         form.submit();
     }
@@ -341,138 +245,94 @@ function supprimerLogo() {
 @endif
 
 <script>
-// Mise à jour de l'aperçu en temps réel avec synchronisation des couleurs hex
 document.addEventListener('DOMContentLoaded', function() {
-    const nameInput = document.getElementById('name');
-    const descriptionInput = document.getElementById('description');
-    const primaryColorInput = document.getElementById('primary_color');
-    const secondaryColorInput = document.getElementById('secondary_color');
-    const primaryColorHexInput = document.getElementById('primary_color_hex');
-    const secondaryColorHexInput = document.getElementById('secondary_color_hex');
-    const imageInput = document.getElementById('image');
-    const logoInput = document.getElementById('logo');
+    const elements = Object.fromEntries(
+        Object.entries(jsConfig.selectors).map(([key, selector]) => [key, document.querySelector(selector)])
+    );
 
-    const preview = document.getElementById('preview');
-    const previewHeader = document.getElementById('preview-header');
-    const previewTitle = document.getElementById('preview-title');
-    const previewDescription = document.getElementById('preview-description');
-    const previewImage = document.getElementById('preview-image');
-    const previewLogoContainer = document.getElementById('preview-logo-container');
-    const previewPrimaryColor = document.getElementById('preview-primary-color');
-    const previewSecondaryColor = document.getElementById('preview-secondary-color');
-
-    // Fonction pour valider et formater le hex
     function validateAndFormatHex(value) {
-        value = value.replace(/[^A-Fa-f0-9]/g, '');
-        value = value.substring(0, 6);
-        return value.toUpperCase();
+        return value.replace(/[^A-Fa-f0-9]/g, '').substring(0, jsConfig.validation.hex_max_length).toUpperCase();
     }
 
-    // Fonction pour synchroniser les champs couleur
     function syncColorInputs(colorInput, hexInput) {
-        // Du sélecteur vers le hex
-        colorInput.addEventListener('input', function() {
-            const hexValue = this.value.substring(1);
-            hexInput.value = hexValue.toUpperCase();
+        colorInput.addEventListener('input', () => {
+            hexInput.value = colorInput.value.substring(1).toUpperCase();
             updatePreview();
         });
-
-        // Du hex vers le sélecteur
-        hexInput.addEventListener('input', function() {
-            let hexValue = validateAndFormatHex(this.value);
-            this.value = hexValue;
-
-            if (hexValue.length === 6) {
+        hexInput.addEventListener('input', () => {
+            let hexValue = validateAndFormatHex(hexInput.value);
+            hexInput.value = hexValue;
+            if (hexValue.length === jsConfig.validation.hex_max_length) {
                 colorInput.value = '#' + hexValue;
                 updatePreview();
             }
         });
-
-        // Validation lors de la perte de focus
-        hexInput.addEventListener('blur', function() {
-            let hexValue = validateAndFormatHex(this.value);
-            if (hexValue.length < 6) {
-                hexValue = hexValue.padEnd(6, '0');
+        hexInput.addEventListener('blur', () => {
+            let hexValue = validateAndFormatHex(hexInput.value);
+            if (hexValue.length < jsConfig.validation.hex_max_length) {
+                hexValue = hexValue.padEnd(jsConfig.validation.hex_max_length, '0');
             }
-            this.value = hexValue;
+            hexInput.value = hexValue;
             colorInput.value = '#' + hexValue;
             updatePreview();
         });
     }
 
-    if (preview && nameInput && primaryColorInput && secondaryColorInput) {
-        // Synchroniser les champs de couleurs
-        syncColorInputs(primaryColorInput, primaryColorHexInput);
-        syncColorInputs(secondaryColorInput, secondaryColorHexInput);
+    function updatePreview() {
+        const name = elements.name_input?.value || jsConfig.preview.default_name;
+        const description = elements.description_input?.value || jsConfig.preview.default_description;
+        const primaryColor = elements.primary_color_input?.value;
+        const secondaryColor = elements.secondary_color_input?.value;
 
-        function updatePreview() {
-            const name = nameInput.value || 'Nom de la carte';
-            const description = descriptionInput.value || 'Description de la carte...';
-            const primaryColor = primaryColorInput.value;
-            const secondaryColor = secondaryColorInput.value;
-
-            // Mise à jour de l'aperçu principal
-            preview.textContent = name;
-            preview.style.background = `linear-gradient(to right, ${primaryColor}, ${secondaryColor})`;
-
-            // Mise à jour de l'aperçu carte
-            previewTitle.textContent = name;
-            previewDescription.textContent = description.length > 80 ? description.substring(0, 80) + '...' : description;
-            previewHeader.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%)`;
-            if (previewPrimaryColor) previewPrimaryColor.style.backgroundColor = primaryColor;
-            if (previewSecondaryColor) previewSecondaryColor.style.backgroundColor = secondaryColor;
-
-            // Mise à jour du gradient de l'image si pas d'image uploadée
-            if (previewImage && previewImage.tagName === 'DIV') {
-                previewImage.style.background = `linear-gradient(45deg, ${primaryColor} 0%, ${secondaryColor} 100%)`;
-            }
+        if (elements.preview) elements.preview.textContent = name;
+        if (elements.preview) elements.preview.style.background = `linear-gradient(to right, ${primaryColor}, ${secondaryColor})`;
+        if (elements.preview_title) elements.preview_title.textContent = name;
+        if (elements.preview_description) {
+            elements.preview_description.textContent = description.length > jsConfig.preview.description_limit ?
+                description.substring(0, jsConfig.preview.description_limit) + '...' : description;
         }
+        if (elements.preview_header) elements.preview_header.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${secondaryColor} 100%)`;
 
-        // Fonction pour prévisualiser l'image
-        function previewImageFile(input, targetElement) {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    targetElement.innerHTML = `<img src="${e.target.result}" alt="Aperçu" style="width: 100%; height: 100%; object-fit: cover;">`;
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
+        if (elements.preview_primary_color) elements.preview_primary_color.style.backgroundColor = primaryColor;
+        if (elements.preview_secondary_color) elements.preview_secondary_color.style.backgroundColor = secondaryColor;
+        if (elements.preview_image && elements.preview_image.tagName === 'DIV') {
+            elements.preview_image.style.background = `linear-gradient(45deg, ${primaryColor} 0%, ${secondaryColor} 100%)`;
         }
+    }
 
-        // Fonction pour prévisualiser le logo
-        function previewLogoFile(input, targetContainer) {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
+    function previewFile(input, targetContainer, isLogo = false) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                if (isLogo) {
                     let logoImg = targetContainer.querySelector('#preview-logo');
                     if (!logoImg) {
-                        logoImg = document.createElement('img');
-                        logoImg.id = 'preview-logo';
-                        logoImg.className = 'rounded-circle border border-2 border-white shadow';
+                        logoImg = Object.assign(document.createElement('img'), {
+                            id: 'preview-logo',
+                            className: 'rounded-circle border border-2 border-white shadow',
+                            alt: 'Logo'
+                        });
                         logoImg.style.cssText = 'width: 40px; height: 40px; object-fit: cover;';
-                        logoImg.alt = 'Logo';
                         targetContainer.appendChild(logoImg);
                     }
                     logoImg.src = e.target.result;
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
+                } else {
+                    targetContainer.innerHTML = `<img src="${e.target.result}" alt="Aperçu" style="width: 100%; height: 100%; object-fit: cover;">`;
+                }
+            };
+            reader.readAsDataURL(input.files[0]);
         }
+    }
 
-        // Event listeners
-        nameInput.addEventListener('input', updatePreview);
-        descriptionInput.addEventListener('input', updatePreview);
+    if (elements.preview) {
+        syncColorInputs(elements.primary_color_input, elements.primary_color_hex_input);
+        syncColorInputs(elements.secondary_color_input, elements.secondary_color_hex_input);
 
-        // Event listeners pour les images
-        imageInput.addEventListener('change', function() {
-            previewImageFile(this, document.getElementById('preview-image-container'));
-        });
+        elements.name_input?.addEventListener('input', updatePreview);
+        elements.description_input?.addEventListener('input', updatePreview);
+        elements.image_input?.addEventListener('change', () => previewFile(elements.image_input, elements.preview_image_container));
+        elements.logo_input?.addEventListener('change', () => previewFile(elements.logo_input, elements.preview_logo_container, true));
 
-        logoInput.addEventListener('change', function() {
-            previewLogoFile(this, previewLogoContainer);
-        });
-
-        // Mise à jour initiale
         updatePreview();
     }
 });
