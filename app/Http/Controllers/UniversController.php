@@ -156,7 +156,7 @@ class UniversController extends Controller
         $univers = Univers::findOrFail($id);
         $this->deleteFile($univers->image);
 
-        // ✅ Utilisation directe au lieu de update()
+        //  Utilisation directe au lieu de update()
         $univers->image = null;
         $univers->save();
 
@@ -171,7 +171,7 @@ class UniversController extends Controller
         $univers = Univers::findOrFail($id);
         $this->deleteFile($univers->logo);
 
-        // ✅ Utilisation directe au lieu de update()
+        //  Utilisation directe au lieu de update()
         $univers->logo = null;
         $univers->save();
 
@@ -312,7 +312,7 @@ class UniversController extends Controller
                 'add_button' => 'Créer'
             ],
             'routes' => [
-                'add' => route('univers.add'),
+                'add' => route('univers.create'), // <-- Correction ici !
                 'edit' => 'univers.modify'
             ],
             'styles' => [

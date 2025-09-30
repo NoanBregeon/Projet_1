@@ -15,7 +15,7 @@
 </div>
 
 <div class="row g-4">
-    @foreach($processedUnivers as $univers)
+    @forelse($processedUnivers as $univers)
     <div class="col-md-6 col-lg-4">
         <div class="card h-100 shadow-sm border-0 position-relative overflow-hidden">
             <div class="card-header border-0 text-white text-center py-3" style="background: {{ $univers['gradient_header'] }};">
@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="d-flex gap-2">
-                    <a href="{{ route('univers.modify', $univers['id']) }}" class="btn btn-outline-primary btn-sm flex-fill">
+                    <a href="{{ route('univers.edit', $univers['id']) }}" class="btn btn-outline-primary btn-sm flex-fill">
                         <i class="bi bi-pencil me-1"></i>Modifier
                     </a>
                 </div>
@@ -57,7 +57,23 @@
             @endif
         </div>
     </div>
-    @endforeach
+
+    @empty
+    <div class="col-12">
+        <div class="text-center mt-5">
+            <div class="mb-4">
+                <i class="bi bi-collection display-1 text-muted"></i>
+            </div>
+            <h3 class="text-muted mb-3">{{ $viewConfig['messages']['empty_title'] }}</h3>
+            <p class="text-muted mb-4">{{ $viewConfig['messages']['empty_subtitle'] }}</p>
+            <a href="{{ route('univers.create') }}" class="btn btn-primary btn-lg">
+                <i class="bi bi-plus-lg me-2"></i>{{ $viewConfig['messages']['empty_button'] }}
+            </a>
+        </div>
+    </div>
+    @endforelse
+
+    @if($processedUnivers->isNotEmpty())
     <div class="col-md-6 col-lg-4">
         <div class="card h-100 border-2 border-dashed border-primary bg-light">
             <div class="card-body d-flex flex-column justify-content-center align-items-center text-center p-5">
@@ -66,24 +82,12 @@
                 </div>
                 <h5 class="card-title text-primary fw-bold mb-3">{{ $viewConfig['messages']['add_title'] }}</h5>
                 <p class="card-text text-muted mb-4">{{ $viewConfig['messages']['add_subtitle'] }}</p>
-                <a href="{{ route('univers.add') }}" class="btn btn-primary btn-lg">
+                <a href="{{ route('univers.create') }}" class="btn btn-primary btn-lg">
                     <i class="bi bi-plus-lg me-2"></i>{{ $viewConfig['messages']['add_button'] }}
                 </a>
             </div>
         </div>
     </div>
+    @endif
 </div>
-
-@if($isEmpty)
-<div class="text-center mt-5">
-    <div class="mb-4">
-        <i class="bi bi-collection display-1 text-muted"></i>
-    </div>
-    <h3 class="text-muted mb-3">{{ $viewConfig['messages']['empty_title'] }}</h3>
-    <p class="text-muted mb-4">{{ $viewConfig['messages']['empty_subtitle'] }}</p>
-    <a href="{{ route('univers.add') }}" class="btn btn-primary btn-lg">
-        <i class="bi bi-plus-lg me-2"></i>{{ $viewConfig['messages']['empty_button'] }}
-    </a>
-</div>
-@endif
 @endsection

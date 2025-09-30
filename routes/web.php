@@ -13,8 +13,5 @@ Route::resource('univers', UniversController::class)->parameters(['univers' => '
 Route::delete('/univers/{id}/image', [UniversController::class, 'removeImage'])->name('univers.remove-image');
 Route::delete('/univers/{id}/logo', [UniversController::class, 'removeLogo'])->name('univers.remove-logo');
 
-// Route personnalisée pour ajouter une carte (formulaire de création)
-Route::get('/univers/add', [UniversController::class, 'create'])->name('univers.add');
-
-// Route personnalisée pour modifier une carte (formulaire d'édition)
+// Route personnalisée pour modifier une carte (optionnel, si tu veux garder /modify)
 Route::get('/univers/{id}/modify', [UniversController::class, 'edit'])->name('univers.modify');
