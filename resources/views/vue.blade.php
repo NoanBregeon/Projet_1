@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('title', 'Ma Collection de Cartes')
-
 @section('content')
 @if(session('message'))
 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -44,7 +43,7 @@
                     </div>
                 </div>
                 <div class="d-flex gap-2">
-                    <a href="{{ $univers['edit_url'] }}" class="btn btn-outline-primary btn-sm flex-fill">
+                    <a href="{{ route('univers.modify', $univers['id']) }}" class="btn btn-outline-primary btn-sm flex-fill">
                         <i class="bi bi-pencil me-1"></i>Modifier
                     </a>
                 </div>
@@ -67,7 +66,7 @@
                 </div>
                 <h5 class="card-title text-primary fw-bold mb-3">{{ $viewConfig['messages']['add_title'] }}</h5>
                 <p class="card-text text-muted mb-4">{{ $viewConfig['messages']['add_subtitle'] }}</p>
-                <a href="{{ $viewConfig['routes']['add'] }}" class="btn btn-primary btn-lg">
+                <a href="{{ route('univers.add') }}" class="btn btn-primary btn-lg">
                     <i class="bi bi-plus-lg me-2"></i>{{ $viewConfig['messages']['add_button'] }}
                 </a>
             </div>
@@ -82,7 +81,7 @@
     </div>
     <h3 class="text-muted mb-3">{{ $viewConfig['messages']['empty_title'] }}</h3>
     <p class="text-muted mb-4">{{ $viewConfig['messages']['empty_subtitle'] }}</p>
-    <a href="{{ $viewConfig['routes']['add'] }}" class="btn btn-primary btn-lg">
+    <a href="{{ route('univers.add') }}" class="btn btn-primary btn-lg">
         <i class="bi bi-plus-lg me-2"></i>{{ $viewConfig['messages']['empty_button'] }}
     </a>
 </div>
