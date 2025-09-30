@@ -3,10 +3,7 @@
 @section('title', 'Ma Collection de Cartes')
 @section('content')
 @if(session('message'))
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-    <i class="bi bi-check-circle me-2"></i>{{ session('message') }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-</div>
+    <x-alerte :message="session('message')" type="success" icon="bi-check-circle" />
 @endif
 
 <div class="text-center mb-5">
@@ -17,47 +14,23 @@
 <div class="row g-4">
     @forelse($processedUnivers as $univers)
     <div class="col-md-6 col-lg-4">
-        <div class="card h-100 shadow-sm border-0 position-relative overflow-hidden">
-            <div class="card-header border-0 text-white text-center py-3" style="background: {{ $univers['gradient_header'] }};">
-                <h6 class="card-title mb-0 fw-bold">{{ $univers['name'] }}</h6>
-            </div>
-            @if($univers['image_url'])
-                <img src="{{ $univers['image_url'] }}" class="card-img-top" alt="{{ $univers['name'] }}" style="height: {{ $viewConfig['styles']['card_image_height'] }}; object-fit: cover;">
-            @else
-                <div class="d-flex align-items-center justify-content-center text-white fs-1 fw-bold" style="height: {{ $viewConfig['styles']['card_image_height'] }}; background: {{ $univers['gradient_background'] }};">
-                    <i class="bi bi-stars opacity-75"></i>
-                </div>
-            @endif
-
-            <div class="card-body d-flex flex-column">
-                <p class="card-text text-muted flex-grow-1">{{ $univers['truncated_description'] }}</p>
-                <div class="d-flex align-items-center mb-3">
-                    <small class="text-muted me-2">Couleurs:</small>
-                    <div class="d-flex gap-2">
-                        <div class="rounded-circle border border-2 border-white shadow-sm"
-                             style="width: {{ $viewConfig['styles']['color_indicator_size'] }}; height: {{ $viewConfig['styles']['color_indicator_size'] }}; background-color: {{ $univers['primary_color'] }};"
-                             title="{{ $univers['color_tooltips']['primary'] }}"></div>
-                        <div class="rounded-circle border border-2 border-white shadow-sm"
-                             style="width: {{ $viewConfig['styles']['color_indicator_size'] }}; height: {{ $viewConfig['styles']['color_indicator_size'] }}; background-color: {{ $univers['secondary_color'] }};"
-                             title="{{ $univers['color_tooltips']['secondary'] }}"></div>
-                    </div>
-                </div>
-                <div class="d-flex gap-2">
-                    <a href="{{ route('univers.edit', $univers['id']) }}" class="btn btn-outline-primary btn-sm flex-fill">
-                        <i class="bi bi-pencil me-1"></i>Modifier
-                    </a>
-                </div>
-            </div>
-            @if($univers['logo_url'])
-            <div class="position-absolute top-0 end-0 m-3" style="z-index: 10;">
-                <img src="{{ $univers['logo_url'] }}" alt="Logo {{ $univers['name'] }}"
-                     class="rounded-circle border border-3 border-white shadow"
-                     style="width: {{ $viewConfig['styles']['logo_size'] }}; height: {{ $viewConfig['styles']['logo_size'] }}; object-fit: cover;">
-            </div>
-            @endif
-        </div>
+        <x-carte
+            :id="$univers['id']"
+            :name="$univers['name']"
+            :gradientHeader="$univers['gradient_header']"
+            :imageUrl="$univers['image_url']"
+            :cardImageHeight="$viewConfig['styles']['card_image_height']"
+            :gradientBackground="$univers['gradient_background']"
+            :description="$univers['truncated_description']"
+            :primaryColor="$univers['primary_color']"
+            :secondaryColor="$univers['secondary_color']"
+            :colorIndicatorSize="$viewConfig['styles']['color_indicator_size']"
+            :colorTooltipPrimary="$univers['color_tooltips']['primary']"
+            :colorTooltipSecondary="$univers['color_tooltips']['secondary']"
+            :logoUrl="$univers['logo_url']"
+            :logoSize="$viewConfig['styles']['logo_size']"
+        />
     </div>
-
     @empty
     <div class="col-12">
         <div class="text-center mt-5">
