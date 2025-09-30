@@ -401,7 +401,7 @@ class UniversController extends Controller
             'secondary_color' => 'required|string|regex:/^#[A-Fa-f0-9]{6}$/',
             'primary_color_hex' => 'nullable|string|regex:/^[A-Fa-f0-9]{6}$/',
             'secondary_color_hex' => 'nullable|string|regex:/^[A-Fa-f0-9]{6}$/',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:3072',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ], [
             'name.required' => 'Le nom de la carte est obligatoire.',
@@ -416,7 +416,7 @@ class UniversController extends Controller
             'secondary_color_hex.regex' => 'Le code hexadécimal secondaire est invalide (format attendu: RRGGBB).',
             'image.image' => 'Le fichier image doit être une image valide.',
             'image.mimes' => 'L\'image doit être au format JPG, PNG ou GIF.',
-            'image.max' => 'L\'image ne doit pas dépasser 2MB.',
+            'image.max' => 'L\'image ne doit pas dépasser 3MB.',
             'logo.image' => 'Le fichier logo doit être une image valide.',
             'logo.mimes' => 'Le logo doit être au format JPG, PNG ou GIF.',
             'logo.max' => 'Le logo ne doit pas dépasser 2MB.'
