@@ -19,7 +19,7 @@
 }
 
 .card:hover {
-    transform: translateY(calc(-1 * var(--spacing, 0.25rem) * 2));
+    transform: translateY(-8px);
     box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
 
@@ -36,7 +36,7 @@
 }
 
 .btn:hover {
-    transform: translateY(calc(-1 * var(--spacing, 0.25rem) * 0.25));
+    transform: translateY(-1px);
 }
 
 .hover-opacity {
@@ -52,5 +52,29 @@
 }
 
 .shadow-custom {
-    box-shadow: 0 calc(var(--spacing, 0.25rem) * 2.5) calc(var(--spacing, 0.25rem) * 7.5) rgba(0,0,0,0.1);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* Amélioration des cartes colorées */
+.card-header {
+    position: relative;
+    z-index: 3;
+}
+
+.card-header h6 {
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+.rounded-circle {
+    transition: transform 0.2s ease;
+}
+
+.rounded-circle:hover {
+    transform: scale(1.2);
+}
+
+/* Logo au-dessus de tout */
+.logo-overlay {
+    z-index: 15 !important;
+    position: relative;
 }
