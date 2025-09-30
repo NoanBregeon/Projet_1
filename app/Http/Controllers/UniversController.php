@@ -395,8 +395,8 @@ class UniversController extends Controller
         $this->processHexColors($request);
 
         return $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string|max:1000',
+            'name' => 'required|string|max:30',
+            'description' => 'required|string|max:255',
             'primary_color' => 'required|string|regex:/^#[A-Fa-f0-9]{6}$/',
             'secondary_color' => 'required|string|regex:/^#[A-Fa-f0-9]{6}$/',
             'primary_color_hex' => 'nullable|string|regex:/^[A-Fa-f0-9]{6}$/',
@@ -405,9 +405,9 @@ class UniversController extends Controller
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ], [
             'name.required' => 'Le nom de la carte est obligatoire.',
-            'name.max' => 'Le nom ne doit pas dépasser 255 caractères.',
+            'name.max' => 'Le nom ne doit pas dépasser 30 caractères.',
             'description.required' => 'La description est obligatoire.',
-            'description.max' => 'La description ne doit pas dépasser 1000 caractères.',
+            'description.max' => 'La description ne doit pas dépasser 255 caractères.',
             'primary_color.required' => 'La couleur principale est obligatoire.',
             'primary_color.regex' => 'La couleur principale doit être au format hexadécimal (#RRGGBB).',
             'secondary_color.required' => 'La couleur secondaire est obligatoire.',

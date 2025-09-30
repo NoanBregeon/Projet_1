@@ -43,7 +43,7 @@
                                 </label>
                                 <input type="text" class="form-control @error('name') is-invalid @enderror"
                                        id="name" name="name" value="{{ $formData['name'] }}" required
-                                       placeholder="Ex: Dragon Légendaire">
+                                       placeholder="Ex : ¯\_(ツ)_/¯">
                                 @error('name')
                                     <div class="invalid-feedback">
                                         <i class="bi bi-x-circle me-1"></i>{{ $message }}
