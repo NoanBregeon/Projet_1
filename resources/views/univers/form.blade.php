@@ -36,7 +36,7 @@
                             @csrf
                             @if($isEdit) @method('PUT') @endif
 
-                            <!-- ✅ Nom DANS le formulaire -->
+                            <!--  Nom DANS le formulaire -->
                             <div class="mb-3">
                                 <label for="name" class="form-label fw-medium">
                                     Nom de la carte <span class="text-danger">*</span>
@@ -51,7 +51,7 @@
                                 @enderror
                             </div>
 
-                            <!-- ✅ Description -->
+                            <!--  Description -->
                             <div class="mb-3">
                                 <label for="description" class="form-label fw-medium">
                                     Description <span class="text-danger">*</span>
@@ -64,7 +64,7 @@
                                     </div>
                                 @enderror
                             </div>
-
+                            <!--  Image DANS le formulaire -->
                             @if($isEdit && $formData['image'])
                                 <div class="mb-3">
                                     <label class="form-label fw-medium">Image actuelle</label>
@@ -82,7 +82,7 @@
                                 <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" accept="image/*">
                                 @error('image')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
-
+                            <!--  Logo DANS le formulaire -->
                             @if($isEdit && $formData['logo'])
                                 <div class="mb-3">
                                     <label class="form-label fw-medium">Logo/Symbole actuel</label>
@@ -100,7 +100,7 @@
                                 <input type="file" class="form-control @error('logo') is-invalid @enderror" id="logo" name="logo" accept="image/*">
                                 @error('logo')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
-
+                            <!--  Couleurs Primaire DANS le formulaire -->
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="primary_color" class="form-label fw-medium">Couleur principale <span class="text-danger">*</span></label>
@@ -114,6 +114,7 @@
                                     @error('primary_color')<div class="invalid-feedback">{{ $message }}</div>@enderror
                                     @error('primary_color_hex')<div class="invalid-feedback">{{ $message }}</div>@enderror
                                 </div>
+                                <!--  Couleurs Secondaire DANS le formulaire -->
                                 <div class="col-md-6">
                                     <label for="secondary_color" class="form-label fw-medium">Couleur secondaire <span class="text-danger">*</span></label>
                                     <div class="input-group">
@@ -129,11 +130,13 @@
                             </div>
 
                             <div class="d-flex justify-content-between mt-4">
+                                <!--  Boutons de suppression -->
                                 @if($isEdit)
                                     <button type="button" class="btn btn-danger" onclick="confirmerSuppressionUnivers()">
                                         <i class="bi bi-trash"></i> Supprimer la carte
                                     </button>
                                 @endif
+                                <!--  Boutons d'annulation et d'application (création/modifications) -->
                                 <div class="d-flex gap-2 {{ !$isEdit ? 'ms-auto' : '' }}">
                                     <a href="{{ url('/') }}" class="btn btn-secondary">Annuler</a>
                                     <button type="submit" class="btn btn-primary">
@@ -144,7 +147,7 @@
                             </div>
                         </form>
                     </div>
-
+                    <!--  Aperçu en temps réel -->
                     <div class="col-md-4">
                         <div class="sticky-top" style="top: 2rem;">
                             <h5 class="fw-bold mb-3">Aperçu en temps réel</h5>
@@ -185,9 +188,7 @@
                                         <img id="preview-logo" src="{{ $formData['preview']['logo_url'] }}" alt="Logo" class="rounded-circle border border-2 border-white shadow" style="width: 40px; height: 40px; object-fit: cover;">
                                     </div>
                                 @else
-                                    <div class="position-absolute top-0 end-0 m-2" style="z-index: 10;" id="preview-logo-container">
-                                        <!-- Container vide pour le logo dynamique -->
-                                    </div>
+                                    <div class="position-absolute top-0 end-0 m-2" style="z-index: 10;" id="preview-logo-container"></div>
                                 @endif
                             </div>
                         </div>
@@ -198,7 +199,6 @@
     </div>
 </div>
 
-<!-- Scripts inchangés -->
 <script>
 const jsConfig = @json($jsConfig);
 @if($isEdit)
@@ -208,6 +208,7 @@ const deleteRoutes = @json($deleteRoutes);
 
 @if($isEdit)
 <script>
+// Fonctions de suppression avec confirmation
 function confirmerSuppressionUnivers() {
     if (confirm('Êtes-vous sûr de vouloir supprimer cette carte ?')) {
         const form = document.createElement('form');
@@ -219,6 +220,7 @@ function confirmerSuppressionUnivers() {
         form.submit();
     }
 }
+// Fonctions de suppression d'image et de logo avec confirmation
 function supprimerImage() {
     if (confirm('Êtes-vous sûr de vouloir supprimer l\'image ?')) {
         const form = document.createElement('form');

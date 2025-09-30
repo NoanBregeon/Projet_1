@@ -22,7 +22,6 @@
             <div class="card-header border-0 text-white text-center py-3" style="background: {{ $univers['gradient_header'] }};">
                 <h6 class="card-title mb-0 fw-bold">{{ $univers['name'] }}</h6>
             </div>
-
             @if($univers['image_url'])
                 <img src="{{ $univers['image_url'] }}" class="card-img-top" alt="{{ $univers['name'] }}" style="height: {{ $viewConfig['styles']['card_image_height'] }}; object-fit: cover;">
             @else
@@ -33,7 +32,6 @@
 
             <div class="card-body d-flex flex-column">
                 <p class="card-text text-muted flex-grow-1">{{ $univers['truncated_description'] }}</p>
-
                 <div class="d-flex align-items-center mb-3">
                     <small class="text-muted me-2">Couleurs:</small>
                     <div class="d-flex gap-2">
@@ -45,14 +43,12 @@
                              title="{{ $univers['color_tooltips']['secondary'] }}"></div>
                     </div>
                 </div>
-
                 <div class="d-flex gap-2">
                     <a href="{{ $univers['edit_url'] }}" class="btn btn-outline-primary btn-sm flex-fill">
                         <i class="bi bi-pencil me-1"></i>Modifier
                     </a>
                 </div>
             </div>
-
             @if($univers['logo_url'])
             <div class="position-absolute top-0 end-0 m-3" style="z-index: 10;">
                 <img src="{{ $univers['logo_url'] }}" alt="Logo {{ $univers['name'] }}"
@@ -63,7 +59,6 @@
         </div>
     </div>
     @endforeach
-
     <div class="col-md-6 col-lg-4">
         <div class="card h-100 border-2 border-dashed border-primary bg-light">
             <div class="card-body d-flex flex-column justify-content-center align-items-center text-center p-5">
