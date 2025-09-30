@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('title', $isEdit ? 'Modifier la carte' : 'Ajouter une carte')
-
 @section('content')
 <div class="row justify-content-center">
     <div class="col-lg-10">
@@ -43,7 +42,7 @@
                                 </label>
                                 <input type="text" class="form-control @error('name') is-invalid @enderror"
                                        id="name" name="name" value="{{ $formData['name'] }}" required
-                                       placeholder="Ex : ¯\_(ツ)_/¯">
+                                       placeholder="Ex : Univers 1">
                                 @error('name')
                                     <div class="invalid-feedback">
                                         <i class="bi bi-x-circle me-1"></i>{{ $message }}
