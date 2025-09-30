@@ -12,13 +12,6 @@ Ce projet est une application Laravel permettant de créer, modifier, visualiser
 - Suppression individuelle de l'image ou du logo
 - Affichage de la collection sous forme de grille
 
-## Installation rapide
-
-1. Cloner le projet et installer les dépendances (`composer install`, `npm install`)
-2. Configurer le fichier `.env` et la base de données
-3. Lancer les migrations (`php artisan migrate`)
-4. Créer le lien de stockage pour les images (`php artisan storage:link`)
-5. Démarrer le serveur local (`php artisan serve`)
 
 ## Utilisation
 
