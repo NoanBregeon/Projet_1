@@ -2,45 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\UniversRepositoryInterface;
+use App\Services\UniversService;
 use App\Models\Univers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class UniversController extends Controller
 {
+    protected $universRepository;
+    protected $universService;
+
+    public function __construct(UniversRepositoryInterface $universRepository, UniversService $universService)
+    {
+        $this->universRepository = $universRepository;
+        $this->universService = $universService;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $listeUnivers = Univers::all();
-        $controller = $this; // Stocke la référence au contrôleur
-
-        $processedUnivers = $listeUnivers->map(function ($univers) use ($controller) {
-            $isAuth = auth()->check();
-            return [
-                'id' => $univers->id,
-                'name' => $univers->name,
-                'description' => $univers->description,
-                'truncated_description' => $isAuth
-                    ? $controller->truncateDescription($univers->description, 100)
-                    : $univers->description,
-                'primary_color' => $univers->primary_color,
-                'secondary_color' => $univers->secondary_color,
-                'image' => $univers->image,
-                'logo' => $univers->logo,
-                'image_url' => $univers->image ? asset('storage/' . $univers->image) : null,
-                'logo_url' => $univers->logo ? asset('storage/' . $univers->logo) : null,
-                'gradient_header' => $controller->generateGradient($univers->primary_color, $univers->secondary_color, '135deg'),
-                'gradient_background' => $controller->generateGradient($univers->primary_color, $univers->secondary_color, '45deg'),
-                'color_tooltips' => [
-                    'primary' => "Couleur primaire: {$univers->primary_color}",
-                    'secondary' => "Couleur secondaire: {$univers->secondary_color}"
-                ],
-                'edit_url' => route('univers.edit', $univers->id)
-            ];
-        });
-
+        $listeUnivers = $this->universRepository->all();
+        $processedUnivers = $this->universService->processUniversForDisplay($listeUnivers);
         $viewConfig = $this->getIndexViewConfig();
 
         return view('vue', [
@@ -76,16 +60,11 @@ class UniversController extends Controller
     {
         try {
             $validatedData = $this->validateUniversData($request);
-
-            $univers = new Univers();
-            $this->fillUniversData($univers, $validatedData, $request);
-            $univers->save();
+            $this->universService->createUnivers($validatedData, $request);
 
             return redirect('/')->with('message', 'Carte ajoutée avec succès !');
 
         } catch (\Illuminate\Validation\ValidationException $e) {
-            // Les erreurs de validation sont automatiquement gérées par Laravel
-            // Les old() values sont automatiquement flashées en session
             throw $e;
         }
     }
@@ -124,14 +103,11 @@ class UniversController extends Controller
     {
         try {
             $validatedData = $this->validateUniversData($request);
-
-            $this->fillUniversData($univers, $validatedData, $request);
-            $univers->save();
+            $this->universService->updateUnivers($univers, $validatedData, $request);
 
             return redirect('/')->with('message', 'Carte modifiée avec succès !');
 
         } catch (\Illuminate\Validation\ValidationException $e) {
-            // Rediriger vers le formulaire d'édition avec les erreurs
             throw $e;
         }
     }
@@ -141,9 +117,7 @@ class UniversController extends Controller
      */
     public function destroy(Univers $univers)
     {
-        $this->deleteUniversFiles($univers);
-        $univers->delete();
-
+        $this->universService->deleteUnivers($univers);
         return redirect('/')->with('message', 'Carte supprimée avec succès !');
     }
 
@@ -529,12 +503,6 @@ class UniversController extends Controller
      */
     public function getColorStats()
     {
-        return Univers::all()->map(function ($univers) {
-            return [
-                'primary' => $univers->primary_color,
-                'secondary' => $univers->secondary_color,
-                'name' => $univers->name
-            ];
-        })->toArray();
+        return $this->universRepository->getColorStats();
     }
 }

@@ -14,7 +14,7 @@ class CheckRole
             return redirect()->route('login');
         }
 
-        if ($request->user()->role !== $role) {
+        if (!$request->user()->isA($role)) {
             abort(403, 'Accès refusé. Permissions insuffisantes.');
         }
 

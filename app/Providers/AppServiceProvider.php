@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use App\Contracts\UniversRepositoryInterface;
+use App\Repositories\UniversRepository;
+use App\Services\UniversService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -12,7 +15,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(UniversRepositoryInterface::class, UniversRepository::class);
+        $this->app->singleton(UniversService::class);
     }
 
     /**
@@ -20,6 +24,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Schema::defaultStringLength(191); //Update defaultStringLength
+        Schema::defaultStringLength(191);
     }
 }

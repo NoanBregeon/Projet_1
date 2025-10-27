@@ -27,9 +27,15 @@
         </div>
         <div class="d-flex gap-2">
             @auth
-                <a href="{{ route('univers.edit', $id) }}" class="btn btn-outline-primary btn-sm flex-fill">
-                    <i class="bi bi-pencil me-1"></i>Modifier
-                </a>
+                @if(Auth::user()->isAdmin())
+                    <a href="{{ route('univers.edit', $id) }}" class="btn btn-outline-primary btn-sm flex-fill">
+                        <i class="bi bi-pencil me-1"></i>Modifier
+                    </a>
+                @else
+                    <span class="btn btn-outline-secondary btn-sm flex-fill disabled" title="Réservé aux administrateurs">
+                        <i class="bi bi-lock me-1"></i>Admin uniquement
+                    </span>
+                @endif
             @else
                 <a href="{{ route('univers.show', $id) }}" class="btn btn-outline-secondary btn-lg w-100">
                     <i class="bi bi-eye me-1"></i>Voir l'univers

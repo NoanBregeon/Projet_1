@@ -2,21 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
+use Silber\Bouncer\Database\HasRolesAndAbilities;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRolesAndAbilities;
 
     protected $fillable = [
         'first_name',
         'last_name',
         'email',
         'password',
-        'role',
     ];
 
     protected $hidden = [
@@ -32,7 +31,7 @@ class User extends Authenticatable
         ];
     }
 
-    // Accessor compatible : Auth::user()->name retourne "Prénom Nom"
+    // Accessor pour le nom complet
     public function getNameAttribute(): string
     {
         $first = $this->first_name ?? '';
@@ -40,19 +39,14 @@ class User extends Authenticatable
         return trim($first . ' ' . $last);
     }
 
-    // Méthodes pour vérifier les rôles
+    // Méthodes compatibles avec Bouncer
     public function isAdmin(): bool
     {
-        return $this->role === 'admin';
+        return $this->isA('admin');
     }
 
     public function isUser(): bool
     {
-        return $this->role === 'user';
-    }
-
-    public function hasRole(string $role): bool
-    {
-        return $this->role === $role;
+        return $this->isA('user') || !$this->isA('admin');
     }
 }
