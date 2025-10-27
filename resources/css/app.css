@@ -1,335 +1,306 @@
-/* Variables pour les thèmes */
+/* Variables CSS pour les thèmes */
 :root {
-    /* Thème clair (par défaut) */
     --bg-primary: #ffffff;
-    --bg-secondary: #f8fafc;
-    --bg-tertiary: #f1f5f9;
-    --text-primary: #0f1724;
-    --text-secondary: #6b7280;
-    --text-muted: #9ca3af;
-    --border-color: #e6eef8;
-    --shadow-color: rgba(2,6,23,0.12);
-    --accent-color: #0b5ed7;
-    --accent-hover: #0a58ca;
+    --bg-secondary: #f8f9fa;
+    --text-primary: #212529;
+    --text-secondary: #6c757d;
+    --border-color: #dee2e6;
+    --shadow-color: rgba(0,0,0,0.1);
 }
 
 [data-theme="dark"] {
-    /* Thème sombre */
-    --bg-primary: #0f1724;
-    --bg-secondary: #1e293b;
-    --bg-tertiary: #334155;
-    --text-primary: #f8fafc;
-    --text-secondary: #cbd5e1;
-    --text-muted: #94a3b8;
-    --border-color: rgba(255,255,255,0.1);
-    --shadow-color: rgba(0,0,0,0.3);
-    --accent-color: #3b82f6;
-    --accent-hover: #2563eb;
+    --bg-primary: #212529;
+    --bg-secondary: #343a40;
+    --text-primary: #ffffff;
+    --text-secondary: #adb5bd;
+    --border-color: #495057;
+    --shadow-color: rgba(255,255,255,0.1);
 }
 
-/* Styles de base utilisant les variables */
+/* Styles de base */
 body {
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
-    transition: background-color 0.3s ease, color 0.3s ease;
+    background-color: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+    transition: all 0.3s ease;
+    padding-top: 20px; /* Ajoute de l'espace en haut */
 }
 
-/* Animations et styles personnalisés */
+/* Cartes */
 .card {
+    background-color: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-color) !important;
     transition: all 0.3s ease;
-    border: none;
-    box-shadow: 0 4px 12px var(--shadow-color);
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
 }
+
 .card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 8px 25px var(--shadow-color);
-}
-.card-img-top {
-    transition: transform 0.5s ease;
-}
-.card:hover .card-img-top {
-    transform: scale(1.05);
-}
-.btn {
-    transition: all 0.3s ease;
-}
-.btn:hover {
-    transform: translateY(-1px);
-}
-.hover-opacity {
-    transition: opacity 0.3s ease;
-}
-.card:hover .hover-opacity {
-    opacity: 1 !important;
-}
-.gradient-bg {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-.shadow-custom {
-    box-shadow: 0 10px 30px var(--shadow-color);
-}
-.card-header {
-    position: relative;
-    z-index: 3;
-}
-.card-header h6 {
-    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-}
-.rounded-circle {
-    transition: transform 0.2s ease;
-}
-.rounded-circle:hover {
-    transform: scale(1.2);
-}
-.logo-overlay {
-    z-index: 15 !important;
-    position: relative;
-    transition: transform 0.2s ease;
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px var(--shadow-color) !important;
 }
 
-/* Styles d'authentification avec thèmes */
-.auth-container {
-    max-width: 480px;
-    margin: 0 auto;
-    padding: 2rem;
-    background: var(--bg-primary);
-    border-radius: 12px;
-    box-shadow: 0 12px 40px var(--shadow-color);
-    border: 1px solid var(--border-color);
-    color: var(--text-primary);
-}
-
-.auth-title {
-    color: var(--text-primary);
-    font-size: 1.5rem;
-    font-weight: 800;
-    text-align: center;
-    margin-bottom: 0.25rem;
-}
-
-.auth-subtitle {
-    color: var(--text-secondary);
-    text-align: center;
-    margin-bottom: 1rem;
-    font-size: 0.95rem;
-}
-
-.auth-form-label {
-    color: var(--text-primary);
-    font-weight: 600;
-    margin-bottom: 0.35rem;
-    display: block;
-}
-
-.auth-form-input {
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 0.6rem 0.75rem;
-    margin-bottom: 0.75rem;
-    width: 100%;
-    box-sizing: border-box;
-    transition: box-shadow .12s ease, border-color .12s ease;
-    box-shadow: none;
-}
-
-.auth-form-input::placeholder {
-    color: var(--text-muted);
-}
-
-.auth-form-input:focus {
-    outline: none;
-    border-color: var(--accent-color);
-    box-shadow: 0 8px 24px rgba(37,99,235,0.12);
-}
-
-.auth-form-button {
-    background: linear-gradient(90deg, var(--accent-color), var(--accent-hover));
-    color: #ffffff;
-    border: none;
-    border-radius: 10px;
-    padding: 0.75rem;
-    width: 100%;
-    font-weight: 700;
-    cursor: pointer;
-    transition: transform .06s ease, box-shadow .12s ease;
-    box-shadow: 0 8px 20px rgba(11,94,215,0.12);
-}
-
-.auth-form-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 18px 38px rgba(11,94,215,0.16);
-}
-
-.auth-link {
-    color: var(--accent-color);
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.auth-link:hover {
-    text-decoration: underline;
-}
-
-/* Bouton retour */
-.auth-back {
-    margin-top: 1rem;
-    display: block;
-    text-align: center;
-}
-
-/* Cadres et groupes pour formulaires */
-.form-frame {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    padding: 1rem;
-    border-radius: 10px;
-    margin-bottom: 1rem;
-}
-
-.form-group {
-    display: flex;
-    gap: 0.75rem;
-    align-items: flex-start;
-    margin-bottom: 0.75rem;
-}
-
-.input-icon {
-    width: 42px;
-    height: 42px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--bg-tertiary);
-    border-radius: 8px;
-    color: var(--accent-color);
-    flex: 0 0 42px;
-    font-size: 1.05rem;
-    margin-top: 0.35rem;
-}
-
-/* Ajuste des labels/inputs */
-.form-group .form-field {
-    flex: 1 1 auto;
-}
-.form-group .form-field .auth-form-label {
-    margin-bottom: 0.35rem;
-}
-.form-group .form-field .auth-form-input {
-    margin-bottom: 0;
-}
-.form-inline {
-    display: flex;
-    gap: 0.75rem;
-    align-items: center;
-}
-
-/* Bouton de bascule thème */
-.theme-toggle {
-    position: fixed;
-    top: 15px;
-    right: 15px;
-    z-index: 1000;
-    background: var(--bg-primary);
-    border: 1px solid var(--border-color);
-    color: var(--text-primary);
-    border-radius: 8px;
-    width: 45px;
-    height: 45px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px var(--shadow-color);
-    font-size: 1.1rem;
-}
-
-.theme-toggle:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px var(--shadow-color);
-    background: var(--bg-secondary);
-}
-
-.theme-toggle:active {
-    transform: translateY(0);
-}
-
-/* Surcharge des classes Bootstrap pour utiliser les variables de thème */
+/* Textes */
 .text-dark {
     color: var(--text-primary) !important;
 }
 
 .text-muted {
-    color: var(--text-muted) !important;
-}
-
-.lead {
     color: var(--text-secondary) !important;
-}
-
-.btn-primary {
-    background-color: var(--accent-color) !important;
-    border-color: var(--accent-color) !important;
-}
-
-.btn-primary:hover {
-    background-color: var(--accent-hover) !important;
-    border-color: var(--accent-hover) !important;
-}
-
-.btn-outline-primary {
-    color: var(--accent-color) !important;
-    border-color: var(--accent-color) !important;
-}
-
-.btn-outline-primary:hover {
-    background-color: var(--accent-color) !important;
-    border-color: var(--accent-color) !important;
-}
-
-.alert {
-    background-color: var(--bg-primary) !important;
-    border-color: var(--border-color) !important;
-    color: var(--text-primary) !important;
-}
-
-.display-4 {
-    color: var(--text-primary) !important;
 }
 
 h1, h2, h3, h4, h5, h6 {
     color: var(--text-primary) !important;
 }
 
-/* Carte d'ajout (border-dashed) */
-.border-dashed {
-    background-color: var(--bg-tertiary) !important;
-    border-color: var(--accent-color) !important;
+/* Header avec boutons repositionnés */
+.header-controls {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 10px var(--shadow-color);
+    z-index: 1000;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
 }
 
-.card-title {
+/* Bouton de thème repositionné */
+.theme-toggle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    box-shadow: 0 2px 8px var(--shadow-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+    /* Supprime le positionnement fixe individuel */
+    position: static;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+    background: var(--bg-secondary);
+}
+
+/* Sélecteur de langue repositionné */
+.language-selector {
+    /* Supprime le positionnement fixe individuel */
+    position: static;
+}
+
+.language-selector .btn {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+    box-shadow: 0 2px 8px var(--shadow-color);
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    border-radius: 8px;
+}
+
+.language-selector .btn:hover {
+    background: var(--bg-secondary);
+    transform: translateY(-1px);
+}
+
+.language-selector .dropdown-menu {
+    background: var(--bg-primary);
+    border-color: var(--border-color);
+    box-shadow: 0 4px 20px var(--shadow-color);
+    border-radius: 8px;
+    margin-top: 5px;
+}
+
+.language-selector .dropdown-item {
+    color: var(--text-primary);
+    padding: 8px 16px;
+    border-radius: 6px;
+    margin: 2px 4px;
+}
+
+.language-selector .dropdown-item:hover {
+    background-color: var(--bg-secondary);
+}
+
+.language-selector .dropdown-item.active {
+    background-color: #0d6efd;
+    color: white;
+}
+
+/* Contenu principal avec espace pour le header */
+.main-content {
+    padding-top: 80px; /* Espace pour le header fixe */
+}
+
+/* Alertes */
+.alert {
+    background-color: var(--bg-primary) !important;
     color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
 }
 
-.card-text {
-    color: var(--text-secondary) !important;
+/* Boutons */
+.btn-primary {
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important;
 }
 
-/* Container principal */
-.container {
-    background-color: transparent !important;
+.btn-outline-primary {
+    color: #0d6efd !important;
+    border-color: #0d6efd !important;
 }
 
-/* Ajustements pour le mode sombre */
-[data-theme="dark"] .bg-light {
-    background-color: var(--bg-tertiary) !important;
+.btn-outline-danger {
+    color: #dc3545 !important;
+    border-color: #dc3545 !important;
 }
 
-[data-theme="dark"] .border-primary {
-    border-color: var(--accent-color) !important;
+.btn-outline-success {
+    color: #198754 !important;
+    border-color: #198754 !important;
+}
+
+/* Styles pour les formulaires d'authentification */
+.auth-container {
+    max-width: 480px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px var(--shadow-color);
+    padding: 2rem;
+    margin: 0 auto;
+}
+
+.auth-title {
+    color: var(--text-primary);
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.auth-subtitle {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
+.form-group {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+}
+
+.input-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0d6efd;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    margin-top: 1.8rem;
+}
+
+.form-field {
+    flex: 1;
+}
+
+.auth-form-label {
+    color: var(--text-primary);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.auth-form-input {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+.auth-form-input:focus {
+    outline: none;
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
+}
+
+.auth-form-button {
+    background: #0d6efd;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    padding: 0.75rem 2rem;
+    width: 100%;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+}
+
+.auth-form-button:hover {
+    background: #0b5ed7;
+    transform: translateY(-1px);
+}
+
+.auth-link {
+    color: #0d6efd;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-link:hover {
+    color: #0b5ed7;
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header-controls {
+        padding: 8px 15px;
+        gap: 10px;
+    }
+
+    .theme-toggle {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+
+    .language-selector .btn {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+
+    .main-content {
+        padding-top: 70px;
+    }
+
+    .auth-container {
+        padding: 1.5rem;
+    }
+
+    .auth-title {
+        font-size: 1.5rem;
+    }
+
+    .auth-form-button {
+        padding: 0.75rem 1.5rem;
+    }
 }
 

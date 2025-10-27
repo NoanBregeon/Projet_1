@@ -1,0 +1,30 @@
+<?php
+
+return [
+    'welcome' => 'Bienvenue',
+    'my_card_collection' => 'Ma Collection de Cartes',
+    'explore_collection' => 'Explorez et gérez votre collection personnelle',
+    'create_card' => 'Créer une carte',
+    'edit_card' => 'Modifier la carte',
+    'delete_card' => 'Supprimer la carte',
+    'login' => 'Connexion',
+    'register' => 'Créer un compte',
+    'logout' => 'Déconnexion',
+    'administrator' => 'Administrateur',
+    'user' => 'Utilisateur',
+    'empty_collection_title' => 'Aucune carte dans votre collection',
+    'empty_collection_subtitle' => 'Commencez par créer votre première carte !',
+    'create_first_card' => 'Créer ma première carte',
+    'add_card_title' => 'Ajouter une carte',
+    'add_card_subtitle' => 'Créer une nouvelle carte pour votre collection',
+    'add_card_button' => 'Créer',
+    'card_name' => 'Nom de la carte',
+    'description' => 'Description',
+    'primary_color' => 'Couleur principale',
+    'secondary_color' => 'Couleur secondaire',
+    'image' => 'Image de la carte',
+    'logo' => 'Logo/Symbole',
+    'preview' => 'Aperçu en temps réel',
+    'cancel' => 'Annuler',
+    'colors' => 'Couleurs:', // Ajout de cette traduction
+];

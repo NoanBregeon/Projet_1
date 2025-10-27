@@ -20,6 +20,8 @@ class UniversService
     {
         return $listeUnivers->map(function ($univers) {
             $isAuth = auth()->check();
+            $locale = app()->getLocale();
+
             return [
                 'id' => $univers->id,
                 'name' => $univers->name,
@@ -36,8 +38,8 @@ class UniversService
                 'gradient_header' => $this->generateGradient($univers->primary_color, $univers->secondary_color, '135deg'),
                 'gradient_background' => $this->generateGradient($univers->primary_color, $univers->secondary_color, '45deg'),
                 'color_tooltips' => [
-                    'primary' => "Couleur primaire: {$univers->primary_color}",
-                    'secondary' => "Couleur secondaire: {$univers->secondary_color}"
+                    'primary' => $locale === 'en' ? "Primary color: {$univers->primary_color}" : "Couleur primaire: {$univers->primary_color}",
+                    'secondary' => $locale === 'en' ? "Secondary color: {$univers->secondary_color}" : "Couleur secondaire: {$univers->secondary_color}"
                 ],
                 'edit_url' => route('univers.edit', $univers->id)
             ];
@@ -64,8 +66,8 @@ class UniversService
         return $univers->delete();
     }
 
-    // Méthodes utilitaires rendues publiques
-    public function truncateDescription($description, $limit = 80)
+    // Méthodes privées pour la logique métier
+    private function truncateDescription($description, $limit = 80)
     {
         if (strlen($description) > $limit) {
             return substr($description, 0, $limit) . '...';
@@ -73,7 +75,7 @@ class UniversService
         return $description;
     }
 
-    public function generateGradient($primaryColor, $secondaryColor, $direction = 'to right')
+    private function generateGradient($primaryColor, $secondaryColor, $direction = 'to right')
     {
         return "linear-gradient({$direction}, {$primaryColor}, {$secondaryColor})";
     }

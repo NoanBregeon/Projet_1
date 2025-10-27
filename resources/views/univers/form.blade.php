@@ -2,11 +2,42 @@
 
 @section('title', $isEdit ? 'Modifier la carte' : 'Ajouter une carte')
 @section('content')
+
+<!-- Bouton de bascule thème -->
+<button id="theme-toggle" class="theme-toggle">
+    <i id="theme-icon" class="bi bi-moon-fill"></i>
+</button>
+
+<!-- Sélecteur de langue -->
+<div class="language-selector">
+    <div class="dropdown">
+        <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+            <i class="bi bi-globe me-1"></i>
+            {{ app()->getLocale() == 'fr' ? 'FR' : 'EN' }}
+        </button>
+        <ul class="dropdown-menu">
+            <li>
+                <a class="dropdown-item {{ app()->getLocale() == 'fr' ? 'active' : '' }}"
+                   href="{{ route('language.switch', 'fr') }}">
+                    <i class="bi bi-flag me-2"></i>Français
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item {{ app()->getLocale() == 'en' ? 'active' : '' }}"
+                   href="{{ route('language.switch', 'en') }}">
+                    <i class="bi bi-flag me-2"></i>English
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
 <div class="row justify-content-center">
     <div class="col-lg-10">
         <div class="mb-4">
             <a href="{{ url('/') }}" class="btn btn-link text-decoration-none">
-                <i class="bi bi-arrow-left"></i> Retour à ma collection
+                <i class="bi bi-arrow-left"></i>
+                {{ app()->getLocale() == 'en' ? 'Back to my collection' : 'Retour à ma collection' }}
             </a>
         </div>
 
@@ -14,13 +45,16 @@
             <div class="card-body p-4">
                 <div class="text-center py-4 rounded-3 mb-4 text-white" style="background: {{ $formData['gradients']['header'] }};">
                     <h1 class="h3 fw-bold">
-                        {{ $isEdit ? 'Modifier ' . $formData['name'] : 'Créer une nouvelle carte' }}
+                        {{ $isEdit ?
+                            (app()->getLocale() == 'en' ? 'Edit ' . $formData['name'] : 'Modifier ' . $formData['name']) :
+                            (app()->getLocale() == 'en' ? 'Create a new card' : 'Créer une nouvelle carte')
+                        }}
                     </h1>
                 </div>
 
                 @if ($errors->any())
                     <x-alerte
-                        :message="'Veuillez corriger les erreurs ci-dessous.'"
+                        :message="app()->getLocale() == 'en' ? 'Please correct the errors below.' : 'Veuillez corriger les erreurs ci-dessous.'"
                         type="danger"
                         icon="bi-exclamation-triangle"
                     />
@@ -37,14 +71,13 @@
                             @csrf
                             @if($isEdit) @method('PUT') @endif
 
-                            <!--  Nom DANS le formulaire -->
                             <div class="mb-3">
                                 <label for="name" class="form-label fw-medium">
-                                    Nom de la carte <span class="text-danger">*</span>
+                                    {{ app()->getLocale() == 'en' ? 'Card name' : 'Nom de la carte' }} <span class="text-danger">*</span>
                                 </label>
                                 <input type="text" class="form-control @error('name') is-invalid @enderror"
                                        id="name" name="name" value="{{ $formData['name'] }}" required
-                                       placeholder="Ex : Univers 1">
+                                       placeholder="{{ app()->getLocale() == 'en' ? 'Ex: Universe 1' : 'Ex : Univers 1' }}">
                                 @error('name')
                                     <div class="invalid-feedback">
                                         <i class="bi bi-x-circle me-1"></i>{{ $message }}
@@ -52,10 +85,9 @@
                                 @enderror
                             </div>
 
-                            <!--  Description -->
                             <div class="mb-3">
                                 <label for="description" class="form-label fw-medium">
-                                    Description <span class="text-danger">*</span>
+                                    {{ app()->getLocale() == 'en' ? 'Description' : 'Description' }} <span class="text-danger">*</span>
                                 </label>
                                 <textarea class="form-control @error('description') is-invalid @enderror"
                                           id="description" name="description" rows="4" required>{{ $formData['description'] }}</textarea>
@@ -104,7 +136,9 @@
                             <!--  Couleurs Primaire DANS le formulaire -->
                             <div class="row mb-3">
                                 <div class="col-md-6">
-                                    <label for="primary_color" class="form-label fw-medium">Couleur principale <span class="text-danger">*</span></label>
+                                    <label for="primary_color" class="form-label fw-medium">
+                                        {{ app()->getLocale() == 'en' ? 'Primary color' : 'Couleur principale' }} <span class="text-danger">*</span>
+                                    </label>
                                     <div class="input-group">
                                         <input type="color" class="form-control form-control-color @error('primary_color') is-invalid @enderror"
                                                id="primary_color" name="primary_color" value="{{ $formData['primary_color'] }}" required>
@@ -112,12 +146,11 @@
                                         <input type="text" class="form-control @error('primary_color_hex') is-invalid @enderror"
                                                id="primary_color_hex" name="primary_color_hex" value="{{ $formData['primary_color_hex'] }}" maxlength="6">
                                     </div>
-                                    @error('primary_color')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                    @error('primary_color_hex')<div class="invalid-feedback">{{ $message }}</div>@enderror
                                 </div>
-                                <!--  Couleurs Secondaire DANS le formulaire -->
                                 <div class="col-md-6">
-                                    <label for="secondary_color" class="form-label fw-medium">Couleur secondaire <span class="text-danger">*</span></label>
+                                    <label for="secondary_color" class="form-label fw-medium">
+                                        {{ app()->getLocale() == 'en' ? 'Secondary color' : 'Couleur secondaire' }} <span class="text-danger">*</span>
+                                    </label>
                                     <div class="input-group">
                                         <input type="color" class="form-control form-control-color @error('secondary_color') is-invalid @enderror"
                                                id="secondary_color" name="secondary_color" value="{{ $formData['secondary_color'] }}" required>
@@ -125,33 +158,37 @@
                                         <input type="text" class="form-control @error('secondary_color_hex') is-invalid @enderror"
                                                id="secondary_color_hex" name="secondary_color_hex" value="{{ $formData['secondary_color_hex'] }}" maxlength="6">
                                     </div>
-                                    @error('secondary_color')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                    @error('secondary_color_hex')<div class="invalid-feedback">{{ $message }}</div>@enderror
                                 </div>
                             </div>
 
                             <div class="d-flex justify-content-between mt-4">
-                                <!--  Boutons de suppression -->
                                 @if($isEdit)
                                     <button type="button" class="btn btn-danger" onclick="confirmerSuppressionUnivers()">
-                                        <i class="bi bi-trash"></i> Supprimer la carte
+                                        <i class="bi bi-trash"></i>
+                                        {{ app()->getLocale() == 'en' ? 'Delete card' : 'Supprimer la carte' }}
                                     </button>
                                 @endif
-                                <!--  Boutons d'annulation et d'application (création/modifications) -->
                                 <div class="d-flex gap-2 {{ !$isEdit ? 'ms-auto' : '' }}">
-                                    <a href="{{ url('/') }}" class="btn btn-secondary">Annuler</a>
+                                    <a href="{{ url('/') }}" class="btn btn-secondary">
+                                        {{ app()->getLocale() == 'en' ? 'Cancel' : 'Annuler' }}
+                                    </a>
                                     <button type="submit" class="btn btn-primary">
                                         <i class="bi bi-{{ $isEdit ? 'check-lg' : 'plus-lg' }}"></i>
-                                        {{ $isEdit ? 'Modifier la carte' : 'Créer la carte' }}
+                                        {{ $isEdit ?
+                                            (app()->getLocale() == 'en' ? 'Update card' : 'Modifier la carte') :
+                                            (app()->getLocale() == 'en' ? 'Create card' : 'Créer la carte')
+                                        }}
                                     </button>
                                 </div>
                             </div>
                         </form>
                     </div>
-                    <!--  Aperçu en temps réel -->
+
                     <div class="col-md-4">
                         <div class="sticky-top" style="top: 2rem;">
-                            <h5 class="fw-bold mb-3">Aperçu en temps réel</h5>
+                            <h5 class="fw-bold mb-3">
+                                {{ app()->getLocale() == 'en' ? 'Live preview' : 'Aperçu en temps réel' }}
+                            </h5>
 
                             <div id="preview" class="rounded-3 d-flex align-items-center justify-content-center text-white fw-bold fs-5 mb-3"
                                  style="height: 120px; background: {{ $formData['gradients']['preview_main'] }};">

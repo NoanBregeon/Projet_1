@@ -15,7 +15,9 @@
             {{ $description }}
         </p>
         <div class="d-flex align-items-center mb-3">
-            <small class="text-muted me-2">Couleurs:</small>
+            <small class="text-muted me-2">
+                {{ app()->getLocale() == 'en' ? 'Colors:' : 'Couleurs:' }}
+            </small>
             <div class="d-flex gap-2">
                 <div class="rounded-circle border border-2 border-white shadow-sm"
                      style="width: {{ $colorIndicatorSize }}; height: {{ $colorIndicatorSize }}; background-color: {{ $primaryColor }};"
@@ -27,18 +29,22 @@
         </div>
         <div class="d-flex gap-2">
             @auth
-                @if(Auth::user()->isAdmin())
+                @if(Auth::user()->isA('admin'))
                     <a href="{{ route('univers.edit', $id) }}" class="btn btn-outline-primary btn-sm flex-fill">
-                        <i class="bi bi-pencil me-1"></i>Modifier
+                        <i class="bi bi-pencil me-1"></i>
+                        {{ app()->getLocale() == 'en' ? 'Edit' : 'Modifier' }}
                     </a>
                 @else
-                    <span class="btn btn-outline-secondary btn-sm flex-fill disabled" title="Réservé aux administrateurs">
-                        <i class="bi bi-lock me-1"></i>Admin uniquement
+                    <span class="btn btn-outline-secondary btn-sm flex-fill disabled"
+                          title="{{ app()->getLocale() == 'en' ? 'For administrators only' : 'Réservé aux administrateurs' }}">
+                        <i class="bi bi-lock me-1"></i>
+                        {{ app()->getLocale() == 'en' ? 'Admin only' : 'Admin uniquement' }}
                     </span>
                 @endif
             @else
                 <a href="{{ route('univers.show', $id) }}" class="btn btn-outline-secondary btn-lg w-100">
-                    <i class="bi bi-eye me-1"></i>Voir l'univers
+                    <i class="bi bi-eye me-1"></i>
+                    {{ app()->getLocale() == 'en' ? 'View card' : 'Voir l\'univers' }}
                 </a>
             @endauth
         </div>

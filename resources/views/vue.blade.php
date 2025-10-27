@@ -2,38 +2,38 @@
 
 @section('title', 'Ma Collection de Cartes')
 @section('content')
+
 @if(session('message'))
     <x-alerte :message="session('message')" type="success" icon="bi-check-circle" />
 @endif
-
-<!-- Bouton de bascule thème (visible pour tous) -->
-<button id="theme-toggle" class="theme-toggle">
-    <i id="theme-icon" class="bi bi-moon-fill"></i>
-</button>
 
 @auth
 <div class="mb-4 text-end d-flex justify-content-end gap-2 align-items-center">
     <!-- Indicateur de rôle -->
     @if(Auth::user()->isA('admin'))
         <span class="badge bg-danger me-2">
-            <i class="bi bi-shield-check me-1"></i>Administrateur
+            <i class="bi bi-shield-check me-1"></i>
+            {{ app()->getLocale() == 'en' ? 'Administrator' : 'Administrateur' }}
         </span>
     @else
         <span class="badge bg-info me-2">
-            <i class="bi bi-person me-1"></i>Utilisateur
+            <i class="bi bi-person me-1"></i>
+            {{ app()->getLocale() == 'en' ? 'User' : 'Utilisateur' }}
         </span>
     @endif
 
-    <!-- Bouton pour créer une carte (visible si connecté) -->
+    <!-- Bouton pour créer une carte -->
     <a href="{{ route('univers.create') }}" class="btn btn-primary me-2">
-        <i class="bi bi-plus-lg me-1"></i> Créer une carte
+        <i class="bi bi-plus-lg me-1"></i>
+        {{ app()->getLocale() == 'en' ? 'Create Card' : 'Créer une carte' }}
     </a>
 
     <!-- Formulaire de déconnexion -->
     <form method="POST" action="{{ route('logout') }}">
         @csrf
         <button type="submit" class="btn btn-outline-danger">
-            <i class="bi bi-box-arrow-right me-1"></i> Déconnexion
+            <i class="bi bi-box-arrow-right me-1"></i>
+            {{ app()->getLocale() == 'en' ? 'Logout' : 'Déconnexion' }}
         </button>
     </form>
 </div>
@@ -42,17 +42,23 @@
 @guest
 <div class="mb-4 text-end">
     <a href="{{ route('login') }}" class="btn btn-outline-primary me-2">
-        <i class="bi bi-person-circle me-1"></i> Connexion
+        <i class="bi bi-person-circle me-1"></i>
+        {{ app()->getLocale() == 'en' ? 'Login' : 'Connexion' }}
     </a>
     <a href="{{ route('register') }}" class="btn btn-outline-success">
-        <i class="bi bi-person-plus me-1"></i> Créer un compte
+        <i class="bi bi-person-plus me-1"></i>
+        {{ app()->getLocale() == 'en' ? 'Sign Up' : 'Créer un compte' }}
     </a>
 </div>
 @endguest
 
 <div class="text-center mb-5">
-    <h1 class="display-4 fw-bold text-dark mb-2">Ma Collection de Cartes</h1>
-    <p class="lead text-muted">Explorez et gérez votre collection personnelle</p>
+    <h1 class="display-4 fw-bold text-dark mb-2">
+        {{ app()->getLocale() == 'en' ? 'My Card Collection' : 'Ma Collection de Cartes' }}
+    </h1>
+    <p class="lead text-muted">
+        {{ app()->getLocale() == 'en' ? 'Explore and manage your personal collection' : 'Explorez et gérez votre collection personnelle' }}
+    </p>
 </div>
 
 <div class="row g-4">
@@ -109,5 +115,4 @@
     </div>
     @endif
 </div>
-
 @endsection
