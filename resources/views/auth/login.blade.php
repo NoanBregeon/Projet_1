@@ -10,7 +10,7 @@
 <div class="min-vh-100 d-flex align-items-center justify-content-center py-5">
     <div class="auth-container">
         <div class="text-center mb-3">
-            <x-application-logo class="mx-auto mb-3" style="width:64px;height:64px;" />
+            <x-application-logo class="mx-auto mb-3 application-logo" />
             <h1 class="auth-title">Connexion</h1>
             <p class="auth-subtitle">Accédez à votre espace pour gérer vos cartes</p>
         </div>

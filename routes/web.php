@@ -15,14 +15,15 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Routes pour les univers
-    Route::resource('univers', UniversController::class)->except(['show']);
-    
-    // Routes pour supprimer individuellement image et logo
-    Route::delete('/univers/{id}/image', [UniversController::class, 'removeImage'])->name('univers.remove-image');
-    Route::delete('/univers/{id}/logo', [UniversController::class, 'removeLogo'])->name('univers.remove-logo');
+    // Routes resource pour les univers (sauf show qui est accessible à tous)
+    Route::resource('univers', UniversController::class)->except(['index', 'show']);
+
+    // Routes personnalisées pour supprimer individuellement image et logo
+    Route::delete('/univers/{univers}/image', [UniversController::class, 'removeImage'])->name('univers.remove-image');
+    Route::delete('/univers/{univers}/logo', [UniversController::class, 'removeLogo'])->name('univers.remove-logo');
 });
 
-Route::get('/univers/{id}', [UniversController::class, 'show'])->name('univers.show');
+// Route show accessible à tous (en dehors du middleware auth)
+Route::get('/univers/{univers}', [UniversController::class, 'show'])->name('univers.show');
 
 require __DIR__.'/auth.php';

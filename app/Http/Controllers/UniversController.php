@@ -14,15 +14,16 @@ class UniversController extends Controller
     public function index()
     {
         $listeUnivers = Univers::all();
+        $controller = $this; // Stocke la référence au contrôleur
 
-        $processedUnivers = $listeUnivers->map(function ($univers) {
+        $processedUnivers = $listeUnivers->map(function ($univers) use ($controller) {
             $isAuth = auth()->check();
             return [
                 'id' => $univers->id,
                 'name' => $univers->name,
                 'description' => $univers->description,
                 'truncated_description' => $isAuth
-                    ? $this->truncateDescription($univers->description, 100)
+                    ? $controller->truncateDescription($univers->description, 100)
                     : $univers->description,
                 'primary_color' => $univers->primary_color,
                 'secondary_color' => $univers->secondary_color,
@@ -30,8 +31,8 @@ class UniversController extends Controller
                 'logo' => $univers->logo,
                 'image_url' => $univers->image ? asset('storage/' . $univers->image) : null,
                 'logo_url' => $univers->logo ? asset('storage/' . $univers->logo) : null,
-                'gradient_header' => $this->generateGradient($univers->primary_color, $univers->secondary_color, '135deg'),
-                'gradient_background' => $this->generateGradient($univers->primary_color, $univers->secondary_color, '45deg'),
+                'gradient_header' => $controller->generateGradient($univers->primary_color, $univers->secondary_color, '135deg'),
+                'gradient_background' => $controller->generateGradient($univers->primary_color, $univers->secondary_color, '45deg'),
                 'color_tooltips' => [
                     'primary' => "Couleur primaire: {$univers->primary_color}",
                     'secondary' => "Couleur secondaire: {$univers->secondary_color}"
@@ -92,18 +93,16 @@ class UniversController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Univers $univers)
     {
-        $univers = Univers::findOrFail($id);
         return view('univers.show', compact('univers'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(Univers $univers)
     {
-        $univers = Univers::findOrFail($id);
         $formData = $this->prepareFormData($univers);
         $jsConfig = $this->getJavaScriptConfig();
         $deleteRoutes = $this->getDeleteRoutes($univers->id);
@@ -121,10 +120,9 @@ class UniversController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Univers $univers)
     {
         try {
-            $univers = Univers::findOrFail($id);
             $validatedData = $this->validateUniversData($request);
 
             $this->fillUniversData($univers, $validatedData, $request);
@@ -141,9 +139,8 @@ class UniversController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Univers $univers)
     {
-        $univers = Univers::findOrFail($id);
         $this->deleteUniversFiles($univers);
         $univers->delete();
 
@@ -153,9 +150,8 @@ class UniversController extends Controller
     /**
      * Supprimer uniquement l'image d'un univers
      */
-    public function removeImage($id)
+    public function removeImage(Univers $univers)
     {
-        $univers = Univers::findOrFail($id);
         $this->deleteFile($univers->image);
 
         //  Utilisation directe au lieu de update()
@@ -168,9 +164,8 @@ class UniversController extends Controller
     /**
      * Supprimer uniquement le logo d'un univers
      */
-    public function removeLogo($id)
+    public function removeLogo(Univers $univers)
     {
-        $univers = Univers::findOrFail($id);
         $this->deleteFile($univers->logo);
 
         //  Utilisation directe au lieu de update()

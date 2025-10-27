@@ -6,8 +6,24 @@
     <x-alerte :message="session('message')" type="success" icon="bi-check-circle" />
 @endif
 
+<!-- Bouton de bascule thème (visible pour tous) -->
+<button id="theme-toggle" class="theme-toggle">
+    <i id="theme-icon" class="bi bi-moon-fill"></i>
+</button>
+
 @auth
-<div class="mb-4 text-end d-flex justify-content-end gap-2">
+<div class="mb-4 text-end d-flex justify-content-end gap-2 align-items-center">
+    <!-- Indicateur de rôle -->
+    @if(Auth::user()->isAdmin())
+        <span class="badge bg-danger me-2">
+            <i class="bi bi-shield-check me-1"></i>Administrateur
+        </span>
+    @else
+        <span class="badge bg-info me-2">
+            <i class="bi bi-person me-1"></i>Utilisateur
+        </span>
+    @endif
+
     <!-- Bouton pour créer une carte (visible si connecté) -->
     <a href="{{ route('univers.create') }}" class="btn btn-primary me-2">
         <i class="bi bi-plus-lg me-1"></i> Créer une carte
@@ -75,22 +91,23 @@
         </div>
     </div>
     @endforelse
-</div>
 
-@if($processedUnivers->isNotEmpty() && Auth::check())
-<div class="col-md-6 col-lg-4">
-    <div class="card h-100 border-2 border-dashed border-primary bg-light">
-        <div class="card-body d-flex flex-column justify-content-center align-items-center text-center p-5">
-            <div class="mb-3">
-                <i class="bi bi-plus-circle display-1 text-primary"></i>
+    @if($processedUnivers->isNotEmpty() && Auth::check())
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-2 border-dashed border-primary bg-light">
+            <div class="card-body d-flex flex-column justify-content-center align-items-center text-center p-5">
+                <div class="mb-3">
+                    <i class="bi bi-plus-circle display-1 text-primary"></i>
+                </div>
+                <h5 class="card-title text-primary fw-bold mb-3">{{ $viewConfig['messages']['add_title'] }}</h5>
+                <p class="card-text text-muted mb-4">{{ $viewConfig['messages']['add_subtitle'] }}</p>
+                <a href="{{ route('univers.create') }}" class="btn btn-primary btn-lg">
+                    <i class="bi bi-plus-lg me-2"></i>{{ $viewConfig['messages']['add_button'] }}
+                </a>
             </div>
-            <h5 class="card-title text-primary fw-bold mb-3">{{ $viewConfig['messages']['add_title'] }}</h5>
-            <p class="card-text text-muted mb-4">{{ $viewConfig['messages']['add_subtitle'] }}</p>
-            <a href="{{ route('univers.create') }}" class="btn btn-primary btn-lg">
-                <i class="bi bi-plus-lg me-2"></i>{{ $viewConfig['messages']['add_button'] }}
-            </a>
         </div>
     </div>
+    @endif
 </div>
-@endif
+
 @endsection

@@ -1,16 +1,54 @@
-@import 'tailwindcss';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/* Styles personnalisés (restauration du CSS précédent) */
+/* Variables pour les thèmes */
+:root {
+    /* Thème clair (par défaut) */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8fafc;
+    --bg-tertiary: #f1f5f9;
+    --text-primary: #0f1724;
+    --text-secondary: #6b7280;
+    --text-muted: #9ca3af;
+    --border-color: #e6eef8;
+    --shadow-color: rgba(2,6,23,0.12);
+    --accent-color: #0b5ed7;
+    --accent-hover: #0a58ca;
+}
+
+[data-theme="dark"] {
+    /* Thème sombre */
+    --bg-primary: #0f1724;
+    --bg-secondary: #1e293b;
+    --bg-tertiary: #334155;
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --border-color: rgba(255,255,255,0.1);
+    --shadow-color: rgba(0,0,0,0.3);
+    --accent-color: #3b82f6;
+    --accent-hover: #2563eb;
+}
+
+/* Styles de base utilisant les variables */
+body {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
 
 /* Animations et styles personnalisés */
 .card {
     transition: all 0.3s ease;
     border: none;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px var(--shadow-color);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
 }
 .card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    box-shadow: 0 8px 25px var(--shadow-color);
 }
 .card-img-top {
     transition: transform 0.5s ease;
@@ -34,7 +72,7 @@
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 .shadow-custom {
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 30px var(--shadow-color);
 }
 .card-header {
     position: relative;
@@ -55,20 +93,20 @@
     transition: transform 0.2s ease;
 }
 
-/* Styles spécifiques pour les pages de connexion et d'inscription */
+/* Styles d'authentification avec thèmes */
 .auth-container {
     max-width: 480px;
     margin: 0 auto;
     padding: 2rem;
-    background: #ffffff; /* carte blanche */
+    background: var(--bg-primary);
     border-radius: 12px;
-    box-shadow: 0 12px 40px rgba(2,6,23,0.12); /* ombre plus visible */
-    border: 1px solid rgba(15,23,42,0.04);
-    color: #0f1724;
+    box-shadow: 0 12px 40px var(--shadow-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
 }
 
 .auth-title {
-    color: #0f1724;
+    color: var(--text-primary);
     font-size: 1.5rem;
     font-weight: 800;
     text-align: center;
@@ -76,23 +114,23 @@
 }
 
 .auth-subtitle {
-    color: #6b7280;
+    color: var(--text-secondary);
     text-align: center;
     margin-bottom: 1rem;
     font-size: 0.95rem;
 }
 
 .auth-form-label {
-    color: #0f1724;
+    color: var(--text-primary);
     font-weight: 600;
     margin-bottom: 0.35rem;
     display: block;
 }
 
 .auth-form-input {
-    background-color: #ffffff;
-    color: #0f1724;
-    border: 1px solid #d1d5db;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     padding: 0.6rem 0.75rem;
     margin-bottom: 0.75rem;
@@ -103,17 +141,17 @@
 }
 
 .auth-form-input::placeholder {
-    color: #9ca3af;
+    color: var(--text-muted);
 }
 
 .auth-form-input:focus {
     outline: none;
-    border-color: #2563eb; /* bleu vif */
+    border-color: var(--accent-color);
     box-shadow: 0 8px 24px rgba(37,99,235,0.12);
 }
 
 .auth-form-button {
-    background: linear-gradient(90deg,#0b5ed7,#0a58ca); /* bleu contrasté */
+    background: linear-gradient(90deg, var(--accent-color), var(--accent-hover));
     color: #ffffff;
     border: none;
     border-radius: 10px;
@@ -131,7 +169,7 @@
 }
 
 .auth-link {
-    color: #0b5ed7;
+    color: var(--accent-color);
     text-decoration: none;
     font-weight: 600;
 }
@@ -147,10 +185,10 @@
     text-align: center;
 }
 
-/* Cadres et groupes pour formulaires (adaptés au thème clair) */
+/* Cadres et groupes pour formulaires */
 .form-frame {
-    background: #f8fafc;
-    border: 1px solid #e6eef8;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
     padding: 1rem;
     border-radius: 10px;
     margin-bottom: 1rem;
@@ -169,9 +207,9 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: #eef2ff;
+    background: var(--bg-tertiary);
     border-radius: 8px;
-    color: #0b5ed7;
+    color: var(--accent-color);
     flex: 0 0 42px;
     font-size: 1.05rem;
     margin-top: 0.35rem;
@@ -191,5 +229,111 @@
     display: flex;
     gap: 0.75rem;
     align-items: center;
+}
+
+/* Bouton de bascule thème */
+.theme-toggle {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 1000;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    border-radius: 8px;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    font-size: 1.1rem;
+}
+
+.theme-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px var(--shadow-color);
+    background: var(--bg-secondary);
+}
+
+.theme-toggle:active {
+    transform: translateY(0);
+}
+
+/* Surcharge des classes Bootstrap pour utiliser les variables de thème */
+.text-dark {
+    color: var(--text-primary) !important;
+}
+
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+.lead {
+    color: var(--text-secondary) !important;
+}
+
+.btn-primary {
+    background-color: var(--accent-color) !important;
+    border-color: var(--accent-color) !important;
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-hover) !important;
+    border-color: var(--accent-hover) !important;
+}
+
+.btn-outline-primary {
+    color: var(--accent-color) !important;
+    border-color: var(--accent-color) !important;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--accent-color) !important;
+    border-color: var(--accent-color) !important;
+}
+
+.alert {
+    background-color: var(--bg-primary) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+
+.display-4 {
+    color: var(--text-primary) !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-primary) !important;
+}
+
+/* Carte d'ajout (border-dashed) */
+.border-dashed {
+    background-color: var(--bg-tertiary) !important;
+    border-color: var(--accent-color) !important;
+}
+
+.card-title {
+    color: var(--text-primary) !important;
+}
+
+.card-text {
+    color: var(--text-secondary) !important;
+}
+
+/* Container principal */
+.container {
+    background-color: transparent !important;
+}
+
+/* Ajustements pour le mode sombre */
+[data-theme="dark"] .bg-light {
+    background-color: var(--bg-tertiary) !important;
+}
+
+[data-theme="dark"] .border-primary {
+    border-color: var(--accent-color) !important;
 }
 
