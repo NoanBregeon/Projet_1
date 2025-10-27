@@ -17,6 +17,10 @@ Route::middleware('auth')->group(function () {
 
     // Routes pour les univers
     Route::resource('univers', UniversController::class)->except(['show']);
+    
+    // Routes pour supprimer individuellement image et logo
+    Route::delete('/univers/{id}/image', [UniversController::class, 'removeImage'])->name('univers.remove-image');
+    Route::delete('/univers/{id}/logo', [UniversController::class, 'removeLogo'])->name('univers.remove-logo');
 });
 
 Route::get('/univers/{id}', [UniversController::class, 'show'])->name('univers.show');
