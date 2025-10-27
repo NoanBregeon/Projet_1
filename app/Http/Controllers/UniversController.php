@@ -15,13 +15,15 @@ class UniversController extends Controller
     {
         $listeUnivers = Univers::all();
 
-        // Préparer les données pour la vue avec logique métier
         $processedUnivers = $listeUnivers->map(function ($univers) {
+            $isAuth = auth()->check();
             return [
                 'id' => $univers->id,
                 'name' => $univers->name,
                 'description' => $univers->description,
-                'truncated_description' => $this->truncateDescription($univers->description, 100),
+                'truncated_description' => $isAuth
+                    ? $this->truncateDescription($univers->description, 100)
+                    : $univers->description,
                 'primary_color' => $univers->primary_color,
                 'secondary_color' => $univers->secondary_color,
                 'image' => $univers->image,
@@ -34,14 +36,14 @@ class UniversController extends Controller
                     'primary' => "Couleur primaire: {$univers->primary_color}",
                     'secondary' => "Couleur secondaire: {$univers->secondary_color}"
                 ],
-                'edit_url' => route('univers.modify', $univers->id)
+                'edit_url' => route('univers.edit', $univers->id)
             ];
         });
 
         $viewConfig = $this->getIndexViewConfig();
 
         return view('vue', [
-            'listeUnivers' => $listeUnivers, // Pour la compatibilité
+            'listeUnivers' => $listeUnivers,
             'processedUnivers' => $processedUnivers,
             'viewConfig' => $viewConfig,
             'isEmpty' => $listeUnivers->isEmpty()

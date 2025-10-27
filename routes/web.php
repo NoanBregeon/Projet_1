@@ -1,17 +1,24 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UniversController;
+use Illuminate\Support\Facades\Route;
 
-// Page d'accueil avec la collection de cartes
 Route::get('/', [UniversController::class, 'index'])->name('home');
 
-// Route resource pour UniversController
-Route::resource('univers', UniversController::class)->parameters(['univers' => 'id']);
+Route::get('/dashboard', function () {
+    return redirect()->route('home');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-// Routes pour supprimer individuellement image et logo
-Route::delete('/univers/{id}/image', [UniversController::class, 'removeImage'])->name('univers.remove-image');
-Route::delete('/univers/{id}/logo', [UniversController::class, 'removeLogo'])->name('univers.remove-logo');
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-// Route personnalisée pour modifier une carte (optionnel, si tu veux garder /modify)
-Route::get('/univers/{id}/modify', [UniversController::class, 'edit'])->name('univers.modify');
+    // Routes pour les univers
+    Route::resource('univers', UniversController::class)->except(['show']);
+});
+
+Route::get('/univers/{id}', [UniversController::class, 'show'])->name('univers.show');
+
+require __DIR__.'/auth.php';

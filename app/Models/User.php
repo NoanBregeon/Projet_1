@@ -18,7 +18,8 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'password',
     ];
@@ -44,5 +45,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Accessor compatible : Auth::user()->name retourne "Prénom Nom"
+     */
+    public function getNameAttribute(): string
+    {
+        $first = $this->first_name ?? '';
+        $last  = $this->last_name ?? '';
+        return trim($first . ' ' . $last);
     }
 }

@@ -1,13 +1,195 @@
 @import 'tailwindcss';
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source "../**/*.blade.php";
-@source "../**/*.js";
-@source "../**/*.vue";
+/* Styles personnalisés (restauration du CSS précédent) */
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+/* Animations et styles personnalisés */
+.card {
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+.card-img-top {
+    transition: transform 0.5s ease;
+}
+.card:hover .card-img-top {
+    transform: scale(1.05);
+}
+.btn {
+    transition: all 0.3s ease;
+}
+.btn:hover {
+    transform: translateY(-1px);
+}
+.hover-opacity {
+    transition: opacity 0.3s ease;
+}
+.card:hover .hover-opacity {
+    opacity: 1 !important;
+}
+.gradient-bg {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+.shadow-custom {
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+.card-header {
+    position: relative;
+    z-index: 3;
+}
+.card-header h6 {
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+.rounded-circle {
+    transition: transform 0.2s ease;
+}
+.rounded-circle:hover {
+    transform: scale(1.2);
+}
+.logo-overlay {
+    z-index: 15 !important;
+    position: relative;
+    transition: transform 0.2s ease;
+}
+
+/* Styles spécifiques pour les pages de connexion et d'inscription */
+.auth-container {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: #ffffff; /* carte blanche */
+    border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(2,6,23,0.12); /* ombre plus visible */
+    border: 1px solid rgba(15,23,42,0.04);
+    color: #0f1724;
+}
+
+.auth-title {
+    color: #0f1724;
+    font-size: 1.5rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 0.25rem;
+}
+
+.auth-subtitle {
+    color: #6b7280;
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+}
+
+.auth-form-label {
+    color: #0f1724;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+    display: block;
+}
+
+.auth-form-input {
+    background-color: #ffffff;
+    color: #0f1724;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 0.6rem 0.75rem;
+    margin-bottom: 0.75rem;
+    width: 100%;
+    box-sizing: border-box;
+    transition: box-shadow .12s ease, border-color .12s ease;
+    box-shadow: none;
+}
+
+.auth-form-input::placeholder {
+    color: #9ca3af;
+}
+
+.auth-form-input:focus {
+    outline: none;
+    border-color: #2563eb; /* bleu vif */
+    box-shadow: 0 8px 24px rgba(37,99,235,0.12);
+}
+
+.auth-form-button {
+    background: linear-gradient(90deg,#0b5ed7,#0a58ca); /* bleu contrasté */
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    padding: 0.75rem;
+    width: 100%;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform .06s ease, box-shadow .12s ease;
+    box-shadow: 0 8px 20px rgba(11,94,215,0.12);
+}
+
+.auth-form-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 38px rgba(11,94,215,0.16);
+}
+
+.auth-link {
+    color: #0b5ed7;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-link:hover {
+    text-decoration: underline;
+}
+
+/* Bouton retour */
+.auth-back {
+    margin-top: 1rem;
+    display: block;
+    text-align: center;
+}
+
+/* Cadres et groupes pour formulaires (adaptés au thème clair) */
+.form-frame {
+    background: #f8fafc;
+    border: 1px solid #e6eef8;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    margin-bottom: 0.75rem;
+}
+
+.input-icon {
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #eef2ff;
+    border-radius: 8px;
+    color: #0b5ed7;
+    flex: 0 0 42px;
+    font-size: 1.05rem;
+    margin-top: 0.35rem;
+}
+
+/* Ajuste des labels/inputs */
+.form-group .form-field {
+    flex: 1 1 auto;
+}
+.form-group .form-field .auth-form-label {
+    margin-bottom: 0.35rem;
+}
+.form-group .form-field .auth-form-input {
+    margin-bottom: 0;
+}
+.form-inline {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
 }
 

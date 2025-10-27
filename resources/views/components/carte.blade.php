@@ -11,7 +11,9 @@
     @endif
 
     <div class="card-body d-flex flex-column">
-        <p class="card-text text-muted flex-grow-1">{{ $description }}</p>
+        <p class="card-text text-muted flex-grow-1 {{ Auth::check() ? '' : 'fs-5 lh-base' }}">
+            {{ $description }}
+        </p>
         <div class="d-flex align-items-center mb-3">
             <small class="text-muted me-2">Couleurs:</small>
             <div class="d-flex gap-2">
@@ -24,9 +26,15 @@
             </div>
         </div>
         <div class="d-flex gap-2">
-            <a href="{{ route('univers.edit', $id) }}" class="btn btn-outline-primary btn-sm flex-fill">
-                <i class="bi bi-pencil me-1"></i>Modifier
-            </a>
+            @auth
+                <a href="{{ route('univers.edit', $id) }}" class="btn btn-outline-primary btn-sm flex-fill">
+                    <i class="bi bi-pencil me-1"></i>Modifier
+                </a>
+            @else
+                <a href="{{ route('univers.show', $id) }}" class="btn btn-outline-secondary btn-lg w-100">
+                    <i class="bi bi-eye me-1"></i>Voir l'univers
+                </a>
+            @endauth
         </div>
     </div>
     @if($logoUrl)
