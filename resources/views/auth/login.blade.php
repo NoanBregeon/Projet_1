@@ -111,6 +111,14 @@
                     {{ app()->getLocale() == 'en' ? 'Log in' : 'Se connecter' }}
                 </button>
 
+                @if (Route::has('password.request'))
+                    <div class="text-center mt-3">
+                        <a class="auth-link" href="{{ route('password.request') }}">
+                            {{ app()->getLocale() == 'en' ? 'Forgot your password?' : 'Mot de passe oublié ?' }}
+                        </a>
+                    </div>
+                @endif
+
                 <div class="text-center mt-3">
                     <a href="{{ route('register') }}" class="auth-link">
                         {{ app()->getLocale() == 'en' ? 'Create an account' : 'Créer un compte' }}

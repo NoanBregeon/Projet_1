@@ -1,39 +1,91 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('password.store') }}">
-        @csrf
+@extends('layouts.app')
 
-        <!-- Password Reset Token -->
-        <input type="hidden" name="token" value="{{ $request->route('token') }}">
+@section('title', app()->getLocale() == 'en' ? 'Reset Password' : 'Réinitialiser le mot de passe')
+@section('content')
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+<div class="d-flex justify-content-center align-items-center" style="min-height: calc(100vh - 120px);">
+    <div class="auth-container">
+        <div class="text-center mb-3">
+            <div class="mb-3">
+                <i class="bi bi-shield-lock display-1 text-success"></i>
+            </div>
+            <h1 class="auth-title">
+                {{ app()->getLocale() == 'en' ? 'Reset Password' : 'Réinitialiser le mot de passe' }}
+            </h1>
+            <p class="auth-subtitle">
+                {{ app()->getLocale() == 'en' ?
+                    'Enter your new password below to complete the reset process.' :
+                    'Saisissez votre nouveau mot de passe ci-dessous pour terminer la réinitialisation.'
+                }}
+            </p>
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <form method="POST" action="{{ route('password.store') }}">
+            @csrf
+            <input type="hidden" name="token" value="{{ $request->route('token') }}">
+
+            <!-- Email (en lecture seule) -->
+            <div class="form-group">
+                <div class="input-icon">
+                    <i class="bi bi-envelope"></i>
+                </div>
+                <div class="form-field">
+                    <label class="auth-form-label" for="email">Email</label>
+                    <input id="email" class="auth-form-input" type="email" name="email"
+                           value="{{ old('email', $request->email) }}" required readonly
+                           style="background-color: #f8f9fa;">
+                    @error('email')
+                        <div class="text-danger mt-1 small">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+
+            <!-- Nouveau mot de passe -->
+            <div class="form-group">
+                <div class="input-icon">
+                    <i class="bi bi-lock"></i>
+                </div>
+                <div class="form-field">
+                    <label class="auth-form-label" for="password">
+                        {{ app()->getLocale() == 'en' ? 'New Password' : 'Nouveau mot de passe' }}
+                    </label>
+                    <input id="password" class="auth-form-input" type="password" name="password" required autofocus>
+                    @error('password')
+                        <div class="text-danger mt-1 small">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+
+            <!-- Confirmation -->
+            <div class="form-group">
+                <div class="input-icon">
+                    <i class="bi bi-lock-fill"></i>
+                </div>
+                <div class="form-field">
+                    <label class="auth-form-label" for="password_confirmation">
+                        {{ app()->getLocale() == 'en' ? 'Confirm Password' : 'Confirmer le mot de passe' }}
+                    </label>
+                    <input id="password_confirmation" class="auth-form-input" type="password"
+                           name="password_confirmation" required>
+                    @error('password_confirmation')
+                        <div class="text-danger mt-1 small">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>
+
+            <button type="submit" class="auth-form-button">
+                <i class="bi bi-check-circle me-2"></i>
+                {{ app()->getLocale() == 'en' ? 'Reset Password' : 'Réinitialiser le mot de passe' }}
+            </button>
+        </form>
+
+        <div class="text-center mt-3">
+            <a href="{{ route('login') }}" class="auth-link">
+                <i class="bi bi-arrow-left me-1"></i>
+                {{ app()->getLocale() == 'en' ? 'Back to login' : 'Retour à la connexion' }}
+            </a>
         </div>
+    </div>
+</div>
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Reset Password') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+@endsection
