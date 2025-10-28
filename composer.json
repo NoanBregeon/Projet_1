@@ -65,8 +65,7 @@
         "ide-helper:generate": "php artisan ide-helper:generate",
         "ide-helper:models": "php artisan ide-helper:models -N",
         "pint": "pint",
-        "analyse": "php -d memory_limit=1024M vendor/bin/phpstan analyse --configuration=phpstan.neon",
-        "analyse:baseline": "php -d memory_limit=1024M vendor/bin/phpstan analyse --configuration=phpstan.neon --generate-baseline=phpstan-baseline.neon"
+        "analyse": "phpstan analyse --configuration=phpstan.neon"
     },
     "extra": {
         "branch-alias": {

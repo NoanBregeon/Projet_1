@@ -3,7 +3,6 @@ includes:
 
 parameters:
   level: 5
-  memoryLimit: -1   # autorise php à utiliser toute la mémoire disponible (ou utilise 1024M dans composer script)
   paths:
     - app
     - database
