@@ -1,43 +1,203 @@
-// Système de thème avec transition fluide globale
-document.addEventListener('DOMContentLoaded', function() {
-    const themeToggle = document.getElementById('theme-toggle');
-    const themeIcon = document.getElementById('theme-icon');
+// Système de thème avec jQuery
+$(document).ready(function() {
+    const $themeToggle = $('#theme-toggle');
+    const $themeIcon = $('#theme-icon');
+    const $html = $('html');
 
-    if (themeToggle && themeIcon) {
-        // Vérifier le thème déjà appliqué
-        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if ($themeToggle.length && $themeIcon.length) {
+        // Vérifier le thème déjà appliqué au chargement
+        const isDark = $html.attr('data-theme') === 'dark';
         if (isDark) {
-            themeIcon.className = 'bi bi-sun-fill';
+            $themeIcon.removeClass('bi-moon-fill').addClass('bi-sun-fill');
         }
 
-        // Gérer le clic avec animation douce
-        themeToggle.addEventListener('click', function() {
-            const html = document.documentElement;
-            const currentTheme = html.getAttribute('data-theme');
+        // Gérer le clic avec animation fluide jQuery
+        $themeToggle.on('click', function() {
+            const currentTheme = $html.attr('data-theme');
 
-            // Ajouter l'animation subtile au bouton
-            themeToggle.classList.add('theme-changing');
+            // Animation du bouton
+            $(this).addClass('theme-changing');
 
             if (currentTheme === 'dark') {
-                // Passage au thème clair
-                html.removeAttribute('data-theme');
-                html.style.backgroundColor = '#f8fafc';
-                html.style.color = '#0f1724';
-                themeIcon.className = 'bi bi-moon-fill';
+                // Passage au thème clair avec animation jQuery
+                $html.removeAttr('data-theme')
+                     .css({
+                         'background-color': '#f8fafc',
+                         'color': '#0f1724'
+                     });
+
+                $themeIcon.removeClass('bi-sun-fill').addClass('bi-moon-fill');
                 localStorage.setItem('theme', 'light');
+
             } else {
-                // Passage au thème sombre
-                html.setAttribute('data-theme', 'dark');
-                html.style.backgroundColor = '#1e293b';
-                html.style.color = '#f8fafc';
-                themeIcon.className = 'bi bi-sun-fill';
+                // Passage au thème sombre avec animation jQuery
+                $html.attr('data-theme', 'dark')
+                     .css({
+                         'background-color': '#1e293b',
+                         'color': '#f8fafc'
+                     });
+
+                $themeIcon.removeClass('bi-moon-fill').addClass('bi-sun-fill');
                 localStorage.setItem('theme', 'dark');
             }
 
-            // Supprimer l'animation après 800ms
+            // Supprimer la classe d'animation après 800ms
             setTimeout(() => {
-                themeToggle.classList.remove('theme-changing');
+                $(this).removeClass('theme-changing');
             }, 800);
         });
     }
+
+    // Animation d'entrée pour les cartes avec jQuery
+    $('.card').each(function(index) {
+        $(this).css({
+            'opacity': '0',
+            'transform': 'translateY(20px)'
+        }).delay(index * 100).animate({
+            'opacity': '1'
+        }, 600).css({
+            'transform': 'translateY(0)'
+        });
+    });
+
+    // Amélioration des tooltips Bootstrap avec jQuery
+    $('[data-bs-toggle="tooltip"]').tooltip();
+
+    // Animation fluide pour les alertes
+    $('.alert').hide().fadeIn(500);
+
+    // Auto-hide des alertes après 5 secondes
+    $('.alert').delay(5000).fadeOut(500);
+
+    // Amélioration de la navigation breadcrumb
+    if (window.location.pathname.includes('/favorites')) {
+        $('body').addClass('favorites-page');
+    }
+    
+    // Gestion des favoris avec jQuery
+    $('.favorite-btn').on('click', function(e) {
+        e.preventDefault();
+        
+        const $btn = $(this);
+        const universId = $btn.data('univers-id');
+        const $icon = $btn.find('i');
+        const $text = $btn.find('.favorite-text');
+        const $card = $btn.closest('.col-md-6, .col-lg-4');
+        
+        // Animation du bouton
+        $btn.prop('disabled', true).addClass('loading');
+        
+        $.ajax({
+            url: `/favorites/${universId}/toggle`,
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                if (response.success) {
+                    // Mettre à jour l'icône et le texte
+                    if (response.is_favorite) {
+                        $icon.removeClass('bi-heart').addClass('bi-heart-fill');
+                        $text.text($('html').attr('lang') === 'en' ? 'Favorited' : 'Favori');
+                        $btn.removeClass('btn-outline-warning').addClass('btn-warning');
+                    } else {
+                        $icon.removeClass('bi-heart-fill').addClass('bi-heart');
+                        $text.text($('html').attr('lang') === 'en' ? 'Favorite' : 'Favoris');
+                        $btn.removeClass('btn-warning').addClass('btn-outline-warning');
+                        
+                        // Si on est sur la page des favoris, retirer la carte avec animation
+                        if ($('body').hasClass('favorites-page')) {
+                            $card.fadeOut(500, function() {
+                                $(this).remove();
+                                // Vérifier s'il reste des cartes
+                                if ($('.row .col-md-6, .row .col-lg-4').length === 0) {
+                                    location.reload(); // Recharger pour afficher le message "aucun favori"
+                                }
+                            });
+                        }
+                    }
+                    
+                    // Mettre à jour le badge dans le header
+                    updateFavoritesCount();
+                    
+                    // Animation de succès
+                    if (!$('body').hasClass('favorites-page') || response.is_favorite) {
+                        $btn.addClass('btn-success');
+                        setTimeout(() => {
+                            $btn.removeClass('btn-success loading');
+                        }, 1000);
+                    }
+                    
+                    // Toast notification
+                    showToast(response.message, 'success');
+                }
+            },
+            error: function() {
+                showToast('Erreur lors de la mise à jour des favoris', 'error');
+                $btn.removeClass('loading');
+            },
+            complete: function() {
+                if (!$('body').hasClass('favorites-page')) {
+                    $btn.prop('disabled', false);
+                }
+            }
+        });
+    });
+    
+    // Fonction pour mettre à jour le compteur de favoris
+    function updateFavoritesCount() {
+        $.get('/favorites/count', function(data) {
+            $('.header-controls .badge').text(data.count);
+        });
+    }
+    
+    // Fonction pour afficher les toasts
+    function showToast(message, type) {
+        const toast = $(`
+            <div class="toast align-items-center text-white bg-${type === 'success' ? 'success' : 'danger'} border-0" role="alert">
+                <div class="d-flex">
+                    <div class="toast-body">${message}</div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                </div>
+            </div>
+        `);
+        
+        if (!$('.toast-container').length) {
+            $('body').append('<div class="toast-container position-fixed bottom-0 end-0 p-3"></div>');
+        }
+        
+        $('.toast-container').append(toast);
+        toast.toast('show');
+    }
+});
+
+// Fonctions utilitaires jQuery
+$(window).on('load', function() {
+    // Masquer le loader si présent
+    $('.loader').fadeOut(300);
+
+    // Animation smooth scroll pour les ancres
+    $('a[href^="#"]').on('click', function(e) {
+        e.preventDefault();
+        const target = $($(this).attr('href'));
+        if (target.length) {
+            $('html, body').animate({
+                scrollTop: target.offset().top - 100
+            }, 600);
+        }
+    });
+});
+
+// Amélioration de l'UX avec jQuery
+$(document).on('click', '.btn', function() {
+    // Effet ripple sur les boutons
+    const $button = $(this);
+    const ripple = $('<span class="ripple"></span>');
+
+    $button.addClass('position-relative overflow-hidden');
+    $button.append(ripple);
+
+    setTimeout(() => {
+        ripple.remove();
+    }, 600);
 });

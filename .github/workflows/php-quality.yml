@@ -1,0 +1,29 @@
+name: PHP Quality
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, xml, pcntl
+
+      - name: Install dependencies
+        run: composer install --no-progress --no-suggest --prefer-dist
+
+      - name: Run Pint (format)
+        run: composer run pint
+
+      - name: Run PHPStan / Larastan
+        run: composer run analyse
+
+      - name: Run PHP Insights
+        run: composer run insights -- --min-quality=70

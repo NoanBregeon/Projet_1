@@ -10,11 +10,11 @@ class CheckRole
 {
     public function handle(Request $request, Closure $next, string $role): Response
     {
-        if (!$request->user()) {
+        if (! $request->user()) {
             return redirect()->route('login');
         }
 
-        if (!$request->user()->isA($role)) {
+        if (! $request->user()->isA($role)) {
             abort(403, 'Accès refusé. Permissions insuffisantes.');
         }
 

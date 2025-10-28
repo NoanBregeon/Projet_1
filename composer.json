@@ -16,13 +16,16 @@
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.16",
+        "barryvdh/laravel-ide-helper": "^3.6",
         "fakerphp/faker": "^1.23",
         "laravel/breeze": "^2.3",
         "laravel/pail": "^1.2.2",
-        "laravel/pint": "^1.13",
+        "laravel/pint": "^1.25",
         "laravel/sail": "^1.41",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
+        "nunomaduro/larastan": "^3.7",
+        "nunomaduro/phpinsights": "^2.13",
         "phpunit/phpunit": "^11.5.3"
     },
     "autoload": {
@@ -56,7 +59,14 @@
         "dev": [
             "Composer\\Config::disableProcessTimeout",
             "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" \"npm run dev\" --names=server,queue,logs,vite"
-        ]
+        ],
+        "insights": "phpinsights",
+        "insights:format": "phpinsights --format=github",
+        "ide-helper:generate": "php artisan ide-helper:generate",
+        "ide-helper:models": "php artisan ide-helper:models -N",
+        "pint": "pint",
+        "analyse": "php -d memory_limit=1024M vendor/bin/phpstan analyse --configuration=phpstan.neon",
+        "analyse:baseline": "php -d memory_limit=1024M vendor/bin/phpstan analyse --configuration=phpstan.neon --generate-baseline=phpstan-baseline.neon"
     },
     "extra": {
         "branch-alias": {
@@ -71,6 +81,7 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
             "pestphp/pest-plugin": true,
             "php-http/discovery": true
         }

@@ -26,6 +26,7 @@ class UniversController extends Controller
 
         $processedUnivers = $listeUnivers->map(function ($univers) use ($controller) {
             $isAuth = auth()->check();
+
             return [
                 'id' => $univers->id,
                 'name' => $univers->name,
@@ -37,15 +38,15 @@ class UniversController extends Controller
                 'secondary_color' => $univers->secondary_color,
                 'image' => $univers->image,
                 'logo' => $univers->logo,
-                'image_url' => $univers->image ? asset('storage/' . $univers->image) : null,
-                'logo_url' => $univers->logo ? asset('storage/' . $univers->logo) : null,
+                'image_url' => $univers->image ? asset('storage/'.$univers->image) : null,
+                'logo_url' => $univers->logo ? asset('storage/'.$univers->logo) : null,
                 'gradient_header' => $controller->generateGradient($univers->primary_color, $univers->secondary_color, '135deg'),
                 'gradient_background' => $controller->generateGradient($univers->primary_color, $univers->secondary_color, '45deg'),
                 'color_tooltips' => [
                     'primary' => "Couleur primaire: {$univers->primary_color}",
-                    'secondary' => "Couleur secondaire: {$univers->secondary_color}"
+                    'secondary' => "Couleur secondaire: {$univers->secondary_color}",
                 ],
-                'edit_url' => route('univers.edit', $univers->id)
+                'edit_url' => route('univers.edit', $univers->id),
             ];
         });
 
@@ -55,7 +56,7 @@ class UniversController extends Controller
             'listeUnivers' => $listeUnivers,
             'processedUnivers' => $processedUnivers,
             'viewConfig' => $viewConfig,
-            'isEmpty' => $listeUnivers->isEmpty()
+            'isEmpty' => $listeUnivers->isEmpty(),
         ]);
     }
 
@@ -73,7 +74,7 @@ class UniversController extends Controller
             'univers' => null,
             'isEdit' => false,
             'jsConfig' => $jsConfig,
-            'viewHelpers' => $this->getViewHelpers()
+            'viewHelpers' => $this->getViewHelpers(),
         ]);
     }
 
@@ -85,7 +86,7 @@ class UniversController extends Controller
         try {
             $validatedData = $this->validateUniversData($request);
 
-            $univers = new Univers();
+            $univers = new Univers;
             $this->fillUniversData($univers, $validatedData, $request);
             $univers->save();
 
@@ -121,7 +122,7 @@ class UniversController extends Controller
             'isEdit' => true,
             'jsConfig' => $jsConfig,
             'deleteRoutes' => $deleteRoutes,
-            'viewHelpers' => $this->getViewHelpers()
+            'viewHelpers' => $this->getViewHelpers(),
         ]);
     }
 
@@ -203,7 +204,7 @@ class UniversController extends Controller
                 'primary_color_hex' => old('primary_color_hex', $this->colorToHex($univers->primary_color)),
                 'secondary_color_hex' => old('secondary_color_hex', $this->colorToHex($univers->secondary_color)),
                 'image' => $univers->image,
-                'logo' => $univers->logo
+                'logo' => $univers->logo,
             ];
         } else {
             // Mode création - prioriser old() puis les valeurs par défaut
@@ -215,7 +216,7 @@ class UniversController extends Controller
                 'primary_color_hex' => old('primary_color_hex', $this->colorToHex($defaultColors['primary'])),
                 'secondary_color_hex' => old('secondary_color_hex', $this->colorToHex($defaultColors['secondary'])),
                 'image' => null,
-                'logo' => null
+                'logo' => null,
             ];
         }
 
@@ -236,10 +237,10 @@ class UniversController extends Controller
             'description' => $this->truncateDescription($formData['description'] ?: 'Description de la carte...', 80),
             'primary_color' => $formData['primary_color'],
             'secondary_color' => $formData['secondary_color'],
-            'image_url' => $univers && $univers->image ? asset('storage/' . $univers->image) : null,
-            'logo_url' => $univers && $univers->logo ? asset('storage/' . $univers->logo) : null,
+            'image_url' => $univers && $univers->image ? asset('storage/'.$univers->image) : null,
+            'logo_url' => $univers && $univers->logo ? asset('storage/'.$univers->logo) : null,
             'has_image' => $univers && $univers->image,
-            'has_logo' => $univers && $univers->logo
+            'has_logo' => $univers && $univers->logo,
         ];
     }
 
@@ -252,7 +253,7 @@ class UniversController extends Controller
             'header' => $this->generateGradient($formData['primary_color'], $formData['secondary_color']),
             'preview_main' => $this->generateGradient($formData['primary_color'], $formData['secondary_color']),
             'preview_header' => $this->generateGradient($formData['primary_color'], $formData['secondary_color'], '135deg'),
-            'preview_image' => $this->generateGradient($formData['primary_color'], $formData['secondary_color'], '45deg')
+            'preview_image' => $this->generateGradient($formData['primary_color'], $formData['secondary_color'], '45deg'),
         ];
     }
 
@@ -266,12 +267,12 @@ class UniversController extends Controller
                 'hex_pattern' => '^[A-Fa-f0-9]{6}$',
                 'hex_max_length' => 6,
                 'name_required' => 'Le nom est requis',
-                'description_required' => 'La description est requise'
+                'description_required' => 'La description est requise',
             ],
             'preview' => [
                 'default_name' => 'Nom de la carte',
                 'default_description' => 'Description de la carte...',
-                'description_limit' => 80
+                'description_limit' => 80,
             ],
             'selectors' => [
                 'name_input' => '#name',
@@ -290,15 +291,15 @@ class UniversController extends Controller
                 'preview_image_container' => '#preview-image-container',
                 'preview_logo_container' => '#preview-logo-container',
                 'preview_primary_color' => '#preview-primary-color',
-                'preview_secondary_color' => '#preview-secondary-color'
+                'preview_secondary_color' => '#preview-secondary-color',
             ],
             'functions' => [
                 'validate_hex' => 'validateAndFormatHex',
                 'sync_colors' => 'syncColorInputs',
                 'update_preview' => 'updatePreview',
                 'preview_image' => 'previewImageFile',
-                'preview_logo' => 'previewLogoFile'
-            ]
+                'preview_logo' => 'previewLogoFile',
+            ],
         ];
     }
 
@@ -317,20 +318,20 @@ class UniversController extends Controller
                     'empty_button' => 'Create my first card',
                     'add_title' => 'Add a card',
                     'add_subtitle' => 'Create a new card for your collection',
-                    'add_button' => 'Create'
+                    'add_button' => 'Create',
                 ],
                 'routes' => [
                     'add' => route('univers.create'),
-                    'edit' => 'univers.modify'
+                    'edit' => 'univers.modify',
                 ],
                 'styles' => [
                     'card_image_height' => '200px',
                     'logo_size' => '50px',
-                    'color_indicator_size' => '30px'
+                    'color_indicator_size' => '30px',
                 ],
                 'limits' => [
-                    'description_truncate' => 100
-                ]
+                    'description_truncate' => 100,
+                ],
             ];
         }
 
@@ -342,20 +343,20 @@ class UniversController extends Controller
                 'empty_button' => 'Créer ma première carte',
                 'add_title' => 'Ajouter une carte',
                 'add_subtitle' => 'Créer une nouvelle carte pour votre collection',
-                'add_button' => 'Créer'
+                'add_button' => 'Créer',
             ],
             'routes' => [
                 'add' => route('univers.create'),
-                'edit' => 'univers.modify'
+                'edit' => 'univers.modify',
             ],
             'styles' => [
                 'card_image_height' => '200px',
                 'logo_size' => '50px',
-                'color_indicator_size' => '30px'
+                'color_indicator_size' => '30px',
             ],
             'limits' => [
-                'description_truncate' => 100
-            ]
+                'description_truncate' => 100,
+            ],
         ];
     }
 
@@ -365,18 +366,18 @@ class UniversController extends Controller
     private function getViewHelpers()
     {
         return [
-            'asset_helper' => function($path) {
-                return asset('storage/' . $path);
+            'asset_helper' => function ($path) {
+                return asset('storage/'.$path);
             },
-            'truncate_helper' => function($text, $limit = 100) {
+            'truncate_helper' => function ($text, $limit = 100) {
                 return $this->truncateDescription($text, $limit);
             },
-            'gradient_helper' => function($primary, $secondary, $direction = 'to right') {
+            'gradient_helper' => function ($primary, $secondary, $direction = 'to right') {
                 return $this->generateGradient($primary, $secondary, $direction);
             },
-            'hex_helper' => function($color) {
+            'hex_helper' => function ($color) {
                 return $this->colorToHex($color);
-            }
+            },
         ];
     }
 
@@ -388,7 +389,7 @@ class UniversController extends Controller
         return [
             'univers' => route('univers.destroy', $universId),
             'image' => route('univers.remove-image', $universId),
-            'logo' => route('univers.remove-logo', $universId)
+            'logo' => route('univers.remove-logo', $universId),
         ];
     }
 
@@ -406,8 +407,9 @@ class UniversController extends Controller
     private function truncateDescription($description, $limit = 80)
     {
         if (strlen($description) > $limit) {
-            return substr($description, 0, $limit) . '...';
+            return substr($description, 0, $limit).'...';
         }
+
         return $description;
     }
 
@@ -435,7 +437,7 @@ class UniversController extends Controller
             'primary_color_hex' => 'nullable|string|regex:/^[A-Fa-f0-9]{6}$/',
             'secondary_color_hex' => 'nullable|string|regex:/^[A-Fa-f0-9]{6}$/',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:3072',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ], [
             'name.required' => 'Le nom de la carte est obligatoire.',
             'name.max' => 'Le nom ne doit pas dépasser 30 caractères.',
@@ -452,7 +454,7 @@ class UniversController extends Controller
             'image.max' => 'L\'image ne doit pas dépasser 3MB.',
             'logo.image' => 'Le fichier logo doit être une image valide.',
             'logo.mimes' => 'Le logo doit être au format JPG, PNG ou GIF.',
-            'logo.max' => 'Le logo ne doit pas dépasser 2MB.'
+            'logo.max' => 'Le logo ne doit pas dépasser 2MB.',
         ]);
     }
 
@@ -462,18 +464,18 @@ class UniversController extends Controller
     private function processHexColors(Request $request)
     {
         // Traitement de la couleur principale
-        if ($request->has('primary_color_hex') && !empty($request->input('primary_color_hex'))) {
+        if ($request->has('primary_color_hex') && ! empty($request->input('primary_color_hex'))) {
             $hex = $this->sanitizeHex($request->input('primary_color_hex'));
             if ($hex && strlen($hex) === 6) {
-                $request->merge(['primary_color' => '#' . $hex]);
+                $request->merge(['primary_color' => '#'.$hex]);
             }
         }
 
         // Traitement de la couleur secondaire
-        if ($request->has('secondary_color_hex') && !empty($request->input('secondary_color_hex'))) {
+        if ($request->has('secondary_color_hex') && ! empty($request->input('secondary_color_hex'))) {
             $hex = $this->sanitizeHex($request->input('secondary_color_hex'));
             if ($hex && strlen($hex) === 6) {
-                $request->merge(['secondary_color' => '#' . $hex]);
+                $request->merge(['secondary_color' => '#'.$hex]);
             }
         }
     }

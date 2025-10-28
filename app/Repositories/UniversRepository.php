@@ -44,7 +44,7 @@ class UniversRepository implements UniversRepositoryInterface
             return [
                 'primary' => $univers->primary_color,
                 'secondary' => $univers->secondary_color,
-                'name' => $univers->name
+                'name' => $univers->name,
             ];
         })->toArray();
     }

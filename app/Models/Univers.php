@@ -10,4 +10,16 @@ class Univers extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
+    // Relation many-to-many avec les utilisateurs qui ont mis en favori
+    public function favoriteUsers()
+    {
+        return $this->belongsToMany(User::class, 'favorites');
+    }
+
+    // Compter le nombre de favoris
+    public function favoritesCount()
+    {
+        return $this->favoriteUsers()->count();
+    }
 }

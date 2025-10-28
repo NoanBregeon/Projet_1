@@ -3,35 +3,6 @@
 @section('title', $univers->name)
 @section('content')
 
-<!-- Bouton de bascule thème -->
-<button id="theme-toggle" class="theme-toggle">
-    <i id="theme-icon" class="bi bi-moon-fill"></i>
-</button>
-
-<!-- Sélecteur de langue -->
-<div class="language-selector">
-    <div class="dropdown">
-        <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
-            <i class="bi bi-globe me-1"></i>
-            {{ app()->getLocale() == 'fr' ? 'FR' : 'EN' }}
-        </button>
-        <ul class="dropdown-menu">
-            <li>
-                <a class="dropdown-item {{ app()->getLocale() == 'fr' ? 'active' : '' }}"
-                   href="{{ route('language.switch', 'fr') }}">
-                    <i class="bi bi-flag me-2"></i>Français
-                </a>
-            </li>
-            <li>
-                <a class="dropdown-item {{ app()->getLocale() == 'en' ? 'active' : '' }}"
-                   href="{{ route('language.switch', 'en') }}">
-                    <i class="bi bi-flag me-2"></i>English
-                </a>
-            </li>
-        </ul>
-    </div>
-</div>
-
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-8">

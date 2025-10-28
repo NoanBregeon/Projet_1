@@ -9,7 +9,9 @@ use Illuminate\View\Component;
 class Alerte extends Component
 {
     public $message;
+
     public $type;
+
     public $icon;
 
     /**

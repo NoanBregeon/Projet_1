@@ -11,16 +11,21 @@ class AccueilController extends Controller
     {
         $this->message = $message ?? 'Hello';
     }
-    function test()
+
+    public function test()
     {
-        return ('Ceci est un test');
+        return 'Ceci est un test';
     }
-    public function index() : View {
+
+    public function index(): View
+    {
         return view('welcome');
     }
-    public function about(?string $message = null) : string|null {
-        return !empty(Str::ucfirst(string:$message))
-         ?Str::ucfirst(string:$message)
+
+    public function about(?string $message = null): ?string
+    {
+        return ! empty(Str::ucfirst(string: $message))
+         ? Str::ucfirst(string: $message)
          : $this->message;
     }
 }

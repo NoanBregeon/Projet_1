@@ -3,14 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Silber\Bouncer\Database\HasRolesAndAbilities;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable, HasRolesAndAbilities;
+    use HasFactory, HasRolesAndAbilities, Notifiable;
 
     protected $fillable = [
         'first_name',
@@ -36,8 +36,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getNameAttribute(): string
     {
         $first = $this->first_name ?? '';
-        $last  = $this->last_name ?? '';
-        return trim($first . ' ' . $last);
+        $last = $this->last_name ?? '';
+
+        return trim($first.' '.$last);
     }
 
     // Méthodes compatibles avec Bouncer
@@ -48,6 +49,18 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function isUser(): bool
     {
-        return $this->isA('user') || !$this->isA('admin');
+        return $this->isA('user') || ! $this->isA('admin');
+    }
+
+    // Relation many-to-many avec les univers favoris
+    public function favorites()
+    {
+        return $this->belongsToMany(Univers::class, 'favorites');
+    }
+
+    // Vérifier si un univers est en favori
+    public function hasFavorite($universId)
+    {
+        return $this->favorites()->where('univers_id', $universId)->exists();
     }
 }

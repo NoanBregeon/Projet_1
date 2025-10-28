@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -24,17 +24,50 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(Request $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        // règles basées sur la présence du champ 'name' (tests Breeze envoient 'name')
+        $rules = [
+            'email' => ['required', 'email', Rule::unique('users')->ignore($user->id)],
+        ];
+
+        if ($request->has('name')) {
+            $rules['name'] = ['required', 'string', 'max:255'];
+        } else {
+            // garder compat pour formulaire qui utilise first_name / last_name
+            $rules['first_name'] = ['required', 'string', 'max:255'];
+            $rules['last_name'] = ['required', 'string', 'max:255'];
         }
 
-        $request->user()->save();
+        $validated = $request->validate($rules);
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        // Mapper les champs validés vers le modèle
+        if (isset($validated['name'])) {
+            $fullName = trim($validated['name']);
+            $parts = $fullName === '' ? [] : preg_split('/\s+/', $fullName);
+            $first = $parts[0] ?? '';
+            $last = count($parts) > 1 ? implode(' ', array_slice($parts, 1)) : '';
+            $user->first_name = $first;
+            $user->last_name = $last;
+        } else {
+            $user->first_name = $validated['first_name'];
+            $user->last_name = $validated['last_name'];
+        }
+
+        // Gérer le changement d'email proprement
+        if ($validated['email'] !== $user->email) {
+            $user->email = $validated['email'];
+            $user->email_verified_at = null;
+            $user->save();
+            $user->sendEmailVerificationNotification();
+        } else {
+            $user->email = $validated['email'];
+            $user->save();
+        }
+
+        return redirect('/profile')->with('status', 'profile-updated');
     }
 
     /**

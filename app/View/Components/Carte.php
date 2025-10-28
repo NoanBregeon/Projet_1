@@ -8,9 +8,33 @@ use Illuminate\View\Component;
 
 class Carte extends Component
 {
-    public $id, $name, $gradientHeader, $imageUrl, $cardImageHeight, $gradientBackground, $description,
-        $primaryColor, $secondaryColor, $colorIndicatorSize, $colorTooltipPrimary, $colorTooltipSecondary,
-        $logoUrl, $logoSize;
+    public $id;
+
+    public $name;
+
+    public $gradientHeader;
+
+    public $imageUrl;
+
+    public $cardImageHeight;
+
+    public $gradientBackground;
+
+    public $description;
+
+    public $primaryColor;
+
+    public $secondaryColor;
+
+    public $colorIndicatorSize;
+
+    public $colorTooltipPrimary;
+
+    public $colorTooltipSecondary;
+
+    public $logoUrl;
+
+    public $logoSize;
 
     /**
      * Create a new component instance.

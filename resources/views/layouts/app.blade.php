@@ -13,19 +13,43 @@
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme === 'dark') {
                 document.documentElement.setAttribute('data-theme', 'dark');
-                document.documentElement.style.backgroundColor = '#343a40';
-                document.documentElement.style.color = '#ffffff';
+                document.documentElement.style.backgroundColor = '#1e293b';
+                document.documentElement.style.color = '#f8fafc';
             }
         })();
     </script>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Vite Assets -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
     <!-- Header fixe avec tous les contrôles -->
     <div class="header-controls">
+        @auth
+            <!-- Lien vers les favoris -->
+            <a href="{{ route('favorites.index') }}" 
+               class="btn {{ request()->routeIs('favorites.index') ? 'btn-warning' : 'btn-outline-warning' }} btn-sm me-2">
+                <i class="bi bi-heart-fill me-1"></i>
+                {{ app()->getLocale() == 'en' ? 'Favorites' : 'Favoris' }}
+                @if(Auth::user()->favorites()->count() > 0)
+                    <span class="badge {{ request()->routeIs('favorites.index') ? 'bg-dark' : 'bg-warning text-dark' }} ms-1">
+                        {{ Auth::user()->favorites()->count() }}
+                    </span>
+                @endif
+            </a>
+            
+            <!-- Lien vers l'accueil si on est sur les favoris -->
+            @if(request()->routeIs('favorites.index'))
+                <a href="{{ url('/') }}" class="btn btn-outline-primary btn-sm me-2">
+                    <i class="bi bi-house me-1"></i>
+                    {{ app()->getLocale() == 'en' ? 'Home' : 'Accueil' }}
+                </a>
+            @endif
+        @endauth
+
         <!-- Sélecteur de langue -->
         <div class="language-selector">
             <div class="dropdown">
@@ -60,8 +84,5 @@
     <main class="main-content container px-4 py-6">
         @yield('content')
     </main>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

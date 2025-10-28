@@ -191,6 +191,8 @@ body {
                 background-color 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
                 color 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
                 border-color 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    opacity: 1;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card:hover {
@@ -412,6 +414,53 @@ h1, h2, h3, h4, h5, h6 {
     text-decoration: underline;
 }
 
+/* Animations jQuery pour les cartes */
+.card {
+    opacity: 1;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Animation de ripple pour les boutons */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: scale(0);
+    animation: ripple-animation 0.6s linear;
+    pointer-events: none;
+}
+
+@keyframes ripple-animation {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* Amélioration des transitions avec jQuery */
+.theme-changing {
+    animation: gentlePulse 0.8s ease-out;
+}
+
+/* Loader pour jQuery */
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+/* Smooth scroll amélioration */
+html {
+    scroll-behavior: smooth;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .header-controls {
@@ -442,4 +491,39 @@ h1, h2, h3, h4, h5, h6 {
     .auth-title {
         font-size: 1.75rem;
     }
+}
+
+/* Styles spécifiques pour la page des favoris */
+.favorites-page .card {
+    transition: all 0.3s ease, opacity 0.5s ease;
+}
+
+.favorites-page .card.removing {
+    opacity: 0;
+    transform: scale(0.9);
+}
+
+/* Amélioration du header pour la navigation */
+.header-controls .btn-warning {
+    color: #000;
+    border-color: #ffc107;
+}
+
+.header-controls .btn-warning:hover {
+    background-color: #ffca2c;
+    border-color: #ffc107;
+}
+
+.header-controls .btn-outline-primary:hover {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+/* Animation pour les boutons de navigation */
+.btn {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn:hover {
+    transform: translateY(-1px);
 }
