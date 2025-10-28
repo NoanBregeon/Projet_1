@@ -30,6 +30,7 @@ return [
         'storage',
         'bootstrap/cache',
         'public',
+        'tests', // Exclure les tests pour éviter les conflits
     ],
 
     /*
@@ -44,6 +45,7 @@ return [
     'remove' => [
         // Retirer des insights si tu veux alléger les règles
         // ex: 'SlevomatCodingStandard.Classes.UnusedPrivateElements',
+        'NunoMaduro\PhpInsights\Domain\Insights\ForbiddenTraits', // Permet l'utilisation des traits dans les tests
     ],
 
     /*
@@ -56,5 +58,9 @@ return [
         // 'SlevomatCodingStandard.Classes.ClassConstantVisibility' => [
         //     'public' => true,
         // ],
+        'PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff' => [
+            'lineLimit' => 120,
+            'absoluteLineLimit' => 160,
+        ],
     ],
 ];
