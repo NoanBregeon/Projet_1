@@ -9,12 +9,10 @@ use Illuminate\Support\Facades\Session;
 
 class SetLocale
 {
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): mixed
     {
-        // Toujours utiliser le français par défaut
         $locale = 'fr';
 
-        // Seulement changer si explicitement demandé en session
         if (Session::has('locale') && Session::get('locale') === 'en') {
             $locale = 'en';
         }

@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
 
 class LanguageController extends Controller
 {
-    public function switch($locale)
+    public function switch(string $locale): RedirectResponse
     {
-        // Vérifier que la langue est supportée
-        if (! in_array($locale, ['fr', 'en'])) {
+        if (! in_array($locale, ['fr', 'en'], true)) {
             abort(400);
         }
 
-        // Sauvegarder en session
         Session::put('locale', $locale);
 
         return redirect()->back();

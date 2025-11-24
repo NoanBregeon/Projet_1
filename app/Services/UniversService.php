@@ -5,56 +5,79 @@ namespace App\Services;
 use App\Contracts\UniversRepositoryInterface;
 use App\Models\Univers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 
 class UniversService
 {
+    /** @var UniversRepositoryInterface */
     protected $universRepository;
 
-    public function __construct(UniversRepositoryInterface $universRepository)
+    public function __construct($universRepository = null)
     {
-        $this->universRepository = $universRepository;
+        // Accept either an implementation instance or resolve the interface via the container
+        $this->universRepository = $universRepository ?? app(UniversRepositoryInterface::class);
     }
 
-    public function processUniversForDisplay($listeUnivers)
+    /**
+     * Prépare les univers pour l'affichage (cards, etc.).
+     */
+    public function processUniversForDisplay(Collection $listeUnivers): Collection
     {
         return $listeUnivers->map(function ($univers) {
+            // Normaliser l'élément : Model, stdClass ou array -> objet
+            if (is_array($univers)) {
+                $univers = (object) $univers;
+            }
+
+            // si $univers est un stdClass ou Univers, on peut accéder aux propriétés
             $isAuth = auth()->check();
             $locale = app()->getLocale();
 
+            $primary = $univers->primary_color ?? '#000000';
+            $secondary = $univers->secondary_color ?? '#ffffff';
+            $image = $univers->image ?? null;
+            $logo = $univers->logo ?? null;
+
             return [
-                'id' => $univers->id,
-                'name' => $univers->name,
-                'description' => $univers->description,
-                'truncated_description' => $isAuth
-                    ? $this->truncateDescription($univers->description, 100)
-                    : $univers->description,
-                'primary_color' => $univers->primary_color,
-                'secondary_color' => $univers->secondary_color,
-                'image' => $univers->image,
-                'logo' => $univers->logo,
-                'image_url' => $univers->image ? asset('storage/'.$univers->image) : null,
-                'logo_url' => $univers->logo ? asset('storage/'.$univers->logo) : null,
-                'gradient_header' => $this->generateGradient($univers->primary_color, $univers->secondary_color, '135deg'),
-                'gradient_background' => $this->generateGradient($univers->primary_color, $univers->secondary_color, '45deg'),
+                'id' => $univers->id ?? null,
+                'name' => $univers->name ?? null,
+                'description' => $univers->description ?? null,
+                'truncated_description' => $isAuth ? $this->truncateDescription((string) ($univers->description ?? ''), 100) : ($univers->description ?? ''),
+                'primary_color' => $primary,
+                'secondary_color' => $secondary,
+                'image' => $image,
+                'logo' => $logo,
+                'image_url' => $image ? asset('storage/'.$image) : null,
+                'logo_url' => $logo ? asset('storage/'.$logo) : null,
+                'gradient_header' => $this->generateGradient((string) $primary, (string) $secondary, '135deg'),
+                'gradient_background' => $this->generateGradient((string) $primary, (string) $secondary, '45deg'),
                 'color_tooltips' => [
-                    'primary' => $locale === 'en' ? "Primary color: {$univers->primary_color}" : "Couleur primaire: {$univers->primary_color}",
-                    'secondary' => $locale === 'en' ? "Secondary color: {$univers->secondary_color}" : "Couleur secondaire: {$univers->secondary_color}",
+                    'primary' => $locale === 'en' ? "Primary color: {$primary}" : "Couleur primaire: {$primary}",
+                    'secondary' => $locale === 'en' ? "Secondary color: {$secondary}" : "Couleur secondaire: {$secondary}",
                 ],
-                'edit_url' => route('univers.edit', $univers->id),
+                'edit_url' => isset($univers->id) ? route('univers.edit', $univers->id) : null,
             ];
         });
     }
 
+    /**
+     * Crée un univers à partir de données validées et d'une requête.
+     */
     public function createUnivers(array $validatedData, Request $request): Univers
     {
         $univers = new Univers;
+
         $this->fillUniversData($univers, $validatedData, $request);
+
         $univers->save();
 
         return $univers;
     }
 
+    /**
+     * Met à jour un univers. Retourne true si OK.
+     */
     public function updateUnivers(Univers $univers, array $validatedData, Request $request): bool
     {
         $this->fillUniversData($univers, $validatedData, $request);
@@ -62,15 +85,24 @@ class UniversService
         return $univers->save();
     }
 
+    /**
+     * Supprime un univers + fichiers associés. Retourne true si OK.
+     */
     public function deleteUnivers(Univers $univers): bool
     {
-        $this->deleteUniversFiles($univers);
+        // suppression des fichiers si présents
+        if ($univers->image && Storage::disk('public')->exists($univers->image)) {
+            Storage::disk('public')->delete($univers->image);
+        }
 
-        return $univers->delete();
+        if ($univers->logo && Storage::disk('public')->exists($univers->logo)) {
+            Storage::disk('public')->delete($univers->logo);
+        }
+
+        return (bool) $univers->delete();
     }
 
-    // Méthodes privées pour la logique métier
-    private function truncateDescription($description, $limit = 80)
+    private function truncateDescription(string $description, int $limit = 80): string
     {
         if (strlen($description) > $limit) {
             return substr($description, 0, $limit).'...';
@@ -79,41 +111,59 @@ class UniversService
         return $description;
     }
 
-    private function generateGradient($primaryColor, $secondaryColor, $direction = 'to right')
+    private function generateGradient(string $primaryColor, string $secondaryColor, string $direction = 'to right'): string
     {
         return "linear-gradient({$direction}, {$primaryColor}, {$secondaryColor})";
     }
 
-    private function fillUniversData(Univers $univers, array $validatedData, Request $request)
+    /**
+     * @param  array<string,mixed>  $validatedData
+     */
+    private function fillUniversData(Univers $univers, array $validatedData, Request $request): void
     {
         $univers->name = $validatedData['name'];
-        $univers->description = $validatedData['description'];
+        $univers->description = $validatedData['description'] ?? null;
         $univers->primary_color = $validatedData['primary_color'];
         $univers->secondary_color = $validatedData['secondary_color'];
 
-        $this->handleFileUpload($univers, $request, 'image', 'univers/images');
-        $this->handleFileUpload($univers, $request, 'logo', 'univers/logos');
-    }
+        // Image
+        if ($request->hasFile('image')) {
+            if ($univers->image && Storage::disk('public')->exists($univers->image)) {
+                Storage::disk('public')->delete($univers->image);
+            }
 
-    private function handleFileUpload(Univers $univers, Request $request, $fieldName, $storagePath)
-    {
-        if ($request->hasFile($fieldName)) {
-            $this->deleteFile($univers->$fieldName);
-            $filePath = $request->file($fieldName)->store($storagePath, 'public');
-            $univers->$fieldName = $filePath;
+            $path = $request->file('image')->store('univers/images', 'public');
+            $univers->image = $path;
         }
-    }
 
-    private function deleteFile($filePath)
-    {
-        if ($filePath && Storage::disk('public')->exists($filePath)) {
-            Storage::disk('public')->delete($filePath);
+        // Logo
+        if ($request->hasFile('logo')) {
+            if ($univers->logo && Storage::disk('public')->exists($univers->logo)) {
+                Storage::disk('public')->delete($univers->logo);
+            }
+
+            $path = $request->file('logo')->store('univers/logos', 'public');
+            $univers->logo = $path;
         }
+
+        // Si jamais la BDD a NOT NULL sur image/logo, on peut forcer une chaîne vide
+        // pour éviter les erreurs SQL tant que la migration n'est pas corrigée :
+        // $univers->image = $univers->image ?? '';
+        // $univers->logo  = $univers->logo ?? '';
     }
 
-    private function deleteUniversFiles(Univers $univers)
+    private function handleFileUpload(Univers $univers, Request $request, string $fieldName, string $storagePath): void
     {
-        $this->deleteFile($univers->image);
-        $this->deleteFile($univers->logo);
+        // ...existing code...
+    }
+
+    private function deleteFile(?string $filePath): void
+    {
+        // ...existing code...
+    }
+
+    private function deleteUniversFiles(Univers $univers): void
+    {
+        // ...existing code...
     }
 }

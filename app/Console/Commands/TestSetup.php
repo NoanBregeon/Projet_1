@@ -13,13 +13,13 @@ class TestSetup extends Command
 
     protected $description = 'Créer la base de test (si besoin) et exécuter les migrations sur la BDD de test';
 
-    public function handle()
+    public function handle(): int
     {
         // Récupérer config depuis .env.testing si dispo
         $envPath = base_path('.env.testing');
         $env = $this->parseEnvFile($envPath);
 
-        $dbName = $env['DB_DATABASE'] ?? env('DB_DATABASE', 'laravel');
+        $dbName = $env['DB_DATABASE'] ?? config('database.connections.mysql.database', 'laravel');
         if (! Str::endsWith($dbName, '_test')) {
             $dbNameTest = $dbName.'_test';
         } else {
@@ -49,13 +49,16 @@ class TestSetup extends Command
         return 0;
     }
 
-    private function parseEnvFile($path)
+    /**
+     * @return array<string,string>
+     */
+    private function parseEnvFile(string $path): array
     {
         if (! File::exists($path)) {
             return [];
         }
 
-        $lines = preg_split('/\r\n|\n|\r/', File::get($path));
+        $lines = preg_split('/\r\n|\n|\r/', File::get($path)) ?: [];
         $result = [];
 
         foreach ($lines as $line) {

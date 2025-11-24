@@ -12,14 +12,17 @@ class AccueilController extends Controller
         $this->message = $message ?? 'Hello';
     }
 
-    public function test()
+    public function test(): string
     {
         return 'Ceci est un test';
     }
 
     public function index(): View
     {
-        return view('welcome');
+        /** @var view-string $template */
+        $template = 'welcome';
+
+        return view($template);
     }
 
     public function about(?string $message = null): ?string

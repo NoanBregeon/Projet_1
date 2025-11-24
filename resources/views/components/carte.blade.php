@@ -2,7 +2,7 @@
     <div class="card-header border-0 text-white text-center py-3" style="background: {{ $gradientHeader }}">
         <h6 class="card-title mb-0 fw-bold">{{ $name }}</h6>
     </div>
-    
+
     @if($imageUrl)
         <img src="{{ $imageUrl }}" class="card-img-top" alt="{{ $name }}" style="height: {{ $cardImageHeight }}; object-fit: cover;">
     @else
@@ -15,7 +15,7 @@
         <p class="card-text text-muted flex-grow-1 {{ Auth::check() ? '' : 'fs-5 lh-base' }}">
             {{ $description }}
         </p>
-        
+
         <div class="d-flex align-items-center mb-3">
             <small class="text-muted me-2">
                 {{ app()->getLocale() == 'en' ? 'Colors:' : 'Couleurs:' }}
@@ -23,17 +23,17 @@
             <div class="d-flex gap-2">
                 <div class="rounded-circle border border-2 border-white shadow-sm"
                      style="width: {{ $colorIndicatorSize }}; height: {{ $colorIndicatorSize }}; background-color: {{ $primaryColor }};"
-                     data-bs-toggle="tooltip" 
+                     data-bs-toggle="tooltip"
                      data-bs-placement="top"
                      title="{{ $colorTooltipPrimary }}"></div>
                 <div class="rounded-circle border border-2 border-white shadow-sm"
                      style="width: {{ $colorIndicatorSize }}; height: {{ $colorIndicatorSize }}; background-color: {{ $secondaryColor }};"
                      data-bs-toggle="tooltip"
-                     data-bs-placement="top" 
+                     data-bs-placement="top"
                      title="{{ $colorTooltipSecondary }}"></div>
             </div>
         </div>
-        
+
         <div class="d-flex gap-2">
             @auth
                 <!-- Bouton Voir (pour tous) -->
@@ -43,21 +43,21 @@
                 </a>
 
                 <!-- Bouton Favoris -->
-                <button class="btn btn-outline-warning btn-sm favorite-btn" 
+                <button class="btn btn-outline-warning btn-sm favorite-btn"
                         data-univers-id="{{ $id }}"
                         data-is-favorite="{{ Auth::user()->hasFavorite($id) ? 'true' : 'false' }}">
                     <i class="bi {{ Auth::user()->hasFavorite($id) ? 'bi-heart-fill' : 'bi-heart' }} me-1"></i>
                     <span class="favorite-text">
-                        {{ Auth::user()->hasFavorite($id) 
-                            ? (app()->getLocale() == 'en' ? 'Favorited' : 'Favori') 
-                            : (app()->getLocale() == 'en' ? 'Favorite' : 'Favoris') 
+                        {{ Auth::user()->hasFavorite($id)
+                            ? (app()->getLocale() == 'en' ? 'Favorited' : 'Favori')
+                            : (app()->getLocale() == 'en' ? 'Favorite' : 'Favoris')
                         }}
                     </span>
                 </button>
 
                 <!-- Bouton Modifier (admin seulement) -->
-                @if(Auth::user()->isA('admin'))
-                    <a href="{{ route('univers.edit', $id) }}" class="btn btn-outline-primary btn-sm">
+                @if(Auth::check() && Auth::user()->role === 'admin')
+                    <a href="{{ route('univers.edit', $id) }}" class="btn btn-outline-warning btn-sm">
                         <i class="bi bi-pencil me-1"></i>
                         {{ app()->getLocale() == 'en' ? 'Edit' : 'Modifier' }}
                     </a>
@@ -71,7 +71,7 @@
             @endauth
         </div>
     </div>
-    
+
     @if($logoUrl)
     <div class="position-absolute top-0 end-0 m-3" style="z-index: 10;">
         <img src="{{ $logoUrl }}" alt="Logo {{ $name }}"

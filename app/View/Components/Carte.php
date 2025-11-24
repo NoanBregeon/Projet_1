@@ -8,42 +8,54 @@ use Illuminate\View\Component;
 
 class Carte extends Component
 {
-    public $id;
+    public int $id;
 
-    public $name;
+    public string $name;
 
-    public $gradientHeader;
+    public string $gradientHeader;
 
-    public $imageUrl;
+    public ?string $imageUrl;
 
-    public $cardImageHeight;
+    public string $cardImageHeight;
 
-    public $gradientBackground;
+    public string $gradientBackground;
 
-    public $description;
+    public string $description;
 
-    public $primaryColor;
+    public string $primaryColor;
 
-    public $secondaryColor;
+    public string $secondaryColor;
 
-    public $colorIndicatorSize;
+    public string $colorIndicatorSize;
 
-    public $colorTooltipPrimary;
+    public string $colorTooltipPrimary;
 
-    public $colorTooltipSecondary;
+    public string $colorTooltipSecondary;
 
-    public $logoUrl;
+    public ?string $logoUrl;
 
-    public $logoSize;
+    public string $logoSize;
 
     /**
      * Create a new component instance.
      */
     public function __construct(
-        $id, $name, $gradientHeader, $imageUrl, $cardImageHeight, $gradientBackground, $description,
-        $primaryColor, $secondaryColor, $colorIndicatorSize, $colorTooltipPrimary, $colorTooltipSecondary,
-        $logoUrl, $logoSize
+        int $id,
+        string $name,
+        string $gradientHeader,
+        ?string $imageUrl,
+        string $cardImageHeight,
+        string $gradientBackground,
+        string $description,
+        string $primaryColor,
+        string $secondaryColor,
+        string $colorIndicatorSize,
+        string $colorTooltipPrimary,
+        string $colorTooltipSecondary,
+        ?string $logoUrl,
+        string $logoSize
     ) {
+
         $this->id = $id;
         $this->name = $name;
         $this->gradientHeader = $gradientHeader;

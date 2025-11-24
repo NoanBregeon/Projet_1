@@ -38,7 +38,7 @@ class RegisteredUserController extends Controller
 
         // Découper le champ "name" en first_name / last_name pour compatibilité
         $fullName = trim($request->input('name', ''));
-        $parts = $fullName === '' ? [] : preg_split('/\s+/', $fullName);
+        $parts = $fullName === '' ? [] : (preg_split('/\s+/', $fullName) ?: []);
         $firstName = $parts[0] ?? '';
         $lastName = count($parts) > 1 ? implode(' ', array_slice($parts, 1)) : '';
 

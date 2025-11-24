@@ -2,51 +2,28 @@
 
 namespace App\Console;
 
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
+    /**
+     * @var array<string>
+     */
     protected $commands = [
         \App\Console\Commands\CreateTestDatabase::class,
         \App\Console\Commands\TestSetup::class,
     ];
 
-    protected $schedule = [
-        \App\Console\Commands\TestSetup::class => [
-            'command' => 'test:setup',
-            'description' => 'Setup test data',
-            'frequency' => 'daily',
-            'timezone' => 'UTC',
-        ],
-    ];
-
-    /**
-     * The Artisan commands provided by your application.
-     *
-     * @var array
-     */
-    protected $commands = [
-        // ...existing commands...
-        \App\Console\Commands\CreateTestDatabase::class,
-        \App\Console\Commands\TestSetup::class,
-    ];
-
-    /**
-     * Register a custom command.
-     *
-     * @param  string  $name
-     * @param  \Closure  $callback
-     */
-    public function command($name, $callback)
+    protected function schedule(Schedule $schedule): void
     {
-        $this->commands[] = $callback;
+        // $schedule->command('inspire')->hourly();
     }
 
-    /**
-     * Run the application.
-     */
-    public function run()
+    protected function commands(): void
     {
-        $this->schedule->run();
+        $this->load(__DIR__.'/Commands');
+
+        require base_path('routes/console.php');
     }
 }

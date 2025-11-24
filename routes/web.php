@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UniversController;
@@ -56,6 +57,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/favorites/count', function () {
         return response()->json(['count' => Auth::user()->favorites()->count()]);
     })->name('favorites.count');
+
+    // Routes pour favoris
+    Route::middleware('auth')->group(function () {
+        Route::post('favorites/{univers}/toggle', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
+        Route::get('favorites', [FavoriteController::class, 'index'])->name('favorites.index');
+
+        // Routes de suppression image/logo pour un univers
+        Route::delete('univers/{univers}/image', [UniversController::class, 'removeImage'])->name('univers.remove-image');
+        Route::delete('univers/{univers}/logo', [UniversController::class, 'removeLogo'])->name('univers.remove-logo');
+    });
+
+    // Resource univers si pas déjà défini
+    Route::resource('univers', UniversController::class);
 });
 
 // Route show accessible à tous

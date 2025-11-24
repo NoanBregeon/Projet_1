@@ -10,7 +10,7 @@
 @auth
 <div class="mb-4 text-end d-flex justify-content-end gap-2 align-items-center">
     <!-- Indicateur de rôle -->
-    @if(Auth::user()->isA('admin'))
+    @if(Auth::check() && Auth::user()->role === 'admin')
         <span class="badge bg-danger me-2">
             <i class="bi bi-shield-check me-1"></i>
             {{ app()->getLocale() == 'en' ? 'Administrator' : 'Administrateur' }}

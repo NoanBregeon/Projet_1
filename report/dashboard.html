@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>Dashboard for C:\code\Projet_1\app</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="_css/bootstrap.min.css?v=11.0.11" rel="stylesheet" type="text/css">
+  <link href="_css/nv.d3.min.css?v=11.0.11" rel="stylesheet" type="text/css">
+  <link href="_css/style.css?v=11.0.11" rel="stylesheet" type="text/css">
+  <link href="_css/custom.css" rel="stylesheet" type="text/css">
+ </head>
+ <body>
+  <header>
+   <div class="container-fluid">
+    <div class="row">
+     <div class="col-md-12">
+      <nav aria-label="breadcrumb">
+       <ol class="breadcrumb">
+         <li class="breadcrumb-item"><a href="index.html">C:\code\Projet_1\app</a></li>
+         <li class="breadcrumb-item active">(Dashboard)</li>
+
+       </ol>
+      </nav>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="container-fluid">
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Classes</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="classCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="classComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Console/Commands/CreateTestDatabase.php.html#11">App\Console\Commands\CreateTestDatabase</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Console/Commands/TestSetup.php.html#10">App\Console\Commands\TestSetup</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Console/Kernel.php.html#8">App\Console\Kernel</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/AccueilController.php.html#8">App\Http\Controllers\AccueilController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/Auth/EmailVerificationNotificationController.php.html#9">App\Http\Controllers\Auth\EmailVerificationNotificationController</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/ProfileUpdateRequest.php.html#9">App\Http\Requests\ProfileUpdateRequest</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Mail/InfoMail.php.html#11">App\Mail\InfoMail</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Univers.php.html#41">App\Models\Univers</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Providers/RouteServiceProvider.php.html#11">App\Providers\RouteServiceProvider</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="View/Components/Alerte.php.html#9">App\View\Components\Alerte</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="View/Components/Carte.php.html#9">App\View\Components\Carte</a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/UniversController.php.html#12">App\Http\Controllers\UniversController</a></td><td class="text-right">23%</td></tr>
+       <tr><td><a href="Models/User.php.html#52">App\Models\User</a></td><td class="text-right">61%</td></tr>
+       <tr><td><a href="Http/Requests/Auth/LoginRequest.php.html#12">App\Http\Requests\Auth\LoginRequest</a></td><td class="text-right">65%</td></tr>
+       <tr><td><a href="Http/Controllers/Auth/EmailVerificationPromptController.php.html#10">App\Http\Controllers\Auth\EmailVerificationPromptController</a></td><td class="text-right">66%</td></tr>
+       <tr><td><a href="Http/Controllers/FavoriteController.php.html#10">App\Http\Controllers\FavoriteController</a></td><td class="text-right">77%</td></tr>
+       <tr><td><a href="Http/Controllers/Auth/VerifyEmailController.php.html#10">App\Http\Controllers\Auth\VerifyEmailController</a></td><td class="text-right">80%</td></tr>
+       <tr><td><a href="Http/Middleware/SetLocale.php.html#10">App\Http\Middleware\SetLocale</a></td><td class="text-right">80%</td></tr>
+       <tr><td><a href="Services/UniversService.php.html#11">App\Services\UniversService</a></td><td class="text-right">88%</td></tr>
+       <tr><td><a href="Http/Controllers/ProfileController.php.html#12">App\Http\Controllers\ProfileController</a></td><td class="text-right">89%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Class</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Console/Commands/CreateTestDatabase.php.html#11">App\Console\Commands\CreateTestDatabase</a></td><td class="text-right">110</td></tr>
+       <tr><td><a href="Console/Commands/TestSetup.php.html#10">App\Console\Commands\TestSetup</a></td><td class="text-right">110</td></tr>
+       <tr><td><a href="Http/Controllers/UniversController.php.html#12">App\Http\Controllers\UniversController</a></td><td class="text-right">77</td></tr>
+       <tr><td><a href="Services/UniversService.php.html#11">App\Services\UniversService</a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="Http/Controllers/AccueilController.php.html#8">App\Http\Controllers\AccueilController</a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="Models/User.php.html#52">App\Models\User</a></td><td class="text-right">9</td></tr>
+       <tr><td><a href="Http/Controllers/ProfileController.php.html#12">App\Http\Controllers\ProfileController</a></td><td class="text-right">9</td></tr>
+       <tr><td><a href="Http/Requests/Auth/LoginRequest.php.html#12">App\Http\Requests\Auth\LoginRequest</a></td><td class="text-right">9</td></tr>
+       <tr><td><a href="Http/Controllers/FavoriteController.php.html#10">App\Http\Controllers\FavoriteController</a></td><td class="text-right">8</td></tr>
+       <tr><td><a href="Http/Controllers/Auth/EmailVerificationNotificationController.php.html#9">App\Http\Controllers\Auth\EmailVerificationNotificationController</a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Providers/RouteServiceProvider.php.html#11">App\Providers\RouteServiceProvider</a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Http/Controllers/Auth/VerifyEmailController.php.html#10">App\Http\Controllers\Auth\VerifyEmailController</a></td><td class="text-right">3</td></tr>
+       <tr><td><a href="Http/Middleware/SetLocale.php.html#10">App\Http\Middleware\SetLocale</a></td><td class="text-right">3</td></tr>
+       <tr><td><a href="Http/Controllers/Auth/EmailVerificationPromptController.php.html#10">App\Http\Controllers\Auth\EmailVerificationPromptController</a></td><td class="text-right">2</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-12">
+     <h2>Methods</h2>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Coverage Distribution</h3>
+     <div id="methodCoverageDistribution" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Complexity</h3>
+     <div id="methodComplexity" style="height: 300px;">
+       <svg></svg>
+     </div>
+    </div>
+   </div>
+   <div class="row">
+    <div class="col-md-6">
+     <h3>Insufficient Coverage</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right">Coverage</th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Console/Commands/CreateTestDatabase.php.html#17"><abbr title="App\Console\Commands\CreateTestDatabase::handle">handle</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Console/Commands/CreateTestDatabase.php.html#58"><abbr title="App\Console\Commands\CreateTestDatabase::parseEnvFile">parseEnvFile</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Console/Commands/TestSetup.php.html#16"><abbr title="App\Console\Commands\TestSetup::handle">handle</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Console/Commands/TestSetup.php.html#55"><abbr title="App\Console\Commands\TestSetup::parseEnvFile">parseEnvFile</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Console/Kernel.php.html#18"><abbr title="App\Console\Kernel::schedule">schedule</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Console/Kernel.php.html#23"><abbr title="App\Console\Kernel::commands">commands</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/AccueilController.php.html#10"><abbr title="App\Http\Controllers\AccueilController::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/AccueilController.php.html#15"><abbr title="App\Http\Controllers\AccueilController::test">test</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/AccueilController.php.html#20"><abbr title="App\Http\Controllers\AccueilController::index">index</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/AccueilController.php.html#28"><abbr title="App\Http\Controllers\AccueilController::about">about</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/Auth/EmailVerificationNotificationController.php.html#14"><abbr title="App\Http\Controllers\Auth\EmailVerificationNotificationController::store">store</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/UniversController.php.html#46"><abbr title="App\Http\Controllers\UniversController::dashboard">dashboard</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/UniversController.php.html#73"><abbr title="App\Http\Controllers\UniversController::create">create</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Controllers/UniversController.php.html#102"><abbr title="App\Http\Controllers\UniversController::edit">edit</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/ProfileUpdateRequest.php.html#16"><abbr title="App\Http\Requests\ProfileUpdateRequest::rules">rules</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Mail/InfoMail.php.html#18"><abbr title="App\Mail\InfoMail::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Mail/InfoMail.php.html#26"><abbr title="App\Mail\InfoMail::envelope">envelope</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Mail/InfoMail.php.html#36"><abbr title="App\Mail\InfoMail::content">content</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Mail/InfoMail.php.html#48"><abbr title="App\Mail\InfoMail::attachments">attachments</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Univers.php.html#66"><abbr title="App\Models\Univers::favoriteUsers">favoriteUsers</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/Univers.php.html#74"><abbr title="App\Models\Univers::favoritesCount">favoritesCount</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/User.php.html#89"><abbr title="App\Models\User::isAdmin">isAdmin</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/User.php.html#94"><abbr title="App\Models\User::isUser">isUser</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Models/User.php.html#107"><abbr title="App\Models\User::hasFavorite">hasFavorite</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Providers/RouteServiceProvider.php.html#25"><abbr title="App\Providers\RouteServiceProvider::boot">boot</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Services/UniversService.php.html#155"><abbr title="App\Services\UniversService::handleFileUpload">handleFileUpload</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Services/UniversService.php.html#160"><abbr title="App\Services\UniversService::deleteFile">deleteFile</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Services/UniversService.php.html#165"><abbr title="App\Services\UniversService::deleteUniversFiles">deleteUniversFiles</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="View/Components/Alerte.php.html#17"><abbr title="App\View\Components\Alerte::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="View/Components/Alerte.php.html#27"><abbr title="App\View\Components\Alerte::render">render</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="View/Components/Carte.php.html#42"><abbr title="App\View\Components\Carte::__construct">__construct</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="View/Components/Carte.php.html#78"><abbr title="App\View\Components\Carte::render">render</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Http/Requests/Auth/LoginRequest.php.html#60"><abbr title="App\Http\Requests\Auth\LoginRequest::ensureIsNotRateLimited">ensureIsNotRateLimited</abbr></a></td><td class="text-right">20%</td></tr>
+       <tr><td><a href="Http/Controllers/UniversController.php.html#140"><abbr title="App\Http\Controllers\UniversController::removeImage">removeImage</abbr></a></td><td class="text-right">25%</td></tr>
+       <tr><td><a href="Http/Controllers/UniversController.php.html#154"><abbr title="App\Http\Controllers\UniversController::removeLogo">removeLogo</abbr></a></td><td class="text-right">25%</td></tr>
+       <tr><td><a href="Http/Controllers/UniversController.php.html#81"><abbr title="App\Http\Controllers\UniversController::store">store</abbr></a></td><td class="text-right">28%</td></tr>
+       <tr><td><a href="Http/Controllers/UniversController.php.html#110"><abbr title="App\Http\Controllers\UniversController::update">update</abbr></a></td><td class="text-right">33%</td></tr>
+       <tr><td><a href="Http/Controllers/UniversController.php.html#129"><abbr title="App\Http\Controllers\UniversController::destroy">destroy</abbr></a></td><td class="text-right">33%</td></tr>
+       <tr><td><a href="Http/Controllers/UniversController.php.html#24"><abbr title="App\Http\Controllers\UniversController::index">index</abbr></a></td><td class="text-right">45%</td></tr>
+       <tr><td><a href="Http/Controllers/Auth/EmailVerificationPromptController.php.html#15"><abbr title="App\Http\Controllers\Auth\EmailVerificationPromptController::__invoke">__invoke</abbr></a></td><td class="text-right">66%</td></tr>
+       <tr><td><a href="Http/Controllers/FavoriteController.php.html#23"><abbr title="App\Http\Controllers\FavoriteController::toggle">toggle</abbr></a></td><td class="text-right">66%</td></tr>
+       <tr><td><a href="Services/UniversService.php.html#105"><abbr title="App\Services\UniversService::truncateDescription">truncateDescription</abbr></a></td><td class="text-right">66%</td></tr>
+       <tr><td><a href="Http/Controllers/Auth/VerifyEmailController.php.html#15"><abbr title="App\Http\Controllers\Auth\VerifyEmailController::__invoke">__invoke</abbr></a></td><td class="text-right">80%</td></tr>
+       <tr><td><a href="Http/Middleware/SetLocale.php.html#12"><abbr title="App\Http\Middleware\SetLocale::handle">handle</abbr></a></td><td class="text-right">80%</td></tr>
+       <tr><td><a href="Http/Controllers/ProfileController.php.html#27"><abbr title="App\Http\Controllers\ProfileController::update">update</abbr></a></td><td class="text-right">84%</td></tr>
+       <tr><td><a href="Services/UniversService.php.html#122"><abbr title="App\Services\UniversService::fillUniversData">fillUniversData</abbr></a></td><td class="text-right">85%</td></tr>
+       <tr><td><a href="Http/Controllers/FavoriteController.php.html#46"><abbr title="App\Http\Controllers\FavoriteController::index">index</abbr></a></td><td class="text-right">87%</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+    <div class="col-md-6">
+     <h3>Project Risks</h3>
+     <div class="scrollbox">
+      <table class="table">
+       <thead>
+        <tr>
+         <th>Method</th>
+         <th class="text-right"><abbr title="Change Risk Anti-Patterns (CRAP) Index">CRAP</abbr></th>
+        </tr>
+       </thead>
+       <tbody>
+       <tr><td><a href="Console/Commands/CreateTestDatabase.php.html#58"><abbr title="App\Console\Commands\CreateTestDatabase::parseEnvFile">parseEnvFile</abbr></a></td><td class="text-right">56</td></tr>
+       <tr><td><a href="Console/Commands/TestSetup.php.html#55"><abbr title="App\Console\Commands\TestSetup::parseEnvFile">parseEnvFile</abbr></a></td><td class="text-right">56</td></tr>
+       <tr><td><a href="Console/Commands/CreateTestDatabase.php.html#17"><abbr title="App\Console\Commands\CreateTestDatabase::handle">handle</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Console/Commands/TestSetup.php.html#16"><abbr title="App\Console\Commands\TestSetup::handle">handle</abbr></a></td><td class="text-right">12</td></tr>
+       <tr><td><a href="Http/Controllers/ProfileController.php.html#27"><abbr title="App\Http\Controllers\ProfileController::update">update</abbr></a></td><td class="text-right">7</td></tr>
+       <tr><td><a href="Services/UniversService.php.html#122"><abbr title="App\Services\UniversService::fillUniversData">fillUniversData</abbr></a></td><td class="text-right">7</td></tr>
+       <tr><td><a href="Http/Controllers/AccueilController.php.html#28"><abbr title="App\Http\Controllers\AccueilController::about">about</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Http/Controllers/Auth/EmailVerificationNotificationController.php.html#14"><abbr title="App\Http\Controllers\Auth\EmailVerificationNotificationController::store">store</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Models/User.php.html#94"><abbr title="App\Models\User::isUser">isUser</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Providers/RouteServiceProvider.php.html#25"><abbr title="App\Providers\RouteServiceProvider::boot">boot</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Http/Controllers/FavoriteController.php.html#23"><abbr title="App\Http\Controllers\FavoriteController::toggle">toggle</abbr></a></td><td class="text-right">5</td></tr>
+       <tr><td><a href="Http/Requests/Auth/LoginRequest.php.html#60"><abbr title="App\Http\Requests\Auth\LoginRequest::ensureIsNotRateLimited">ensureIsNotRateLimited</abbr></a></td><td class="text-right">4</td></tr>
+       <tr><td><a href="Http/Controllers/UniversController.php.html#81"><abbr title="App\Http\Controllers\UniversController::store">store</abbr></a></td><td class="text-right">3</td></tr>
+       <tr><td><a href="Http/Controllers/UniversController.php.html#110"><abbr title="App\Http\Controllers\UniversController::update">update</abbr></a></td><td class="text-right">3</td></tr>
+       <tr><td><a href="Http/Controllers/Auth/VerifyEmailController.php.html#15"><abbr title="App\Http\Controllers\Auth\VerifyEmailController::__invoke">__invoke</abbr></a></td><td class="text-right">3</td></tr>
+       <tr><td><a href="Http/Middleware/SetLocale.php.html#12"><abbr title="App\Http\Middleware\SetLocale::handle">handle</abbr></a></td><td class="text-right">3</td></tr>
+       <tr><td><a href="Http/Controllers/Auth/EmailVerificationPromptController.php.html#15"><abbr title="App\Http\Controllers\Auth\EmailVerificationPromptController::__invoke">__invoke</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="Services/UniversService.php.html#105"><abbr title="App\Services\UniversService::truncateDescription">truncateDescription</abbr></a></td><td class="text-right">2</td></tr>
+       <tr><td><a href="Http/Controllers/FavoriteController.php.html#46"><abbr title="App\Http\Controllers\FavoriteController::index">index</abbr></a></td><td class="text-right">2</td></tr>
+
+       </tbody>
+      </table>
+     </div>
+    </div>
+   </div>
+   <footer>
+    <hr/>
+    <p>
+     <small>Generated by <a href="https://github.com/sebastianbergmann/php-code-coverage" target="_top">php-code-coverage 11.0.11</a> using <a href="https://www.php.net/" target="_top">PHP 8.4.15</a> and <a href="https://phpunit.de/">PHPUnit 11.5.42</a> at Mon Nov 24 13:29:12 UTC 2025.</small>
+    </p>
+   </footer>
+  </div>
+  <script src="_js/jquery.min.js?v=11.0.11" type="text/javascript"></script>
+  <script src="_js/d3.min.js?v=11.0.11" type="text/javascript"></script>
+  <script src="_js/nv.d3.min.js?v=11.0.11" type="text/javascript"></script>
+  <script type="text/javascript">
+$(document).ready(function() {
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#classCoverageDistribution svg')
+      .datum(getCoverageDistributionData([11,0,0,1,0,0,0,3,1,4,0,14], "Class Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.multiBarChart();
+    chart.tooltips(false)
+      .showControls(false)
+      .showLegend(false)
+      .reduceXTicks(false)
+      .staggerLabels(true)
+      .yAxis.tickFormat(d3.format('d'));
+
+    d3.select('#methodCoverageDistribution svg')
+      .datum(getCoverageDistributionData([32,0,0,4,2,1,0,3,0,5,1,40], "Method Coverage"))
+      .transition().duration(500).call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getCoverageDistributionData(data, label) {
+    var labels = [
+      '0%',
+      '0-10%',
+      '10-20%',
+      '20-30%',
+      '30-40%',
+      '40-50%',
+      '50-60%',
+      '60-70%',
+      '70-80%',
+      '80-90%',
+      '90-100%',
+      '100%'
+    ];
+    var values = [];
+    $.each(labels, function(key) {
+      values.push({x: labels[key], y: data[key]});
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Cyclomatic Complexity');
+
+    d3.select('#classComplexity svg')
+      .datum(getComplexityData([[0,10,"<a href=\"Console\/Commands\/CreateTestDatabase.php.html#11\">App\\Console\\Commands\\CreateTestDatabase<\/a>"],[0,10,"<a href=\"Console\/Commands\/TestSetup.php.html#10\">App\\Console\\Commands\\TestSetup<\/a>"],[0,2,"<a href=\"Console\/Kernel.php.html#8\">App\\Console\\Kernel<\/a>"],[0,5,"<a href=\"Http\/Controllers\/AccueilController.php.html#8\">App\\Http\\Controllers\\AccueilController<\/a>"],[100,3,"<a href=\"Http\/Controllers\/Auth\/AuthenticatedSessionController.php.html#12\">App\\Http\\Controllers\\Auth\\AuthenticatedSessionController<\/a>"],[100,3,"<a href=\"Http\/Controllers\/Auth\/ConfirmablePasswordController.php.html#12\">App\\Http\\Controllers\\Auth\\ConfirmablePasswordController<\/a>"],[0,2,"<a href=\"Http\/Controllers\/Auth\/EmailVerificationNotificationController.php.html#9\">App\\Http\\Controllers\\Auth\\EmailVerificationNotificationController<\/a>"],[66.66666666666666,2,"<a href=\"Http\/Controllers\/Auth\/EmailVerificationPromptController.php.html#10\">App\\Http\\Controllers\\Auth\\EmailVerificationPromptController<\/a>"],[100,3,"<a href=\"Http\/Controllers\/Auth\/NewPasswordController.php.html#16\">App\\Http\\Controllers\\Auth\\NewPasswordController<\/a>"],[100,1,"<a href=\"Http\/Controllers\/Auth\/PasswordController.php.html#11\">App\\Http\\Controllers\\Auth\\PasswordController<\/a>"],[100,3,"<a href=\"Http\/Controllers\/Auth\/PasswordResetLinkController.php.html#11\">App\\Http\\Controllers\\Auth\\PasswordResetLinkController<\/a>"],[100,5,"<a href=\"Http\/Controllers\/Auth\/RegisteredUserController.php.html#16\">App\\Http\\Controllers\\Auth\\RegisteredUserController<\/a>"],[80,3,"<a href=\"Http\/Controllers\/Auth\/VerifyEmailController.php.html#10\">App\\Http\\Controllers\\Auth\\VerifyEmailController<\/a>"],[100,0,"<a href=\"Http\/Controllers\/Controller.php.html#10\">App\\Http\\Controllers\\Controller<\/a>"],[77.77777777777779,8,"<a href=\"Http\/Controllers\/FavoriteController.php.html#10\">App\\Http\\Controllers\\FavoriteController<\/a>"],[100,2,"<a href=\"Http\/Controllers\/LanguageController.php.html#8\">App\\Http\\Controllers\\LanguageController<\/a>"],[89.47368421052632,9,"<a href=\"Http\/Controllers\/ProfileController.php.html#12\">App\\Http\\Controllers\\ProfileController<\/a>"],[23.214285714285715,12,"<a href=\"Http\/Controllers\/UniversController.php.html#12\">App\\Http\\Controllers\\UniversController<\/a>"],[100,0,"<a href=\"Http\/Kernel.php.html#7\">App\\Http\\Kernel<\/a>"],[100,3,"<a href=\"Http\/Middleware\/CheckRole.php.html#9\">App\\Http\\Middleware\\CheckRole<\/a>"],[80,3,"<a href=\"Http\/Middleware\/SetLocale.php.html#10\">App\\Http\\Middleware\\SetLocale<\/a>"],[65.21739130434783,7,"<a href=\"Http\/Requests\/Auth\/LoginRequest.php.html#12\">App\\Http\\Requests\\Auth\\LoginRequest<\/a>"],[0,1,"<a href=\"Http\/Requests\/ProfileUpdateRequest.php.html#9\">App\\Http\\Requests\\ProfileUpdateRequest<\/a>"],[0,4,"<a href=\"Mail\/InfoMail.php.html#11\">App\\Mail\\InfoMail<\/a>"],[0,2,"<a href=\"Models\/Univers.php.html#41\">App\\Models\\Univers<\/a>"],[61.53846153846154,7,"<a href=\"Models\/User.php.html#52\">App\\Models\\User<\/a>"],[100,2,"<a href=\"Providers\/AppServiceProvider.php.html#10\">App\\Providers\\AppServiceProvider<\/a>"],[0,2,"<a href=\"Providers\/RouteServiceProvider.php.html#11\">App\\Providers\\RouteServiceProvider<\/a>"],[100,6,"<a href=\"Repositories\/UniversRepository.php.html#8\">App\\Repositories\\UniversRepository<\/a>"],[88.70967741935483,29,"<a href=\"Services\/UniversService.php.html#11\">App\\Services\\UniversService<\/a>"],[0,2,"<a href=\"View\/Components\/Alerte.php.html#9\">App\\View\\Components\\Alerte<\/a>"],[100,1,"<a href=\"View\/Components\/AppLayout.php.html#8\">App\\View\\Components\\AppLayout<\/a>"],[0,2,"<a href=\"View\/Components\/Carte.php.html#9\">App\\View\\Components\\Carte<\/a>"],[100,1,"<a href=\"View\/Components\/GuestLayout.php.html#8\">App\\View\\Components\\GuestLayout<\/a>"]], 'Class Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  nv.addGraph(function() {
+    var chart = nv.models.scatterChart()
+      .showDistX(true)
+      .showDistY(true)
+      .showLegend(false)
+      .forceX([0, 100]);
+    chart.tooltipContent(function(graph) {
+      return '<p>' + graph.point.class + '</p>';
+    });
+
+    chart.xAxis.axisLabel('Code Coverage (in percent)');
+    chart.yAxis.axisLabel('Method Complexity');
+
+    d3.select('#methodComplexity svg')
+      .datum(getComplexityData([[0,3,"<a href=\"Console\/Commands\/CreateTestDatabase.php.html#17\">App\\Console\\Commands\\CreateTestDatabase::handle<\/a>"],[0,7,"<a href=\"Console\/Commands\/CreateTestDatabase.php.html#58\">App\\Console\\Commands\\CreateTestDatabase::parseEnvFile<\/a>"],[0,3,"<a href=\"Console\/Commands\/TestSetup.php.html#16\">App\\Console\\Commands\\TestSetup::handle<\/a>"],[0,7,"<a href=\"Console\/Commands\/TestSetup.php.html#55\">App\\Console\\Commands\\TestSetup::parseEnvFile<\/a>"],[0,1,"<a href=\"Console\/Kernel.php.html#18\">App\\Console\\Kernel::schedule<\/a>"],[0,1,"<a href=\"Console\/Kernel.php.html#23\">App\\Console\\Kernel::commands<\/a>"],[0,1,"<a href=\"Http\/Controllers\/AccueilController.php.html#10\">App\\Http\\Controllers\\AccueilController::__construct<\/a>"],[0,1,"<a href=\"Http\/Controllers\/AccueilController.php.html#15\">App\\Http\\Controllers\\AccueilController::test<\/a>"],[0,1,"<a href=\"Http\/Controllers\/AccueilController.php.html#20\">App\\Http\\Controllers\\AccueilController::index<\/a>"],[0,2,"<a href=\"Http\/Controllers\/AccueilController.php.html#28\">App\\Http\\Controllers\\AccueilController::about<\/a>"],[100,1,"<a href=\"Http\/Controllers\/Auth\/AuthenticatedSessionController.php.html#17\">App\\Http\\Controllers\\Auth\\AuthenticatedSessionController::create<\/a>"],[100,1,"<a href=\"Http\/Controllers\/Auth\/AuthenticatedSessionController.php.html#25\">App\\Http\\Controllers\\Auth\\AuthenticatedSessionController::store<\/a>"],[100,1,"<a href=\"Http\/Controllers\/Auth\/AuthenticatedSessionController.php.html#37\">App\\Http\\Controllers\\Auth\\AuthenticatedSessionController::destroy<\/a>"],[100,1,"<a href=\"Http\/Controllers\/Auth\/ConfirmablePasswordController.php.html#17\">App\\Http\\Controllers\\Auth\\ConfirmablePasswordController::show<\/a>"],[100,2,"<a href=\"Http\/Controllers\/Auth\/ConfirmablePasswordController.php.html#25\">App\\Http\\Controllers\\Auth\\ConfirmablePasswordController::store<\/a>"],[0,2,"<a href=\"Http\/Controllers\/Auth\/EmailVerificationNotificationController.php.html#14\">App\\Http\\Controllers\\Auth\\EmailVerificationNotificationController::store<\/a>"],[66.66666666666666,2,"<a href=\"Http\/Controllers\/Auth\/EmailVerificationPromptController.php.html#15\">App\\Http\\Controllers\\Auth\\EmailVerificationPromptController::__invoke<\/a>"],[100,1,"<a href=\"Http\/Controllers\/Auth\/NewPasswordController.php.html#21\">App\\Http\\Controllers\\Auth\\NewPasswordController::create<\/a>"],[100,2,"<a href=\"Http\/Controllers\/Auth\/NewPasswordController.php.html#31\">App\\Http\\Controllers\\Auth\\NewPasswordController::store<\/a>"],[100,1,"<a href=\"Http\/Controllers\/Auth\/PasswordController.php.html#16\">App\\Http\\Controllers\\Auth\\PasswordController::update<\/a>"],[100,1,"<a href=\"Http\/Controllers\/Auth\/PasswordResetLinkController.php.html#16\">App\\Http\\Controllers\\Auth\\PasswordResetLinkController::create<\/a>"],[100,2,"<a href=\"Http\/Controllers\/Auth\/PasswordResetLinkController.php.html#26\">App\\Http\\Controllers\\Auth\\PasswordResetLinkController::store<\/a>"],[100,1,"<a href=\"Http\/Controllers\/Auth\/RegisteredUserController.php.html#21\">App\\Http\\Controllers\\Auth\\RegisteredUserController::create<\/a>"],[100,4,"<a href=\"Http\/Controllers\/Auth\/RegisteredUserController.php.html#31\">App\\Http\\Controllers\\Auth\\RegisteredUserController::store<\/a>"],[80,3,"<a href=\"Http\/Controllers\/Auth\/VerifyEmailController.php.html#15\">App\\Http\\Controllers\\Auth\\VerifyEmailController::__invoke<\/a>"],[100,1,"<a href=\"Http\/Controllers\/FavoriteController.php.html#15\">App\\Http\\Controllers\\FavoriteController::__construct<\/a>"],[66.66666666666666,5,"<a href=\"Http\/Controllers\/FavoriteController.php.html#23\">App\\Http\\Controllers\\FavoriteController::toggle<\/a>"],[87.5,2,"<a href=\"Http\/Controllers\/FavoriteController.php.html#46\">App\\Http\\Controllers\\FavoriteController::index<\/a>"],[100,2,"<a href=\"Http\/Controllers\/LanguageController.php.html#10\">App\\Http\\Controllers\\LanguageController::switch<\/a>"],[100,1,"<a href=\"Http\/Controllers\/ProfileController.php.html#17\">App\\Http\\Controllers\\ProfileController::edit<\/a>"],[84.61538461538461,7,"<a href=\"Http\/Controllers\/ProfileController.php.html#27\">App\\Http\\Controllers\\ProfileController::update<\/a>"],[100,1,"<a href=\"Http\/Controllers\/ProfileController.php.html#77\">App\\Http\\Controllers\\ProfileController::destroy<\/a>"],[100,1,"<a href=\"Http\/Controllers\/UniversController.php.html#14\">App\\Http\\Controllers\\UniversController::__construct<\/a>"],[45.45454545454545,1,"<a href=\"Http\/Controllers\/UniversController.php.html#24\">App\\Http\\Controllers\\UniversController::index<\/a>"],[0,1,"<a href=\"Http\/Controllers\/UniversController.php.html#46\">App\\Http\\Controllers\\UniversController::dashboard<\/a>"],[0,1,"<a href=\"Http\/Controllers\/UniversController.php.html#73\">App\\Http\\Controllers\\UniversController::create<\/a>"],[28.57142857142857,2,"<a href=\"Http\/Controllers\/UniversController.php.html#81\">App\\Http\\Controllers\\UniversController::store<\/a>"],[0,1,"<a href=\"Http\/Controllers\/UniversController.php.html#102\">App\\Http\\Controllers\\UniversController::edit<\/a>"],[33.33333333333333,2,"<a href=\"Http\/Controllers\/UniversController.php.html#110\">App\\Http\\Controllers\\UniversController::update<\/a>"],[33.33333333333333,1,"<a href=\"Http\/Controllers\/UniversController.php.html#129\">App\\Http\\Controllers\\UniversController::destroy<\/a>"],[25,1,"<a href=\"Http\/Controllers\/UniversController.php.html#140\">App\\Http\\Controllers\\UniversController::removeImage<\/a>"],[25,1,"<a href=\"Http\/Controllers\/UniversController.php.html#154\">App\\Http\\Controllers\\UniversController::removeLogo<\/a>"],[100,3,"<a href=\"Http\/Middleware\/CheckRole.php.html#11\">App\\Http\\Middleware\\CheckRole::handle<\/a>"],[80,3,"<a href=\"Http\/Middleware\/SetLocale.php.html#12\">App\\Http\\Middleware\\SetLocale::handle<\/a>"],[100,1,"<a href=\"Http\/Requests\/Auth\/LoginRequest.php.html#17\">App\\Http\\Requests\\Auth\\LoginRequest::authorize<\/a>"],[100,1,"<a href=\"Http\/Requests\/Auth\/LoginRequest.php.html#27\">App\\Http\\Requests\\Auth\\LoginRequest::rules<\/a>"],[100,2,"<a href=\"Http\/Requests\/Auth\/LoginRequest.php.html#40\">App\\Http\\Requests\\Auth\\LoginRequest::authenticate<\/a>"],[20,2,"<a href=\"Http\/Requests\/Auth\/LoginRequest.php.html#60\">App\\Http\\Requests\\Auth\\LoginRequest::ensureIsNotRateLimited<\/a>"],[100,1,"<a href=\"Http\/Requests\/Auth\/LoginRequest.php.html#81\">App\\Http\\Requests\\Auth\\LoginRequest::throttleKey<\/a>"],[0,1,"<a href=\"Http\/Requests\/ProfileUpdateRequest.php.html#16\">App\\Http\\Requests\\ProfileUpdateRequest::rules<\/a>"],[0,1,"<a href=\"Mail\/InfoMail.php.html#18\">App\\Mail\\InfoMail::__construct<\/a>"],[0,1,"<a href=\"Mail\/InfoMail.php.html#26\">App\\Mail\\InfoMail::envelope<\/a>"],[0,1,"<a href=\"Mail\/InfoMail.php.html#36\">App\\Mail\\InfoMail::content<\/a>"],[0,1,"<a href=\"Mail\/InfoMail.php.html#48\">App\\Mail\\InfoMail::attachments<\/a>"],[0,1,"<a href=\"Models\/Univers.php.html#66\">App\\Models\\Univers::favoriteUsers<\/a>"],[0,1,"<a href=\"Models\/Univers.php.html#74\">App\\Models\\Univers::favoritesCount<\/a>"],[100,1,"<a href=\"Models\/User.php.html#71\">App\\Models\\User::casts<\/a>"],[100,1,"<a href=\"Models\/User.php.html#80\">App\\Models\\User::getNameAttribute<\/a>"],[0,1,"<a href=\"Models\/User.php.html#89\">App\\Models\\User::isAdmin<\/a>"],[0,2,"<a href=\"Models\/User.php.html#94\">App\\Models\\User::isUser<\/a>"],[100,1,"<a href=\"Models\/User.php.html#102\">App\\Models\\User::favorites<\/a>"],[0,1,"<a href=\"Models\/User.php.html#107\">App\\Models\\User::hasFavorite<\/a>"],[100,1,"<a href=\"Providers\/AppServiceProvider.php.html#15\">App\\Providers\\AppServiceProvider::register<\/a>"],[100,1,"<a href=\"Providers\/AppServiceProvider.php.html#23\">App\\Providers\\AppServiceProvider::boot<\/a>"],[0,2,"<a href=\"Providers\/RouteServiceProvider.php.html#25\">App\\Providers\\RouteServiceProvider::boot<\/a>"],[100,1,"<a href=\"Repositories\/UniversRepository.php.html#13\">App\\Repositories\\UniversRepository::all<\/a>"],[100,1,"<a href=\"Repositories\/UniversRepository.php.html#21\">App\\Repositories\\UniversRepository::find<\/a>"],[100,1,"<a href=\"Repositories\/UniversRepository.php.html#29\">App\\Repositories\\UniversRepository::create<\/a>"],[100,1,"<a href=\"Repositories\/UniversRepository.php.html#37\">App\\Repositories\\UniversRepository::update<\/a>"],[100,1,"<a href=\"Repositories\/UniversRepository.php.html#45\">App\\Repositories\\UniversRepository::delete<\/a>"],[100,1,"<a href=\"Repositories\/UniversRepository.php.html#60\">App\\Repositories\\UniversRepository::getColorStats<\/a>"],[100,1,"<a href=\"Services\/UniversService.php.html#16\">App\\Services\\UniversService::__construct<\/a>"],[96.55172413793103,8,"<a href=\"Services\/UniversService.php.html#25\">App\\Services\\UniversService::processUniversForDisplay<\/a>"],[100,1,"<a href=\"Services\/UniversService.php.html#67\">App\\Services\\UniversService::createUnivers<\/a>"],[100,1,"<a href=\"Services\/UniversService.php.html#81\">App\\Services\\UniversService::updateUnivers<\/a>"],[100,5,"<a href=\"Services\/UniversService.php.html#91\">App\\Services\\UniversService::deleteUnivers<\/a>"],[66.66666666666666,2,"<a href=\"Services\/UniversService.php.html#105\">App\\Services\\UniversService::truncateDescription<\/a>"],[100,1,"<a href=\"Services\/UniversService.php.html#114\">App\\Services\\UniversService::generateGradient<\/a>"],[85.71428571428571,7,"<a href=\"Services\/UniversService.php.html#122\">App\\Services\\UniversService::fillUniversData<\/a>"],[0,1,"<a href=\"Services\/UniversService.php.html#155\">App\\Services\\UniversService::handleFileUpload<\/a>"],[0,1,"<a href=\"Services\/UniversService.php.html#160\">App\\Services\\UniversService::deleteFile<\/a>"],[0,1,"<a href=\"Services\/UniversService.php.html#165\">App\\Services\\UniversService::deleteUniversFiles<\/a>"],[0,1,"<a href=\"View\/Components\/Alerte.php.html#17\">App\\View\\Components\\Alerte::__construct<\/a>"],[0,1,"<a href=\"View\/Components\/Alerte.php.html#27\">App\\View\\Components\\Alerte::render<\/a>"],[100,1,"<a href=\"View\/Components\/AppLayout.php.html#13\">App\\View\\Components\\AppLayout::render<\/a>"],[0,1,"<a href=\"View\/Components\/Carte.php.html#42\">App\\View\\Components\\Carte::__construct<\/a>"],[0,1,"<a href=\"View\/Components\/Carte.php.html#78\">App\\View\\Components\\Carte::render<\/a>"],[100,1,"<a href=\"View\/Components\/GuestLayout.php.html#13\">App\\View\\Components\\GuestLayout::render<\/a>"]], 'Method Complexity'))
+      .transition()
+      .duration(500)
+      .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+
+  function getComplexityData(data, label) {
+    var values = [];
+    $.each(data, function(key) {
+      var value = Math.round(data[key][0]*100) / 100;
+      values.push({
+        x: value,
+        y: data[key][1],
+        class: data[key][2],
+        size: 0.05,
+        shape: 'diamond'
+      });
+    });
+
+    return [
+      {
+        key: label,
+        values: values,
+        color: "#4572A7"
+      }
+    ];
+  }
+});
+  </script>
+ </body>
+</html>

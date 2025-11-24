@@ -46,11 +46,12 @@ class ProfileController extends Controller
         // Mapper les champs validés vers le modèle
         if (isset($validated['name'])) {
             $fullName = trim($validated['name']);
-            $parts = $fullName === '' ? [] : preg_split('/\s+/', $fullName);
+            $parts = $fullName === '' ? [] : (preg_split('/\s+/', $fullName) ?: []);
             $first = $parts[0] ?? '';
             $last = count($parts) > 1 ? implode(' ', array_slice($parts, 1)) : '';
             $user->first_name = $first;
             $user->last_name = $last;
+
         } else {
             $user->first_name = $validated['first_name'];
             $user->last_name = $validated['last_name'];

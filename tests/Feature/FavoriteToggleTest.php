@@ -2,10 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Models\Univers;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use App\Models\User;
-use App\Models\Univers;
 
 class FavoriteToggleTest extends TestCase
 {

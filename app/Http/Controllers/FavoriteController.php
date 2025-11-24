@@ -3,55 +3,60 @@
 namespace App\Http\Controllers;
 
 use App\Models\Univers;
-use Illuminate\Http\JsonResponse;
+use App\Services\UniversService;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class FavoriteController extends Controller
 {
-    public function toggle(Univers $univers): JsonResponse
+    protected UniversService $universService;
+
+    // Accept a nullable service to allow the container to fallback gracefully
+    public function __construct(?UniversService $universService = null)
     {
-        $user = auth()->user();
-        $isFavorite = $user->hasFavorite($univers->id);
-
-        if ($isFavorite) {
-            $user->favorites()->detach($univers->id);
-            $message = app()->getLocale() == 'en' ? 'Removed from favorites' : 'Retiré des favoris';
-            $action = 'removed';
-        } else {
-            $user->favorites()->attach($univers->id);
-            $message = app()->getLocale() == 'en' ? 'Added to favorites' : 'Ajouté aux favoris';
-            $action = 'added';
-        }
-
-        return response()->json([
-            'success' => true,
-            'message' => $message,
-            'action' => $action,
-            'is_favorite' => ! $isFavorite,
-            'favorites_count' => $univers->favoritesCount(),
-        ]);
+        $this->universService = $universService ?? app(UniversService::class);
     }
 
-    public function index()
+    /**
+     * Toggle favorite pour l'utilisateur connecté.
+     */
+    public function toggle(Univers $univers): RedirectResponse
     {
-        $favorites = auth()->user()->favorites()->get();
+        $user = auth()->user();
 
-        $viewConfig = [
-            'messages' => [
-                'title' => app()->getLocale() == 'en' ? 'My Favorites' : 'Mes Favoris',
-                'subtitle' => app()->getLocale() == 'en' ? 'Your favorite cards collection' : 'Votre collection de cartes favorites',
-                'empty_title' => app()->getLocale() == 'en' ? 'No favorite cards yet' : 'Aucune carte favorite pour le moment',
-                'empty_subtitle' => app()->getLocale() == 'en' ? 'Add cards to your favorites to see them here!' : 'Ajoutez des cartes à vos favoris pour les voir ici !',
-            ],
-            'styles' => [
-                'card_image_height' => '200px',
-                'color_indicator_size' => '20px',
-                'logo_size' => '60px',
-            ],
-        ];
+        if (! $user) {
+            return redirect()->route('login');
+        }
 
-        $universService = app(\App\Services\UniversService::class);
-        $processedUnivers = $universService->processUniversForDisplay($favorites);
+        // relation many-to-many attendue : favorites()
+        if ($user->favorites()->where('univers_id', $univers->id)->exists()) {
+            $user->favorites()->detach($univers->id);
+            $message = app()->getLocale() === 'en' ? 'Removed from favorites' : 'Retiré des favoris';
+        } else {
+            $user->favorites()->attach($univers->id);
+            $message = app()->getLocale() === 'en' ? 'Added to favorites' : 'Ajouté aux favoris';
+        }
 
-        return view('favorites.index', compact('processedUnivers', 'viewConfig'));
+        return back()->with('message', $message);
+    }
+
+    /**
+     * Page index des favoris de l'utilisateur.
+     */
+    public function index(): View
+    {
+        $user = auth()->user();
+
+        if (! $user) {
+            return view('favorites.index', ['processedUnivers' => collect()]);
+        }
+
+        $favorites = $user->favorites()->get();
+
+        $processedUnivers = $this->universService->processUniversForDisplay($favorites);
+
+        return view('favorites.index', [
+            'processedUnivers' => $processedUnivers,
+        ]);
     }
 }
