@@ -2,10 +2,10 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
+use App\Contracts\UniversRepositoryInterface;
 use App\Services\UniversService;
 use Illuminate\Support\Collection;
-use App\Contracts\UniversRepositoryInterface;
+use Tests\TestCase;
 
 class UniversServiceTest extends TestCase
 {
@@ -14,7 +14,7 @@ class UniversServiceTest extends TestCase
         $repo = $this->createMock(UniversRepositoryInterface::class);
         $service = new UniversService($repo);
 
-        $univers = new \stdClass();
+        $univers = new \stdClass;
         $univers->id = 1;
         $univers->name = 'Test Universe';
         $univers->description = 'Ceci est une description de test.';

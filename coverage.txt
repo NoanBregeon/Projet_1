@@ -1,0 +1,50 @@
+
+
+[1;37;40mCode Coverage Report:      [0m
+[1;37;40m  2025-11-24 15:53:15      [0m
+[1;37;40m                           [0m
+[1;37;40m Summary:                  [0m
+[37;41m  Classes: 31.25% (10/32)  [0m
+[37;41m  Methods: 30.84% (33/107) [0m
+[37;41m  Lines:   32.76% (229/699)[0m
+
+App\Http\Controllers\Auth\AuthenticatedSessionController
+  [30;42mMethods: 100.00% ( 3/ 3)[0m   [30;42mLines: 100.00% (  8/  8)[0m
+App\Http\Controllers\Auth\ConfirmablePasswordController
+  [30;42mMethods: 100.00% ( 2/ 2)[0m   [30;42mLines: 100.00% ( 10/ 10)[0m
+App\Http\Controllers\Auth\EmailVerificationPromptController
+  [37;41mMethods:   0.00% ( 0/ 1)[0m   [30;43mLines:  66.67% (  2/  3)[0m
+App\Http\Controllers\Auth\NewPasswordController
+  [30;42mMethods: 100.00% ( 2/ 2)[0m   [30;42mLines: 100.00% ( 20/ 20)[0m
+App\Http\Controllers\Auth\PasswordController
+  [30;42mMethods: 100.00% ( 1/ 1)[0m   [30;42mLines: 100.00% (  8/  8)[0m
+App\Http\Controllers\Auth\PasswordResetLinkController
+  [30;42mMethods: 100.00% ( 2/ 2)[0m   [30;42mLines: 100.00% ( 11/ 11)[0m
+App\Http\Controllers\Auth\RegisteredUserController
+  [30;42mMethods: 100.00% ( 2/ 2)[0m   [30;42mLines: 100.00% ( 19/ 19)[0m
+App\Http\Controllers\Auth\VerifyEmailController
+  [37;41mMethods:   0.00% ( 0/ 1)[0m   [30;43mLines:  80.00% (  4/  5)[0m
+App\Http\Controllers\FavoriteController
+  [37;41mMethods:  50.00% ( 1/ 2)[0m   [37;41mLines:  48.48% ( 16/ 33)[0m
+App\Http\Controllers\ProfileController
+  [30;43mMethods:  66.67% ( 2/ 3)[0m   [30;43mLines:  89.47% ( 34/ 38)[0m
+App\Http\Controllers\UniversController
+  [37;41mMethods:   3.45% ( 1/29)[0m   [37;41mLines:  12.16% ( 36/296)[0m
+App\Http\Middleware\SetLocale
+  [37;41mMethods:   0.00% ( 0/ 1)[0m   [30;43mLines:  80.00% (  4/  5)[0m
+App\Http\Requests\Auth\LoginRequest
+  [30;43mMethods:  80.00% ( 4/ 5)[0m   [30;43mLines:  65.22% ( 15/ 23)[0m
+App\Models\Univers
+  [30;42mMethods: 100.00% ( 2/ 2)[0m   [30;42mLines: 100.00% (  2/  2)[0m
+App\Models\User
+  [30;43mMethods:  66.67% ( 4/ 6)[0m   [30;43mLines:  81.82% (  9/ 11)[0m
+App\Providers\AppServiceProvider
+  [30;42mMethods: 100.00% ( 2/ 2)[0m   [30;42mLines: 100.00% (  2/  2)[0m
+App\Repositories\UniversRepository
+  [37;41mMethods:  14.29% ( 1/ 7)[0m   [37;41mLines:   7.69% (  1/ 13)[0m
+App\Services\UniversService
+  [37;41mMethods:  18.18% ( 2/11)[0m   [37;41mLines:  50.00% ( 26/ 52)[0m
+App\View\Components\AppLayout
+  [30;42mMethods: 100.00% ( 1/ 1)[0m   [30;42mLines: 100.00% (  1/  1)[0m
+App\View\Components\GuestLayout
+  [30;42mMethods: 100.00% ( 1/ 1)[0m   [30;42mLines: 100.00% (  1/  1)[0m
